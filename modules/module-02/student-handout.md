@@ -1,39 +1,38 @@
 # 🔍 Module 02: Failure Mode Analysis
 
-> **Lab:** [`labs/02-failure-analysis-lab.ipynb`](../../labs/02-failure-analysis-lab.ipynb) · **Time:** 20–25 min · **Tools:** `sentence-transformers`, `scikit-learn`, `pandas` · **Keys needed:** none
+> **Lab:** [`labs/02-failure-analysis-lab.ipynb`](../../labs/02-failure-analysis-lab.ipynb) · **Time:** 40–45 min core · **Tools:** `pandas`, `sentence-transformers`, `scikit-learn` · **Keys needed:** none (optional OpenAI/Anthropic key for live summaries)
 
-![The failure-analysis pipeline](images/pipeline.png)
+![The error-analysis loop](images/pipeline.png)
 
 ---
 
 ## 🧭 Overview
 
-Module 01 gave you a way to *see* what an AI system did. This module answers the next question: **when it goes wrong, what kinds of wrong are there, and which kind matters most?**
+Module 01 gave you a way to *see* what an AI system did. This module answers the next question: **when it goes wrong, what kinds of wrong are there, why do they happen, and which kind do we fix first?**
 
-You'll take 30 messy, free-text failure reports from a customer-support assistant and turn them into a structured, prioritized picture:
+You'll take 100 traces from a fictional bookkeeping assistant, **AcmeBooks Assist**, whose automated checks pass every single one, and run the error-analysis loop most eval teams use in 2026:
 
-1. 📂 **Load** the raw reports (description + severity + frequency + user-facing flag).
-2. 🤔 **Predict** the categories yourself, before any algorithm runs.
-3. 🧮 **Embed** each description as a 384-number vector that captures its meaning.
-4. 🔬 **Cluster** similar failures with K-Means.
-5. 🏷️ **Label** clusters using a six-category failure taxonomy.
-6. 📊 **Prioritize** clusters by **impact = severity × frequency**.
-7. 🧩 **Investigate** the outlier that doesn't fit, and ask whether the taxonomy is missing something.
+1. 📖 **Read** traces. Give each a pass/fail, and write a short free-text note on the first thing that went wrong (**open coding**).
+2. 🏷️ **Group** the notes into a few named, app-specific failure modes (**axial coding**), and map them to six generic **failure families**.
+3. 📉 **Stop reading** when new traces stop revealing new modes (**theoretical saturation**).
+4. 🔬 **Scale with clustering**, used as a helper: summarize each failure in one sentence, then embed and cluster with K-Means, and measure how well that recovers your taxonomy.
+5. 🧭 **Attribute** each failure to a root cause: prompt, retrieval, tool, model, or **harness** (your own logging/eval setup).
+6. 📊 **Prioritize** by **impact = frequency × severity**, decide what to fix first, and turn the failure modes into an eval suite.
 
 ---
 
 ## 💡 Why This Matters
 
-Production failures don't arrive labelled. They arrive as support tickets, QA notes, angry tweets and trace annotations: hundreds of slightly different sentences describing overlapping problems. Teams that read them one by one tend to fix **whichever bug was reported last, or sounds scariest**.
+Production failures don't arrive labeled. They arrive as traces, thumbs-downs, and escalations: hundreds of slightly different conversations that fail in overlapping ways. Teams without a method tend to fix **whichever bug was reported last, or sounds scariest**, or to trust a dashboard that measures the wrong things.
 
-Failure-mode analysis replaces that with evidence:
+Error analysis replaces that with evidence:
 
-- 🗂️ **Structure:** "We have 6 kinds of failure, not 30 bugs."
+- 🗂️ **Structure:** "We have 7 kinds of product failure, not 40 bugs."
+- 🧭 **Ownership:** "Most of them are prompt and retrieval problems, not model problems."
 - 🎯 **Prioritization:** "This *kind* costs the most, so we fix it first."
-- 🔭 **Early warning:** "These outliers don't fit our categories, so something new is happening."
-- 🔁 **Better evaluation:** every category you name becomes something you can write a check for. *If you can't name a failure mode, you won't build an evaluator that detects it.*
+- 🔁 **Better evaluation:** every failure mode you name becomes a check you can run. *If you can't name a failure mode, you won't build an evaluator that detects it.*
 
-> 🧠 **Insight:** the taxonomy you build here reappears in Module 06 (agent root causes) and Lab 06b (naming failure modes from transcripts). It's the bridge between "something went wrong" and "here's the test that catches it".
+> 🧠 **Insight:** the method here reappears in Module 06 (agent root causes, first upstream failure) and Lab 06b (naming failure modes from transcripts). It's the bridge between "something went wrong" and "here's the test that catches it".
 
 ---
 
@@ -41,12 +40,12 @@ Failure-mode analysis replaces that with evidence:
 
 After this module you will be able to:
 
-1. **Apply** a failure taxonomy (boundary, unsupported claim, incomplete output, tool misuse, planning, execution) to real failure descriptions.
-2. **Explain** what text embeddings are and why they make large-scale failure grouping possible.
-3. **Cluster** failures with K-Means and **visualize** them with PCA, knowing what the 2-D picture can and can't tell you.
-4. **Validate** algorithmic clusters against your own hypotheses instead of trusting them blindly.
-5. **Prioritize** failure categories with an impact score, and recognize when severity needs a separate hard rule.
-6. **Identify** long-tail and outlier failures that signal gaps in your taxonomy.
+1. **Open-code** raw traces: pass/fail first, then a short note on the *first upstream failure*.
+2. **Axial-code** notes into an app-specific failure taxonomy, and map it to the six failure families (boundary, unsupported claim, incomplete output, tool misuse, planning, execution).
+3. **Use theoretical saturation** to decide when to stop reading, and estimate what a sample of *n* traces can miss.
+4. **Explain** what text embeddings and K-Means do, and **compare** clustering raw traces with clustering failure summaries using the adjusted Rand index (ARI) and purity.
+5. **Attribute root causes** (prompt / retrieval / tool / model / harness), and rule out harness bugs before blaming the model.
+6. **Prioritize** with an impact score, recognize when a critical failure needs a hard gate regardless of rank, and judge an eval suite's pass rate (≈70% beats 100% for a capability suite).
 
 ---
 
@@ -60,126 +59,174 @@ After this module you will be able to:
 
 ## 🧩 Key Concepts
 
-### 1. 🏷️ A failure taxonomy
+### 1. 📖 Read before you cluster: open coding
 
-A **taxonomy** is a fixed set of named categories that describe *how* something failed. Good categories describe **mechanisms**, not outcomes ("wrong answer" is an outcome; "cited a non-existent source" is a mechanism).
+**Open coding** means reading traces one by one and writing a short free-text note about what went wrong, *before* you have categories. The practitioner method popularized by Hamel Husain and Shreya Shankar (their evals FAQ, updated 2026) goes like this:
 
-![The six-category failure taxonomy](images/taxonomy.png)
+- Start with about **100 diverse traces**. Annotate at least the first 30 yourself.
+- Give the whole trace a **pass/fail** first. Then, for failures, note the **first upstream failure**: the earliest thing that went wrong. Errors compound, and fixing the upstream error often fixes everything downstream.
+- **Don't delegate open coding to an LLM.** It doesn't know your policies, your deadlines, or that your chat widget can't render markdown.
+- Appoint one domain expert as the **"benevolent dictator"** who makes final calls. Add more annotators (and measure agreement with Cohen's κ) only when you need to.
 
-| Category | Mechanism | Example from the lab dataset | Typical evaluator |
+| ❌ Weak note | ✅ Strong note |
+|---|---|
+| "Hallucination." | "Claimed a 'Crypto Sync' integration; search returned nothing, so it filled the gap." |
+| "Wrong answer." | "Said 1099-NEC is due Feb 28 (it's Jan 31). Retrieval returned the old 1099-MISC article." |
+
+**Why read first?** Shankar et al. (2024) observed *criteria drift*: people's evaluation criteria changed as they graded outputs. You can't fully specify good criteria before you look at outputs. Reading is where the criteria come from.
+
+> 🧪 In the lab, the existing automated checks (non-empty, no leaked card numbers, polite tone, length) pass **all 100** traces. Ten minutes of reading the first 15 fails **7**, and those 7 notes already describe 5 different problems.
+
+### 2. 🏷️ Axial coding: from notes to a taxonomy
+
+**Axial coding** groups open codes that share a **mechanism** (how it failed), not a **topic** (what it was about), and names each group with something specific enough to act on. An LLM can *propose* groupings of your notes; you review and edit them.
+
+The lab's codebook has 8 app-specific failure modes. The **six failure families** from earlier versions of this module are still useful, as a **coverage checklist**:
+
+![Failure families as a coverage checklist](images/taxonomy.png)
+
+| Failure family | Mechanism | App-specific mode in the lab | Typical evaluator |
 |---|---|---|---|
-| 🌐 **Boundary error** | Input outside what the system handles well | Mixed French/English question answered only in English (#1) | Robustness / perturbation tests (Module 07) |
-| 🤥 **Unsupported claim** | Hallucination or fabrication | "90-day money-back guarantee"; actual policy is 30 days (#7) | Factuality / faithfulness checks (Modules 04, 05) |
-| ✂️ **Incomplete output** | Required information missing | Password reset that omits email verification (#12) | Completeness checks, required-field rules |
-| 🔧 **Tool misuse** | Wrong tool, or right tool with wrong arguments | Email address passed in the *name* field (#17) | Tool selection & input validation (Module 06) |
-| 📋 **Planning failure** | Wrong strategy or order of steps | Cancelled the subscription *before* processing the refund that needed it (#21) | Process constraints, trajectory checks |
-| ⚡ **Execution failure** | Right plan, botched step | Entered "10" as $10 off instead of 10% off (#27) | End-state / value checks |
+| 🌐 **Boundary error** | Input at the edge of what the system handles | `ignored_user_context` (Ontario user gets US sales-tax rules) | Robustness / perturbation tests (Module 07) |
+| 🤥 **Unsupported claim** | Not grounded in a current source | `stale_or_wrong_figure`, `invented_feature` | Factuality / faithfulness checks (Modules 04, 05) |
+| ✂️ **Incomplete output** | Required information missing | `cut_off_answer` (but see Concept 5!) | Completeness checks |
+| 🔧 **Tool misuse** | Wrong tool, or right tool with wrong arguments | `wrong_record_lookup` (invoice number sent to the customer tool) | Tool input validation (Module 06) |
+| 📋 **Planning failure** | Wrong strategy, order, or control flow | `missed_expert_handoff`, `stuck_in_loop` | Process constraints, trajectory checks |
+| ⚡ **Execution failure** | Right plan, botched step or format | `raw_markdown` (markdown shown raw in a plain-text widget) | Format / end-state checks |
 
-> ⚠️ Categories overlap at the edges. A failure can be *both* a planning and a tool problem. Pick the **primary** mechanism (the one whose fix would prevent it) and note the rest.
+> ⚠️ The family alone doesn't tell you what to fix. `stale_or_wrong_figure` and `invented_feature` are both "unsupported claims", but the first is mostly a retrieval-freshness fix and the second mostly a model/prompt fix. **Name app-specific modes; use the families to check coverage.**
 
-### 2. 🧮 Embeddings: turning sentences into geometry
+### 3. 📉 Theoretical saturation: when to stop reading
 
-An **embedding model** maps text to a vector (a list of numbers) such that **similar meanings land close together**. The lab uses `all-MiniLM-L6-v2`, a small, fast model that outputs **384** numbers per sentence.
+Plot "distinct failure modes seen" against "traces read". The curve climbs fast, then flattens. When new traces stop revealing new modes, you've reached **theoretical saturation**, and you can stop this review cycle.
 
-```
-"Assistant fabricated a phone number"     → [0.12, -0.34, 0.87, …]  ┐  close together:
-"Assistant cited a non-existent article"  → [0.11, -0.31, 0.85, …]  ┘  both are fabrications
-"Response formatting broke in chat"       → [-0.40, 0.22, 0.05, …]     far away
-```
+In the lab, 7 of 8 modes appear by trace 31, and the next 51 traces add none. A "stop after 20 quiet traces" rule would stop at trace 51, and miss the 8th mode (`stuck_in_loop`), which appears once, at trace 83.
 
-Two vectors' **cosine similarity** (1.0 = same direction, 0 = unrelated) measures how alike their meanings are. This beats keyword matching: the two fabrication examples share almost no words.
+The math of rare modes: the chance a mode with prevalence *p* shows up at least once in *n* traces is **1 − (1 − p)ⁿ**. For p = 1% and n = 100 that's only **63%**. Saturation tells you the *common* modes are covered, not that rare ones don't exist. So:
+
+- Review about **100 fresh traces per cycle** (every 2–4 weeks), and **10–20 traces a week** between cycles.
+- Do a quick review of 20–50 outputs after every significant change.
+- Add **targeted sampling** (thumbs-down, escalations, long conversations) for rare, high-severity modes.
+
+**Rule of three:** to see a 1-in-N failure at least once with 95% confidence, read about **3N** traces (because −ln 0.05 ≈ 3). A 1-in-200 cross-account leak needs ~600 random traces, or ~120 from a sample where it's 5× more common.
+
+### 4. 🔬 Clustering as a helper: summarize, then embed
+
+An **embedding model** maps text to a vector such that **similar meanings land close together**. The lab uses `all-MiniLM-L6-v2` (384 numbers per sentence).
 
 ![Similar meanings land close together](images/embedding-clusters.png)
 
-You never need to interpret an individual dimension. What matters is **relative distance**.
-
-### 3. 🔬 Clustering with K-Means
+**K-Means** splits vectors into **k** groups around **centroids** (group averages). In the lab: `KMeans(n_clusters=k, random_state=SEED, n_init=50)` with k = the number of failure modes, so the comparison is fair.
 
 ![How K-Means works](images/kmeans.png)
 
-K-Means splits points into **k** groups so that each point is close to its group's **centroid** (the group's average vector). In the lab: `KMeans(n_clusters=6, random_state=42, n_init=10)`.
+The key question is **what you embed**:
 
-- **k is your choice.** The lab uses 6 because the taxonomy has 6 categories. In real work you'd try several values (and look at silhouette scores or simply read the clusters).
-- **`random_state` makes runs reproducible**; `n_init=10` runs 10 different starts and keeps the best.
-- **Clusters are not labels.** The algorithm groups things that *sound alike*. Deciding what each group *means* is your job (Task 6).
-- **Imbalance is normal.** In the verified lab run, cluster sizes are 11, 7, 6, 2, 2, 2. Real failure data is lumpy.
+| Input | What the clusters find (lab result) |
+|---|---|
+| Raw trace text (user message + response) | **Topic.** ARI vs. topic 0.34; ARI vs. your failure modes **0.01** (random) |
+| One-sentence LLM **failure summary** ("how did it fail?") | **Failure mode.** ARI vs. your failure modes **0.65** (purity 85%) |
 
-**PCA for plotting:** you can't draw 384 dimensions, so the lab projects them to 2 with **PCA** (principal component analysis). Use the plot to *eyeball* structure, but trust the clusters, which were computed in the full 384-D space. Two dots that look close in 2-D can be far apart in reality.
+Raw text is dominated by topic words (payroll, invoice, 1099), so that's what the geometry captures. The lab measures it with **cosine similarity** (1 = vectors point the same way, 0 = unrelated): in raw text, pairs that share a *topic* sit closer (0.26) than pairs that share a *failure* (0.20). Summaries flip it (0.29 vs 0.68). Summarizing first is the hybrid Anthropic's **Clio** uses: an LLM extracts a *facet* per conversation, facets are embedded and clustered with K-Means, an LLM names the clusters, and humans review them. Clio reports 94% accuracy reconstructing ground-truth categories on synthetic data, and lists its own failure modes, including rare behaviors that escape detection.
 
-### 4. 🤔 Hypothesize before you cluster
+- **Adjusted Rand index (ARI):** for every pair of items, do both groupings treat it the same way (together in both, or apart in both)? The share of agreeing pairs is the **Rand index**; ARI rescales it so 1.0 = identical and 0 = no better than chance (it can dip below 0). The adjustment matters: most pairs are "apart" in any 8-way split, so the lab's useless raw-trace clustering still scores an unadjusted Rand index of 0.78.
 
-Task 3 asks you to predict the categories **before** you see any clusters. That's not busywork:
+![ARI scores pairs, not labels](images/ari-pairs.png)
 
-- Without a hypothesis you have no way to judge whether the algorithm's groups are meaningful or garbage.
-- Disagreements are valuable: either the algorithm found a pattern you missed, or it grouped things by surface wording rather than mechanism.
+- **Purity:** the share of items that belong to their cluster's most common label. 1.0 = every cluster is a single mode. It rewards many tiny clusters, so read it next to ARI.
+- **K-Means depends on its random start.** With `SEED = 0`, the lab's summary ARI is 0.83 instead of 0.65. Check that a cluster survives a different seed before you trust it.
 
-> 🧪 In the verified run, one cluster mixes a hallucinated policy (#7), a tool call to the wrong API (#16), and a plan to upgrade for a bug that exists in every tier (#25). The embedding grouped them by **topic** (billing, plans, pricing), not by **mechanism**. Only a human reading the cluster notices.
+> 💡 Clusters are **hypotheses for a human editor**, not the taxonomy. And you could only measure any of this because you had human axial codes to compare against.
 
-### 5. 📊 Impact scoring: what to fix first
+### 5. 🧭 Root-cause attribution, and the harness
+
+A failure mode says **what** went wrong. A root cause says **where the fix goes**:
+
+| Root cause | The fix goes into… |
+|---|---|
+| `prompt` | System prompt, instructions, output-format spec |
+| `retrieval` | Index, chunking, freshness, query rewriting |
+| `tool` | Tool schema, argument validation, access scoping |
+| `model` | Model choice, fine-tuning, reasoning budget |
+| `harness` | **Your own** logging, tracing, eval, or test setup. Not the product at all |
+
+One symptom can have several root causes (in the lab, `stale_or_wrong_figure` splits 4 retrieval / 2 model), so the same mode may need two different fixes.
+
+**The harness is a legitimate root cause.** In the lab, `cut_off_answer` (the most frequent mode, 9 traces) was first attributed to the model. Every one of those responses was exactly **200 characters** long: the tracing exporter truncated span attributes at 200 characters. Customers received complete answers of 343–418 characters. The expert and the LLM summarizer both read the corrupted trace and believed it.
+
+![The model finished every answer; the trace store kept only the first 200 characters](images/harness-truncation.png)
+
+**The tell is the shape of the lengths.** A model that runs out of output tokens stops at a token count, and tokens map to a varying number of characters, so real truncations scatter. Identical character lengths point to a character limit, and characters are what loggers count. Transluce's Docent (2025) found the same class of problem in public agent benchmarks: a task that needed internet access the agent didn't have, and a task whose answer was exposed in the Dockerfile.
+
+> ✅ **Before blaming the model, rule out the harness:** logging/attribute limits, timeouts, missing tool access, broken graders.
+
+### 6. 📊 Impact scoring: what to fix first
 
 ![Impact ranking](images/impact-ranking.png)
 
-The lab's impact score is:
-
 ```
-impact = severity_weight × weekly_frequency      weights: low 1 · medium 2 · high 3 · critical 5
+impact(mode) = Σ severity weight over its traces = frequency × average severity
+weights: low 1 · medium 2 · high 3 · critical 5      (harness bugs excluded from customer impact)
 ```
 
-Then sum per cluster to rank **categories**. Two lessons:
+Three lessons from the lab:
 
-1. **Frequency can beat severity.** A medium bug hitting 20 users a week (impact 40) outranks a critical one hitting 3 (impact 15).
-2. **…but some failures need a hard rule anyway.** Showing one customer another customer's order (#26) is a privacy incident no matter how rare. Impact ranks the **backlog**; critical safety/privacy failures may deserve a **gate** regardless of rank. (You'll formalize "hard gates vs. averages" in Module 06.)
+1. **The most frequent failure is not the most important.** `raw_markdown` is the most frequent product failure (7×) but ranks #6 of 7. `stale_or_wrong_figure` (6×, 4 critical: wrong tax deadlines and rates) ranks #1.
+2. **Some failures need a hard gate regardless of rank.** One trace emailed another company's invoice to them. That's a privacy incident, not a backlog item.
+3. **Severity weights are a team decision.** Write them down; changing `critical` from 5 to 10 can reorder the roadmap.
 
-> ✍️ Severity weights are a **judgment call**. Write them down, agree on them as a team, and revisit them. Changing `critical` from 5 to 10 can reorder your whole roadmap.
+### 7. 🧪 From failure modes to an eval suite (and the 70% rule)
 
-### 6. 🧩 Outliers and the long tail
+Each product failure mode becomes one **binary check**. On the lab's 100 traces, the new suite passes **69%** (95% CI 59–77%) after the harness fix, versus **100%** for the old checks.
 
-Failure #30 is an assistant **stuck in a loop**, repeatedly asking "Is there anything else I can help you with?" It doesn't fit any category well. In the verified run, its cosine similarity to its own cluster's centroid is about **0.66**, while its similarity to individual members of that cluster is only **0.26–0.47**: a weak fit.
-
-What outliers tell you:
-
-- 🆕 A **new failure mode** may be emerging (here: *looping / no progress*, which becomes a first-class check in Module 06).
-- 🧱 Your taxonomy may need a new category, or a "system-level behavior" bucket.
-- 📈 The **long tail** (many rare, unique failures) is where surface metrics are blindest.
-
-> 💡 **Taxonomies are living documents.** Review them as you see new failures; a taxonomy that never changes is falling behind your system.
+Husain & Shankar's rule of thumb: for a **capability** suite, about **70%** is healthier than 100%. A suite that always passes isn't measuring anything hard. When a check sits near 100% after fixes land, **graduate** it to the regression suite that gates CI.
 
 ---
 
 ## 🧪 Example Walkthrough
 
-The full pipeline is only a few lines of code:
+The core of the lab in a few lines (data loading omitted):
 
 ```python
+# 1. Open + axial coding produce one row per failing trace
+#    columns: trace_id, topic, user_msg, response, open_code, failure_mode, root_cause, severity
+
+# 2. Saturation: distinct modes seen after each trace
+seen, curve = set(), []
+for mode in df["failure_mode"]:
+    if isinstance(mode, str): seen.add(mode)
+    curve.append(len(seen))
+
+# 3. Raw text vs. failure summaries, scored against the human taxonomy
 from sentence_transformers import SentenceTransformer
 from sklearn.cluster import KMeans
+from sklearn.metrics import adjusted_rand_score
+emb = SentenceTransformer("all-MiniLM-L6-v2")
+k = fails["failure_mode"].nunique()
+for name, text in [("raw", fails.user_msg + " " + fails.response), ("summary", fails.summary)]:
+    labels = KMeans(k, random_state=42, n_init=50).fit_predict(emb.encode(text.tolist(), normalize_embeddings=True))
+    print(name, adjusted_rand_score(fails.failure_mode, labels))
 
-model = SentenceTransformer("all-MiniLM-L6-v2")
-embeddings = model.encode(df["description"].tolist())        # shape (30, 384)
+# 4. Rule out the harness: are the "cut-off" answers all the same length?
+print(df.loc[df.failure_mode == "cut_off_answer", "response"].str.len().unique())   # [200]
 
-df["cluster"] = KMeans(n_clusters=6, random_state=42, n_init=10).fit_predict(embeddings)
-
-severity_weights = {"low": 1, "medium": 2, "high": 3, "critical": 5}
-df["impact_score"] = df["severity"].map(severity_weights) * df["frequency"]
-
-ranking = (df.groupby("cluster")
-             .agg(total_impact=("impact_score", "sum"), n=("id", "count"),
-                  critical=("severity", lambda s: (s == "critical").sum()))
-             .sort_values("total_impact", ascending=False))
+# 5. Impact on product failures only
+w = {"low": 1, "medium": 2, "high": 3, "critical": 5}
+product = fails[fails.root_cause != "harness"]
+impact = product.groupby("failure_mode")["severity"].apply(lambda s: s.map(w).sum()).sort_values(ascending=False)
 ```
 
 What the numbers look like in the verified run:
 
-| Cluster (size) | Total impact | Critical failures | Your label? |
-|---|---|---|---|
-| 1 (11) | **275** | 0 | *you decide in Task 6* |
-| 0 (7) | 184 | 3 | |
-| 4 (6) | 137 | 2 | |
-| 3 (2) | 69 | 1 | |
-| 5 (2) | 63 | 0 | |
-| 2 (2) | 51 | 0 | |
-
-Notice the top cluster by total impact has **zero** critical failures, while cluster 0 holds three. Is "most total impact" the right thing to fix first? That's the kind of judgment the lab asks you to make and defend.
+| Step | Result |
+|---|---|
+| Automated checks | 100/100 pass |
+| Expert read of 100 traces | 40 fail, 8 failure modes |
+| Saturation | 7 of 8 modes by trace 31; the 8th at trace 83 |
+| Clustering, ARI vs. taxonomy | raw traces 0.01 · failure summaries 0.65 |
+| Root cause `model` | 17 → 8 after the harness fix (9 were a 200-char tracing limit) |
+| Fix first | `stale_or_wrong_figure` (impact 26), then `missed_expert_handoff` (21) |
+| New failure-mode suite | 69% pass (95% CI 59–77%) |
 
 ---
 
@@ -187,64 +234,74 @@ Notice the top cluster by total impact has **zero** critical failures, while clu
 
 | ❌ Mistake | ✅ Instead |
 |---|---|
-| Running the algorithm before reading the data | Read the 30 descriptions and write predictions first (Task 3). |
-| Treating cluster IDs as meaningful labels | Clusters are groupings; meaning comes from your labeling. |
-| Trusting the PCA plot over the cluster assignments | PCA compresses 384 → 2 dimensions; distances distort. |
-| Forcing every failure into a category | Outliers are a signal. Record them, don't hide them. |
-| Ranking only by severity, or only by count | Use impact (severity × frequency), *plus* hard rules for critical failures. |
-| Assuming k=6 is "correct" | k is a modelling choice; try others (Stretch goal) and compare. |
-| Labeling a cluster by its most dramatic member | Label by the **majority mechanism**; note exceptions explicitly. |
+| Clustering before anyone reads a trace | Read and open-code 20–100 traces first; clustering comes after |
+| Letting an LLM do the open coding | Let an LLM *propose* groupings of your notes; a domain expert writes the notes and makes the final call |
+| Noting every problem in a trace | Note the **first upstream failure**; downstream errors usually follow from it |
+| Embedding raw traces to find failure modes | Raw text clusters by topic. Summarize the failure first, then embed |
+| Treating clusters as the taxonomy | Clusters are hypotheses: merge, split, rename. Check they survive a different seed |
+| Starting from a generic taxonomy | Build app-specific modes from data; use the six families as a coverage check |
+| Blaming the model for the biggest bucket | Verify first. Logging limits, timeouts, and grader bugs can manufacture failures |
+| Ranking by count | Rank by frequency × severity, and hard-gate critical privacy/compliance failures |
+| Celebrating a 100% pass rate | For a capability suite, ~70% means the suite has headroom and signal |
+| Reporting a stratified sample's failure rate as the production rate | If you oversampled thumbs-downs, say so; the rate is biased upward |
 
 ---
 
 ## 🚀 Before You Start the Lab
 
 - ⏬ The first run downloads `all-MiniLM-L6-v2` (~90 MB). That's normal and takes under a minute on Colab.
-- 🗒️ Open a scratch note for Task 3 and commit to your predictions *before* clustering.
-- 🧭 While labeling, ask of each cluster: "What **single fix** would prevent most of these?" That's usually its true category.
-- 🎯 Be ready to defend your top-priority cluster in one sentence to a manager who doesn't want a list of 30 bugs.
+- 🗒️ In Task 3 you'll write open codes for 15 traces (about 6 minutes). The **reviewer's cheat sheet** in the lab tells you the policies and facts a domain expert knows.
+- 🔮 Each task asks you to **predict** before running. Write your guess down; the surprises are the point.
+- 🎯 Be ready to defend your "fix first" choice in one sentence to a manager who doesn't want a list of 40 bugs.
 
 ---
 
 ## 🔑 Key Takeaways
 
-1. 🏷️ **Name mechanisms, not outcomes.** A taxonomy turns "wrong answers" into fixable categories, and each category into a future evaluator.
-2. 🧮 **Embeddings + clustering create structure from free text** at a scale humans can't read.
-3. 🤔 **Hypothesize first.** Your predictions are the yardstick for judging the algorithm.
-4. 📊 **Impact = severity × frequency** ranks the backlog. Keep separate hard rules for privacy and safety failures.
-5. 🧩 **Outliers reveal taxonomy gaps.** Looping didn't fit; it becomes a first-class check in Module 06.
-6. 🔁 **Taxonomies evolve.** Revisit them whenever new failure patterns appear.
+1. 📖 **Read first, cluster second.** Open coding by a domain expert is where evaluation criteria come from.
+2. 🏷️ **Name app-specific failure modes**, and use the six failure families as a coverage check.
+3. 📉 **Stop at saturation, keep sampling weekly.** A 1-in-100 mode appears in 100 traces only 63% of the time.
+4. 🔬 **Summarize, then embed and cluster.** Raw traces cluster by topic; clusters are hypotheses for a human editor.
+5. 🧭 **Failure mode ≠ root cause, and `harness` is a root cause.** Rule out your own logging/eval setup before blaming the model.
+6. 📊 **Impact = frequency × severity** sets the order of work; critical privacy/compliance failures get a hard gate.
+7. 🧪 **Every mode becomes a check.** A capability suite near 70% has signal; one at 100% isn't testing anything hard.
 
 ---
 
 ## 🧠 Self-Check
 
 <details>
-<summary>1. Two failure descriptions share almost no words but end up in the same cluster. Is that a bug?</summary>
+<summary>1. Your team wants to skip reading and run K-Means on 50,000 raw conversations. What do you expect, and what would you do instead?</summary>
 
-Usually not: that's what embeddings are for. They capture meaning ("fabricated a phone number" ≈ "cited a non-existent article"). Do check that the shared meaning is the *mechanism* and not just the *topic*.
+Raw-text clusters mostly group by **topic** (what users asked about), not by failure mechanism. In the lab, raw-trace ARI against the human taxonomy was 0.01. Read and open-code ~100 traces first, build a taxonomy, then generate a one-sentence failure summary per trace, embed and cluster *those*, and have a human review the clusters against the taxonomy.
 </details>
 
 <details>
-<summary>2. A failure is critical but happens twice a week. Another is low severity and happens 35 times a week. Which has more impact, and is impact the whole story?</summary>
+<summary>2. After 40 traces you've found 6 failure modes, and the last 25 traces added nothing new. Should you stop?</summary>
 
-Critical × 2 = 10; low × 35 = 35, so the low-severity one has more impact. But a critical privacy or financial failure may warrant an immediate fix or a release gate regardless of its impact rank.
+You've likely reached saturation for *common* modes, so you can stop this cycle. But a mode with 1% prevalence has only a 1 − 0.99⁴⁰ ≈ 33% chance of appearing in 40 traces. Keep reading 10–20 fresh traces a week, and sample thumbs-downs and escalations to catch rare, high-severity modes.
 </details>
 
 <details>
-<summary>3. Why does the lab compare failure #30 to the cluster <em>centroid</em> and to individual cluster members?</summary>
+<summary>3. Nine "incomplete answer" failures were all attributed to the model. What would you check before upgrading the model?</summary>
 
-The centroid similarity says how well it fits the group's average meaning; similarities to individual members show whether it actually resembles any of them. High-ish centroid similarity with low member similarities suggests it was assigned by elimination, which is a sign of an outlier.
+Whether the harness created them: Are the responses all the same length (a logging or attribute limit)? Did a timeout cut them? Does the delivered output (what the customer saw) match the trace? In the lab, all nine were exactly 200 characters: a tracing limit. Customers saw full answers.
 </details>
 
 <details>
-<summary>4. What would you expect to happen with k = 4? With k = 10?</summary>
+<summary>4. A failure mode is the most frequent one in your sample. Is it the one to fix first?</summary>
 
-With k = 4, distinct mechanisms get merged (e.g. tool misuse with execution failures). With k = 10, real categories split into topic-level sub-clusters and singletons. Neither is "wrong": choose k by whether the resulting groups are *actionable*.
+Not necessarily. Rank by frequency × severity. In the lab, `raw_markdown` was the most frequent product failure but ranked #6 of 7 by impact; `stale_or_wrong_figure` (fewer traces, mostly critical) ranked #1. Separately, any critical privacy or compliance failure gets a hard gate regardless of rank.
+</details>
+
+<details>
+<summary>5. Your new capability suite passes 100% of cases. Good news?</summary>
+
+Probably not. A capability suite that always passes isn't testing anything hard, and gives you no hill to climb. Around 70% is a healthier sign. Checks that sit at ~100% after fixes belong in the regression suite that gates CI.
 </details>
 
 ---
 
 ## 📖 Glossary
 
-**Taxonomy** · a fixed set of named failure categories. **Embedding** · a vector representation of text where similar meanings are close. **Cosine similarity** · similarity of two vectors' directions, from −1 to 1. **K-Means** · clustering into k groups around centroids. **Centroid** · the mean vector of a cluster. **PCA** · projection to fewer dimensions for visualization. **Impact score** · severity weight × frequency. **Long tail** · the many rare, unique failures. **Outlier** · a failure that fits no cluster well.
+**Open coding** · free-text notes on what went wrong, written while reading traces, before categories exist. **Axial coding** · grouping open codes into named failure modes. **First upstream failure** · the earliest error in a trace; fix it first. **Benevolent dictator** · the one domain expert who makes final labeling calls. **Theoretical saturation** · the point where new traces stop revealing new failure modes. **Criteria drift** · evaluation criteria changing as you grade outputs (Shankar et al., 2024). **Failure family** · one of six generic categories (boundary, unsupported claim, incomplete, tool misuse, planning, execution). **Embedding** · a vector representation of text where similar meanings are close. **K-Means** · clustering into k groups around centroids. **Facet / failure summary** · a one-sentence LLM description of one aspect of a trace (here: how it failed). **ARI (adjusted Rand index)** · agreement between two groupings; 1 = identical, ≈ 0 = random. **Rand index** · share of item pairs two groupings treat the same way. **Cosine similarity** · how closely two vectors point the same way (1 = same, 0 = unrelated). **Purity** · share of items matching their cluster's majority label. **Root cause** · the layer where the fix goes: prompt, retrieval, tool, model, or harness. **Harness** · your own logging, tracing, eval, or test setup. **Impact score** · frequency × average severity. **Capability vs. regression suite** · a suite with headroom to climb (~70%) vs. one that gates CI (~100%).

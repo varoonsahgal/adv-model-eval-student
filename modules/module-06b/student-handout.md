@@ -1,8 +1,10 @@
 # 🛠️ Module 06b: Build Your Own Agent, Then Prove It Works
 
-> **Lab:** [`labs/06b-build-and-evaluate-agent-lab.ipynb`](../../labs/06b-build-and-evaluate-agent-lab.ipynb) · **Supplemental challenge lab after Module 06** · **Time:** ≈ 75 min · **Keys needed:** none (offline `MockLLM`); optional OpenAI / Anthropic
+> **Lab:** [`labs/06b-build-and-evaluate-agent-lab.ipynb`](../../labs/06b-build-and-evaluate-agent-lab.ipynb) · **Supplemental challenge lab after Module 06** · **Time:** ≈ 80 min · **Keys needed:** none (offline `MockLLM`); optional OpenAI (`gpt-6-luna`, Responses API) / Anthropic (`claude-haiku-5-5`, Messages API)
 
 ![Lab 06b architecture](images/lab-architecture.png)
+
+![Lab 06b roadmap: six stops, each with the question it answers](images/lab-roadmap.png)
 
 ---
 
@@ -11,7 +13,7 @@
 In Module 06 you evaluated an agent someone else built, from recorded traces. Here you sit in **both seats**:
 
 1. 🏗️ **Build** a real tool-calling agent: a billing-support agent for *LedgerLy*, a fictional accounting app. It can look up customers, verify identity, list invoices, issue refunds (real money!), and escalate to humans.
-2. 📏 **Evaluate** it the way frontier teams do: many **trials** per task, **state** graders, **policy invariants** on the path, an **honesty judge**, **pass^k**, and **cost per successful task**.
+2. 📏 **Evaluate** it the way frontier teams do: many **trials** per task, **state** graders, **policy invariants** on the path, an **honesty judge**, a **do-nothing baseline** that proves the graders can't be gamed, **pass^k**, and **cost per successful task**.
 3. 🚀 **Improve** it with one targeted change and **prove** the improvement with a paired regression comparison.
 
 LedgerLy's three non-negotiable policies drive every grader:
@@ -48,7 +50,7 @@ After this module you will be able to:
 1. **Implement** the agent loop and record a structured trace with standard span names.
 2. **Write** a tool specification the model can use correctly, and check it against the real function.
 3. **Design** a balanced task suite with *should-act*, *should-not-act* and *should-escalate* cases.
-4. **Grade** trials on three layers: **state**, **policy invariants**, **response honesty**.
+4. **Grade** trials on three layers: **state**, **policy invariants**, **response honesty**, and **validate the graders** with a do-nothing baseline.
 5. **Measure** reliability with **pass^k** vs **pass@k** using the unbiased combinatorial estimators.
 6. **Report** cost per *successful* task and p95 latency.
 7. **Run** an error-analysis → fix → paired-regression loop and make a ship decision.
@@ -84,6 +86,14 @@ def run_agent(user_message, world, llm, system_prompt, max_steps=10):
 
 Everything that makes agents hard to evaluate comes from this loop: **the model picks the path, the path changes the world, and each run can take a different path.** A `max_steps` budget prevents runaway loops.
 
+Each step re-sends the whole conversation, so cost compounds: in the lab's check run, the 4th model call reads 1.5× the input tokens of the first, and the 4 calls together read 5× what a single call would. Budget tokens per **task**, not per call.
+
+![Each model call re-sends tool specs, system prompt, customer message and every earlier step](images/context-growth.png)
+
+Notice what dominates: the five tool specs (≈ 455 tokens) ride along on **every** call, and the history term grows each step, so total input grows roughly with the *square* of the step count.
+
+> 🔌 **Real providers (Nov 2026).** The lab's adapters use the OpenAI **Responses API** function-calling loop (`function_call` items with a `call_id`, answered by `function_call_output` items) and the Anthropic **Messages API** tool-use loop (`tool_use` blocks answered by `tool_result` blocks). Tool schemas are sent with `strict: true`. Neither adapter sends `temperature`: Anthropic rejects it (HTTP 400 since API version 2026-10-21), and **temperature 0 is not deterministic anyway** (Thinking Machines, 2025: 1,000 identical requests, 80 distinct completions). Always check `stop_reason`, including `"refusal"`.
+
 > 🧠 **Standard span names.** The trace uses the OpenTelemetry **GenAI semantic conventions** (`chat`, `execute_tool`; also `invoke_agent`). Using them means your graders work on traces from any framework and render in Langfuse, Phoenix, Datadog and others.
 
 ### 2. 🌍 A resettable world, one per trial
@@ -114,10 +124,12 @@ The harness's `check_tool_spec` verifies the schema matches the real function's 
 | **Task** | One test case: input + success criteria (`expect`) |
 | **Trial** | One run of a task (agents are stochastic, so run several) |
 | **Grader** | Logic that scores a trial (a task can have several) |
-| **Transcript / trace** | Everything that happened in a trial |
+| **Trace** (also called the *transcript*; Lab 06's *trajectory*) | Everything one trial did: model turns, tool calls, results |
 | **Outcome** | The world's final state |
 
-**Balance the suite.** Half the provided tasks are *should-not-act* (missing ZIP, wrong ZIP, already refunded, unknown email, info-only). If every task says "refund this", an agent that refunds *everything* scores 100%. Without negative cases, fixing under-triggering just creates over-triggering.
+**Balance the suite.** Half the provided tasks are *should-not-act* (missing ZIP, wrong ZIP, already refunded, unknown email, info-only). If every task says "refund this", an agent that refunds *everything* scores 100%; on the lab's 12-task suite it caps at 5/12 (42%). Without negative cases, fixing under-triggering just creates over-triggering.
+
+**Single-turn vs. multi-turn.** In T03 the correct answer is a *question* ("what's your ZIP code?"), and a single-turn eval stops there. Multi-turn evals continue the conversation with an **LLM-simulated user** (the τ-bench pattern). Treat those scores as an **upper bound**: Zhou et al. (CMU, Mar 2026; COLM 2026) ran τ-bench with 451 real people on 165 tasks and compared 31 LLM user simulators, which were *excessively cooperative* and stylistically uniform, an "easy mode" that inflates agent success. Vary personas (vague, frustrated, uncooperative). **Lab 06c** covers this.
 
 ### 5. ⚖️ Three grader layers
 
@@ -131,9 +143,15 @@ The harness's `check_tool_spec` verifies the schema matches the real function's 
 
 **Path vs. outcome, updated for 2026:** grade the **outcome** in state, and constrain the path with **invariants** ("never refund before verifying") rather than an exact expected tool sequence. Invariants give you the safety of path checking without the brittleness.
 
+![A lucky pass: same end state, but one trace skipped verify_identity](images/lucky-pass.png)
+
+A **lucky pass** is a trial with the right end state and a broken policy on the way. The lab's own Task 4 check run is one: lookup → list → refund, no verification.
+
 The **policy grader you write** (Task 7) is subtle: verification must be **successful**, and must be for **the owner of that specific invoice**. Verifying Maya doesn't authorize refunding Jordan's invoice.
 
-**Honesty-judge best practices** built into the harness: binary verdicts (PASS/FAIL), an **UNKNOWN** escape hatch so it doesn't guess, and **ground truth** (the action log) to compare against. Calibrate against your own labels before trusting it in CI (Stretch A).
+**Honesty-judge best practices** built into the harness: binary verdicts (PASS/FAIL), an **UNKNOWN** escape hatch so it doesn't guess, **ground truth** (the action log) to compare against, and structured outputs (a JSON schema) on real providers. Calibrate against your own labels before trusting it in CI (Stretch A).
+
+**Validate the graders before you trust the score.** Point them at an agent that **does nothing** ("Sorry, I can't help"). On the lab's suite it scores **50% on state alone** (every should-not-act task expects an unchanged database) and 50% with policy too, and only the response layer takes it to **0%**. Anything above ~0% is a grader bug you'd otherwise report as agent quality. Agents also *exploit* weak graders (**reward hacking**): the Agentic Benchmark Checklist (Zhu et al., 2025) found benchmark design flaws that mis-estimate agent performance by up to 100% relative, and **ImpossibleBench** (Oct 2025; ICLR 2026) showed coding agents "passing" tasks whose spec and tests contradict each other, i.e. gaming the tests. Add a do-nothing baseline and an **impossible-task canary** (correct behavior: flag it and stop) to every suite.
 
 ### 6. 🎲 pass@k vs pass^k, done properly
 
@@ -146,7 +164,11 @@ With *n* trials of which *c* passed, the unbiased estimators are:
 | **pass@k** | succeeds **at least once** in k tries | 1 − C(n−c, k) / C(n, k) |
 | **pass^k** | succeeds **every time**, k in a row | C(c, k) / C(n, k) |
 
-`math.comb(c, k)` is 0 when k > c, so a task that passed 3 of 5 trials has pass^4 = 0. **The gap between pass@k and pass^k is your flakiness.**
+`math.comb(c, k)` is 0 when k > c, so a task that passed 3 of 5 trials has pass^4 = 0. **The gap between pass@k and pass^k is your flakiness.** Worked example: 4 of 5 trials passed → pass^2 = C(4,2) / C(5,2) = 6 / 10 = 0.60.
+
+Compute pass^k **per task, then average**. Raising the suite pass rate to the k-th power assumes every task is equally flaky: the lab's 0.68⁵ = 0.15, but the measured pass^5 is 0.33, because failures cluster in a few tasks (which also means targeted fixes work).
+
+Put an interval on any pass rate from fewer than ~200 trials. The lab's v1 pass@1 of 0.68 on 60 trials has a 95% Wilson interval of 0.56–0.79, and trials of the same task are correlated, so the honest interval is wider still.
 
 ### 7. 💸 Cost per *successful* task
 
@@ -156,7 +178,7 @@ Cost per **run** flatters a flaky agent, because failures cost money too (plus h
 
 ![Eval-driven development loop](images/edd-loop.png)
 
-1. Read failing transcripts (teams recommend reading **20–50 traces by hand** before writing graders).
+1. Read failing traces (teams recommend reading **20–50 traces by hand** before writing graders).
 2. Name 2–3 failure modes and ask: is the cause the **prompt**, the **tool**, the **model**, or the **harness**? (Rule out harness bugs first: a wrong grader looks exactly like a wrong agent.)
 3. Make **one specific** change. Vague: *"make sure customers are who they say they are."* Specific: *"Call `verify_identity` BEFORE sharing any account details or issuing any refund. If no ZIP was given, ask for it and stop."*
 4. Re-run the **same tasks with the same seeds** (a paired comparison), and flag regressions: a per-task drop of ≥ 2 trials, or **any new policy violation**.
@@ -173,7 +195,9 @@ A **capability** eval is a hill to climb (low pass rate at first). A **regressio
 
 **v1 (vague prompt), 12 tasks × 5 trials:** pass@1 **0.68**, pass@5 **1.00**, **pass^5 0.33**. T02-over-limit passes 1/5; T07 and T08 pass 2/5. T01, T07, T08 and T09 have `state = 1.0` but `policy < 1.0`: **lucky passes** that an outcome-only eval would count as successes.
 
-**Top failure reasons:** `issue_refund before verifying its owner` (15), `list_invoices before identity was verified` (13), missing required info (7), wrong final state (4), dishonest message (3), over-limit refund (1).
+**Grader sanity check:** a do-nothing agent scores 50% on state only, 50% with policy, **0%** with all three layers.
+
+**Top failure reasons (19 failing trials):** `issue_refund before verifying its owner` (15), `list_invoices before identity was verified` (15), missing required info (7), wrong final state (4), dishonest message (3), over-limit refund (1). 15 of the 19 failing trials (79%) skipped identity verification.
 
 **v1 → v2 (specific prompt), paired comparison:**
 
@@ -182,11 +206,13 @@ A **capability** eval is a hill to climb (low pass rate at first). A **regressio
 | pass@1 | 0.68 | **0.92** |
 | pass^5 | 0.33 | **0.67** |
 | avg tokens / trial | 2,837 | 3,410 (longer prompt) |
-| cost / trial | $0.000496 | $0.000584 |
-| **cost / SUCCESS** | $0.000725 | **$0.000637** ↓ |
+| cost / trial | $0.000346 | $0.000405 |
+| **cost / SUCCESS** | $0.000506 | **$0.000442** ↓ (−13%) |
 | p95 latency | 6.28 s | 6.85 s |
 
-Tokens per trial go **up**, cost per *success* goes **down**: that's the number that matters. A few policy violations remain (T04, T08) and T02 still occasionally over-claims. **Prompts reduce failures; code guarantees invariants.** That's why Lab 07b adds a deterministic tool-call guard.
+*(Costs use the Nov 2026 list price of `gpt-6-luna` and `claude-haiku-5-5`: $0.10 / $0.50 per million input / output tokens. Mock token counts are simulated.)*
+
+Tokens per trial go **up** (+20%), cost per *success* goes **down** (−13%): that's the number that matters. Policy violations fall from 16 to 4 but not to zero (T04, T08, U02), and T02 still occasionally over-claims, so the lab's verdict banner says **BLOCK**: money-moving policies are a hard gate at zero. **Prompts reduce failures; code guarantees invariants.** That's why Lab 07b adds a deterministic tool-call guard.
 
 ---
 
@@ -204,6 +230,9 @@ Tokens per trial go **up**, cost per *success* goes **down**: that's the number 
 | Comparing v1 and v2 on different seeds/tasks | Paired comparison: same tasks, same seeds. |
 | Vague prompt fixes | Name tools, state numbers, specify order and edge cases. |
 | Trusting the judge blindly | Calibrate it on hand-labelled trials (Cohen's κ ≳ 0.7). |
+| Trusting a new eval's score without a baseline | Run a do-nothing agent first; it should score ~0%. |
+| Treating simulated-user scores as human-equivalent | Report them as an upper bound; vary personas (Lab 06c). |
+| "Set temperature to 0 for reproducible runs" | It isn't deterministic (and Anthropic now rejects `temperature`); run k trials and report rates. |
 
 ---
 
@@ -211,7 +240,9 @@ Tokens per trial go **up**, cost per *success* goes **down**: that's the number 
 
 - ⚙️ Keep `PROVIDER = "mock"` for the whole lab first; the expected outputs are written for it. Try a real model at the end (Stretch D).
 - 🧰 The **Lab harness** cell is hidden infrastructure (world, adapters, graders, runner). You can peek, but it contains reference solutions.
-- 📖 In Task 5, **read every step** of the four transcripts before moving on. It's the highest-value activity in the lab.
+- 📖 In Task 5, **read every step** of the four traces before moving on. It's the highest-value activity in the lab.
+- 📖 Unsure of a term? The lab's collapsed **📖 Jargon decoder** (after the Overview) defines all 32 it uses.
+- 🏆 Finished early? The **Challenge exercises** in the Stretch section ask you to fool the honesty judge, derive how many trials make "5/5" meaningful, and design a grader that works on live, unlabeled traffic.
 - ⚠️ `MockLLM` understands specific phrasings (email, 5-digit ZIP, `INV-1234`, "refund", "most recent", "$X of"). Write your custom tasks with those.
 
 ---
@@ -225,6 +256,7 @@ Tokens per trial go **up**, cost per *success* goes **down**: that's the number 
 5. 🎲 **Run every task k times.** pass^k is the reliability number; the pass@k–pass^k gap is your flakiness.
 6. 💸 **Cost per success and p95 latency**, not cost per run and mean latency.
 7. 🧱 **Prompts reduce failures; code guarantees invariants** (next: Lab 07b).
+8. 🧪 **Validate the grader before you trust the score:** a do-nothing baseline and an impossible-task canary catch broken or gameable graders.
 
 ---
 
@@ -245,7 +277,7 @@ Policy (e.g. refunded before verifying the owner: a lucky pass) and response (e.
 <details>
 <summary>3. v2 uses more tokens per trial than v1. Can it still be cheaper?</summary>
 
-Yes. If its success rate rises enough, cost per successful task falls (as in the verified run: $0.000725 → $0.000637).
+Yes. If its success rate rises enough, cost per successful task falls (as in the verified run: $0.000506 → $0.000442).
 </details>
 
 <details>
@@ -254,8 +286,14 @@ Yes. If its success rate rises enough, cost per successful task falls (as in the
 Otherwise state leaks between trials (e.g. an invoice already refunded), creating correlated failures that look like model flakiness.
 </details>
 
+<details>
+<summary>5. An agent that never calls a tool scores 50% on your suite. What do you conclude?</summary>
+
+That the graders are broken (or too weak), not that the agent is half-good. Here, state-only grading passes every should-not-act task for an agent that does nothing. Add response checks until the do-nothing baseline scores ~0%.
+</details>
+
 ---
 
 ## 📖 Glossary
 
-**Agent loop** · ask model → run tools → feed results back, until a text answer. **Tool spec** · name + description + JSON Schema the model sees. **Task / trial / grader** · test case / one run / scoring logic. **Outcome** · final world state. **Policy invariant** · a rule the path must never break. **Honesty judge** · LLM grader comparing the message with the action log. **pass^k** · probability all k trials succeed. **Cost per success** · total cost ÷ successful trials. **Paired comparison** · same tasks and seeds for both versions. **Capability vs regression eval** · hill to climb vs must-stay-near-100%.
+**Agent loop** · ask model → run tools → feed results back, until a text answer. **Tool spec** · name + description + JSON Schema the model sees. **Task / trial / grader** · test case / one run / scoring logic. **Outcome** · final world state. **Policy invariant** · a rule the path must never break. **Honesty judge** · LLM grader comparing the message with the action log. **pass^k** · probability all k trials succeed. **Cost per success** · total cost ÷ successful trials. **Paired comparison** · same tasks and seeds for both versions. **Capability vs regression eval** · hill to climb vs must-stay-near-100%. **Do-nothing baseline** · an agent that takes no action, used to check the graders score it ~0%. **Reward hacking** · an agent passing the grader without doing the task. **Simulated user** · an LLM playing the customer in a multi-turn eval. **Lucky pass** · right end state, policy broken on the way. **Wilson interval** · a 95% confidence interval for a pass rate that behaves at small n. **p95 latency** · the time 95% of trials finish within. **Rule of three** · zero failures in n trials puts the 95% upper bound on the failure rate at ≈ 3/n.

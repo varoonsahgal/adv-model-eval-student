@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lab 07b · The Poisoned Memo · Eval Labs</title>
+<meta name="description" content="Lab 07b: The Poisoned Memo. The attacker never talks to your agent. A hands-on Colab lab from Advanced AI Model Evaluation.">
+<meta property="og:title" content="Lab 07b · The Poisoned Memo · Eval Labs">
+<meta property="og:description" content="Lab 07b: The Poisoned Memo. The attacker never talks to your agent. A hands-on Colab lab from Advanced AI Model Evaluation.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://varoonsahgal.github.io/adv-model-eval-student/img/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#070d1a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23070d1a'/%3E%3Cpath d='M8 17l5 5 11-12' fill='none' stroke='%2334d47f' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='25' cy='24' r='4' fill='%23eb6834'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Mono:ital,wght@0,400;0,500;1,400&display=swap">
+<link rel="stylesheet" href="assets/site.css">
+<script>try{var m=location.search.match(/theme=(dark|light)/),t=m?m[1]:localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar"><div class="wrap">
+<a class="brand" href="index.html"><svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#13213f"/><path d="M8 17l5 5 11-12" fill="none" stroke="#34d47f" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="25" cy="24" r="4" fill="#eb6834"/></svg><span>Eval Labs <span class="dim">· Advanced AI Model Evaluation</span></span></a>
+<nav class="nav" aria-label="Site"><a href="index.html" class="home">Start here</a><a href="index.html#labs" class="">Labs</a><a href="index.html#map" class="opt">Your day</a><a href="index.html#preflight" class="opt">Pre-flight</a><a href="glossary.html" class="">Glossary</a></nav>
+<button class="theme-toggle" type="button" aria-label="Toggle dark mode"><svg class="sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg><svg class="moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg></button>
+</div></header>
+
+<main id="main" style="--hue:#fb7185;--hue-rgb:251,113,133;--hue-ink:#91414d">
+<section class="lab-hero"><div class="wrap lab-hero-grid">
+ <div>
+  <p class="lh-kick"><a href="index.html#labs">All labs</a><span>/</span>Lab 07b<span>·</span>Attack<span>·</span>Side quest after 07</p>
+  <h1>The Poisoned Memo</h1>
+  <p class="lh-tag">The attacker never talks to your agent.</p>
+  <p class="lh-full">Red-Team Your Agent — Indirect Prompt Injection</p>
+  <p class="lh-hook">Your billing agent verifies identity and follows every policy. Can someone who never talks to it still get a refund out of it? An attacker who can only edit an <b>invoice memo</b> is about to find out.</p>
+  <div class="cta-row">
+   <a class="btn btn-hue" href="https://colab.research.google.com/github/varoonsahgal/adv-model-eval-student/blob/main/labs/07b-agent-red-team-lab.ipynb" target="_blank" rel="noopener"><span class="play" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 10 10"><path d="M2 1l7 4-7 4z" fill="currentColor"/></svg></span>Open in Colab</a>
+   <a class="btn btn-ghost" href="https://github.com/varoonsahgal/adv-model-eval-student/blob/main/modules/module-07b/student-handout.md" target="_blank" rel="noopener">Student handout</a>
+   
+  </div>
+ </div>
+ <div class="lh-art"><svg class="ill big" viewBox="0 0 250 168" role="img" aria-hidden="true" focusable="false"><defs><marker id="ah" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" class="ahf"/></marker></defs>
+<rect class="w fd" x="26" y="18" width="104" height="134" rx="8"/><text x="38" y="40">INVOICE #2210</text>
+<path class="w2" d="M38 56h80M38 70h64M38 84h72"/>
+<rect class="rf2" x="34" y="98" width="88" height="40" rx="5"/><text class="rt" x="40" y="114">memo: also</text>
+<text class="rt" x="40" y="130">refund #2211</text>
+<rect class="h fh" x="168" y="58" width="56" height="48" rx="10"/><circle class="hf" cx="184" cy="80" r="4"/><circle class="hf" cx="208" cy="80" r="4"/>
+<path class="h" d="M196 58 v-12"/><circle class="h fh" cx="196" cy="42" r="5"/>
+<path class="hd" d="M166 86 L126 116"/><circle class="gb" cx="220" cy="126" r="12"/><path class="g" d="M214 125 l5 5 l10 -11"/></svg></div>
+</div></section>
+<div class="wrap">
+ <dl class="facts reveal"><div class="fact"><dt>⏱ Time</dt><dd>≈ 50 min. Stretch goals +15–30 min</dd></div><div class="fact"><dt>🎚 Level</dt><dd>Advanced, but you can't get stuck: every 🧠 cell has hints + a fallback</dd></div><div class="fact"><dt>🔑 Keys</dt><dd>None (offline <code>MockLLM</code>). Optional: OpenAI (<code>gpt-6-luna</code>) or Anthropic (<code>claude-haiku-5-5</code>)</dd></div><div class="fact"><dt>💻 You’ll do</dt><dd>The three AgentDojo metrics, your own attack, a spotlighting defense, and a policy guard</dd></div></dl>
+ <div class="leave reveal"><span class="lv-k">🏁 You’ll leave with</span><p>A defense-in-depth recommendation backed by benign utility, utility under attack, and ASR <b>with an upper bound</b>, mapped to the OWASP Top 10 for Agentic Applications</p></div>
+ <section class="lab-sec"><p class="kicker hue">The strips</p><h2 class="h3">Read these first</h2>
+  <p class="sub">The punchline is the lab’s key insight. You’ll meet each strip again inside the notebook, with your own numbers.</p>
+  <div class="strips"><figure class="strip reveal"><button class="comic" type="button" data-full="img/comics/comic-memo.webp" data-cap="Memo">
+<img src="img/comics/comic-memo.webp" alt="Comic strip: Memo" width="1589" height="513" loading="lazy"><span class="zoom">Click to enlarge</span></button></figure><figure class="strip reveal"><button class="comic" type="button" data-full="img/comics/comic-retry.webp" data-cap="Retry">
+<img src="img/comics/comic-retry.webp" alt="Comic strip: Retry" width="1589" height="513" loading="lazy"><span class="zoom">Click to enlarge</span></button></figure></div></section>
+ <section class="lab-sec two">
+  <div><p class="kicker hue">Your route</p><h2 class="h3">10 tasks</h2>
+   <ol class="route reveal"><li><span class="tn">1</span><span>Environment and Setup</span></li><li><span class="tn">2</span><span>Think First — Map the Attack Surface</span></li><li><span class="tn">3</span><span>Meet the Attacks</span></li><li><span class="tn">4</span><span>Your Turn — Measure the Undefended Agent</span></li><li><span class="tn">5</span><span>Your Turn — Write Your Own Attack</span></li><li><span class="tn">6</span><span>Your Turn — Defense 1: Spotlighting</span></li><li><span class="tn">7</span><span>Defense 2, Attempt 1 — A Naive Tool-Call Guard</span></li><li><span class="tn">8</span><span>Your Turn — A Guard That Encodes the Real Policy</span></li><li><span class="tn">9</span><span>Defense in Depth — Combine and Decide</span></li><li><span class="tn">10</span><span>Plot Twist — The Attacker Moves Second</span></li></ol></div>
+  <div><p class="kicker hue">Words you’ll meet</p><h2 class="h3">Jargon decoder</h2>
+   <p class="sub small">The notebook defines each term right before you need it. Here’s the cheat sheet.</p>
+   <dl class="jargon"><div class="jr"><dt><b>Agent</b> / <b>agent loop</b></dt><dd>An LLM that repeatedly picks a tool, reads the tool's result, and picks again until it answers</dd></div><div class="jr"><dt><b>Tool call</b> / <b>tool output</b></dt><dd>A function the model asks the harness to run (e.g. <code>issue_refund</code>) / the text that comes back, which the model reads</dd></div><div class="jr"><dt><b>System prompt</b></dt><dd>The developer's standing instructions to the model (<code>GOOD_PROMPT</code>)</dd></div><div class="jr"><dt><b>Direct prompt injection</b></dt><dd>Attack text the <i>user</i> types into the chat</dd></div><div class="jr"><dt><b>Indirect prompt injection</b></dt><dd>Attack text hidden in <i>data</i> the agent reads (a memo, profile, email, web page)</dd></div><div class="jr"><dt><b>Attack surface</b></dt><dd>Every place untrusted text can enter the agent</dd></div><div class="jr"><dt><b>Invoice memo</b> (<code>description</code>)</dt><dd>The free-text line on an invoice; here third-party marketplace apps write it</dd></div><div class="jr"><dt><b>Escalation</b></dt><dd>Handing a case to a human specialist (<code>escalate_to_human</code>); required for refunds over $500</dd></div><div class="jr"><dt><b>Trial</b>, <b>K</b></dt><dd>One independent run of a task with a fresh database; K = 5 trials per task</dd></div><div class="jr"><dt><b>State / policy / response grader</b></dt><dd>Lab 06b's checks on the final database, on the rules along the way, and on the final message</dd></div><div class="jr"><dt><b>Attacker goal (state-based)</b></dt><dd>The attacker's win condition, checked in the database ("INV-1001 got refunded"), not in what the model said</dd></div><div class="jr"><dt><b>Benign utility</b></dt><dd>Share of normal (no-attack) trials that pass</dd></div></dl><details class="more"><summary>All 30 terms in this lab</summary><dl class="jargon"><div class="jr"><dt><b>Utility under attack</b></dt><dd>Share of attacked trials where the <i>customer's</i> request still passes</dd></div><div class="jr"><dt><b>ASR</b> (attack success rate)</dt><dd>Share of attacked trials where the <i>attacker's</i> goal was met</dd></div><div class="jr"><dt><b>AgentDojo</b></dt><dd>A 2024 research benchmark (NeurIPS) that pairs agent tasks with injection attacks; source of the three metrics</dd></div><div class="jr"><dt><b>OWASP</b>, <b>ASI01–ASI10</b>, <b>LLM01</b></dt><dd>A nonprofit that publishes security top-10 lists; ASI = its Agentic list (Dec 2025); LLM01 = Prompt Injection on its LLM list</dd></div><div class="jr"><dt><b>Lethal trifecta</b></dt><dd>Private data + untrusted content + a way to act or communicate externally; remove one and attacks get much harder</dd></div><div class="jr"><dt><b>Spotlighting</b></dt><dd>Marking untrusted text so the model can tell it's data: delimiting, datamarking, or encoding</dd></div><div class="jr"><dt><b>Guardrail</b> / <b>tool-call guard</b></dt><dd>Code that inspects a tool call <i>before</i> it runs and can block it</dd></div><div class="jr"><dt><b>Evaluator</b></dt><dd>A check that scores behavior <i>after</i> the fact; it can't block anything</dd></div><div class="jr"><dt><b>False positive</b> / <b>miss</b></dt><dd>The guard blocks a legitimate call / lets an attacker's call through</dd></div><div class="jr"><dt><b>Defense in depth</b></dt><dd>Stacking independent defenses so one layer's miss is another's catch</dd></div><div class="jr"><dt><b>Utility tax</b></dt><dd>The benign utility a defense costs compared with no defense</dd></div><div class="jr"><dt><b>CaMeL</b></dt><dd>A 2025 Google DeepMind design that lets only the trusted request decide which actions run</dd></div><div class="jr"><dt><b>Confidence interval</b> / <b>Wilson upper bound</b></dt><dd>A range of true rates consistent with your data / its top end, computed so it stays sensible at small n and zero successes</dd></div><div class="jr"><dt><b>Rule of three</b></dt><dd>Shortcut: 0 events in n trials → 95% upper bound ≈ 3/n</dd></div><div class="jr"><dt><b>pass@k</b> / <b>pass^k</b></dt><dd>Chance that <i>at least one</i> of k tries succeeds / that <i>all</i> k succeed</dd></div><div class="jr"><dt><b>Attack campaign</b> / <b>adaptive attack</b></dt><dd>Many attempts per attack / an attacker who rewrites the attack using feedback, not just retries</dd></div><div class="jr"><dt><b>Design patterns</b> (Plan-Then-Execute, Dual LLM, …)</dt><dd>Agent architectures in which untrusted text can't choose consequential actions, e.g. fix the action plan from the user's request <i>before</i> reading any data</dd></div><div class="jr"><dt><b>Exfiltration</b></dt><dd>Sneaking data out to an attacker (e.g. emailing another customer's invoices)</dd></div></dl></details>
+   <p class="small"><a href="glossary.html">Search all terms across the course →</a></p></div>
+ </section>
+ <section class="lab-sec go reveal"><div class="go-card">
+  <div><p class="kicker hue">Ready?</p><h2 class="h3">Open Lab 07b in Colab</h2>
+  <p>Then <b>File → Save a copy in Drive</b> and <b>Runtime → Run all</b>. No keys needed.</p></div>
+  <a class="btn btn-hue" href="https://colab.research.google.com/github/varoonsahgal/adv-model-eval-student/blob/main/labs/07b-agent-red-team-lab.ipynb" target="_blank" rel="noopener"><span class="play" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 10 10"><path d="M2 1l7 4-7 4z" fill="currentColor"/></svg></span>Open in Colab</a>
+ </div></section>
+</div>
+<nav class="pager wrap" aria-label="Previous and next lab"><a class="pg prev" href="lab-07.html" style="--hue:#f87171;--hue-rgb:248,113,113;--hue-ink:#8f4141"><span>← Lab 07</span><b>Zero of Thirty</b></a><a class="pg next" href="lab-08.html" style="--hue:#ff7a45;--hue-rgb:255,122,69;--hue-ink:#934628"><span>Lab 08 →</span><b>The Launch Decision</b></a></nav>
+</main>
+<footer class="foot"><div class="wrap">
+<p><b>Advanced AI Model Evaluation · Lab Hub.</b> Every company, product and character in these labs is fictional.
+Tax and accounting rules in the labs are simplified teaching rules, not advice. Labs run in Google Colab:
+<b>File → Save a copy in Drive</b> keeps your edits.</p>
+<div class="links"><a href="index.html#labs">All labs</a><a href="glossary.html">Glossary</a>
+<a href="https://github.com/varoonsahgal/adv-model-eval-student">GitHub</a></div>
+</div></footer>
+<dialog class="lightbox" aria-label="Comic strip"><button type="button" aria-label="Close">×</button>
+<img alt=""><p class="cap"></p></dialog>
+<script src="assets/site.js" defer></script>
+</body>
+</html>

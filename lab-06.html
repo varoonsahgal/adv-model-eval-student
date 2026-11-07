@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lab 06 · Grade the World · Eval Labs</title>
+<meta name="description" content="Lab 06: Grade the World. Don’t grade what the agent said. Grade what it did. A hands-on Colab lab from Advanced AI Model Evaluation.">
+<meta property="og:title" content="Lab 06 · Grade the World · Eval Labs">
+<meta property="og:description" content="Lab 06: Grade the World. Don’t grade what the agent said. Grade what it did. A hands-on Colab lab from Advanced AI Model Evaluation.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://varoonsahgal.github.io/adv-model-eval-student/img/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#070d1a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23070d1a'/%3E%3Cpath d='M8 17l5 5 11-12' fill='none' stroke='%2334d47f' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='25' cy='24' r='4' fill='%23eb6834'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Mono:ital,wght@0,400;0,500;1,400&display=swap">
+<link rel="stylesheet" href="assets/site.css">
+<script>try{var m=location.search.match(/theme=(dark|light)/),t=m?m[1]:localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar"><div class="wrap">
+<a class="brand" href="index.html"><svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#13213f"/><path d="M8 17l5 5 11-12" fill="none" stroke="#34d47f" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="25" cy="24" r="4" fill="#eb6834"/></svg><span>Eval Labs <span class="dim">· Advanced AI Model Evaluation</span></span></a>
+<nav class="nav" aria-label="Site"><a href="index.html" class="home">Start here</a><a href="index.html#labs" class="">Labs</a><a href="index.html#map" class="opt">Your day</a><a href="index.html#preflight" class="opt">Pre-flight</a><a href="glossary.html" class="">Glossary</a></nav>
+<button class="theme-toggle" type="button" aria-label="Toggle dark mode"><svg class="sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg><svg class="moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg></button>
+</div></header>
+
+<main id="main" style="--hue:#a78bfa;--hue-rgb:167,139,250;--hue-ink:#605091">
+<section class="lab-hero"><div class="wrap lab-hero-grid">
+ <div>
+  <p class="lh-kick"><a href="index.html#labs">All labs</a><span>/</span>Lab 06<span>·</span>Act<span>·</span>Core · Module 06</p>
+  <h1>Grade the World</h1>
+  <p class="lh-tag">Don’t grade what the agent said. Grade what it did.</p>
+  <p class="lh-full">Evaluating Agentic Systems in 2026 — Student Edition</p>
+  <p class="lh-hook"><i>“Am I free Friday? If so, book a flight.”</i> The agent checks the calendar, sees a 2–4 pm meeting, books a 3 pm flight, and replies that you’re free. You’re the release engineer and a new version ships today. Would you ship this run?</p>
+  <div class="cta-row">
+   <a class="btn btn-hue" href="https://colab.research.google.com/github/varoonsahgal/adv-model-eval-student/blob/main/labs/06-agent-evaluation-lab.ipynb" target="_blank" rel="noopener"><span class="play" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 10 10"><path d="M2 1l7 4-7 4z" fill="currentColor"/></svg></span>Open in Colab</a>
+   <a class="btn btn-ghost" href="https://github.com/varoonsahgal/adv-model-eval-student/blob/main/modules/module-06/student-handout.md" target="_blank" rel="noopener">Student handout</a>
+   
+  </div>
+ </div>
+ <div class="lh-art"><svg class="ill big" viewBox="0 0 250 168" role="img" aria-hidden="true" focusable="false"><defs><marker id="ah" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" class="ahf"/></marker></defs>
+<rect class="w fd" x="22" y="24" width="120" height="118" rx="10"/><path class="w2" d="M22 46h120"/>
+<text x="32" y="40">FRIDAY</text>
+<rect class="rf2" x="34" y="72" width="96" height="26" rx="5"/><text class="rt" x="42" y="89">MEETING 2–4</text>
+<path class="h" d="M58 112 h56"/><path class="h" d="M98 104 l16 8 l-16 8"/><text x="42" y="134">✈ 3 pm</text>
+<circle class="h" cx="196" cy="74" r="38"/><path class="h" d="M226 56 l8 -2 l-1 9"/>
+<rect class="w fd" x="180" y="60" width="32" height="28" rx="6"/><circle class="hf" cx="190" cy="73" r="3"/><circle class="hf" cx="202" cy="73" r="3"/>
+<circle class="gb" cx="222" cy="128" r="12"/><path class="g" d="M216 127 l5 5 l10 -11"/><text x="160" y="152">"You're free!"</text></svg></div>
+</div></section>
+<div class="wrap">
+ <dl class="facts reveal"><div class="fact"><dt>⏱ Time</dt><dd>70–95 min core, plus optional extensions</dd></div><div class="fact"><dt>🎚 Level</dt><dd>Intermediate–advanced</dd></div><div class="fact"><dt>🔑 Keys</dt><dd>None. Fully offline, deterministic data</dd></div><div class="fact"><dt>💻 You’ll do</dt><dd>Exercises 4A, 5A, 11A, 13A (each has a safe fallback, so <i>Run All</i> always works)</dd></div></dl>
+ <div class="leave reveal"><span class="lv-k">🏁 You’ll leave with</span><p>An evidence-based SHIP / BLOCK decision for a travel agent</p></div>
+ <section class="lab-sec"><p class="kicker hue">The strips</p><h2 class="h3">Read these first</h2>
+  <p class="sub">The punchline is the lab’s key insight. You’ll meet each strip again inside the notebook, with your own numbers.</p>
+  <div class="strips"><figure class="strip reveal"><button class="comic" type="button" data-full="img/comics/comic-booked.webp" data-cap="Booked">
+<img src="img/comics/comic-booked.webp" alt="Comic strip: Booked" width="1589" height="513" loading="lazy"><span class="zoom">Click to enlarge</span></button></figure><figure class="strip reveal"><button class="comic" type="button" data-full="img/comics/comic-do-nothing.webp" data-cap="Do nothing">
+<img src="img/comics/comic-do-nothing.webp" alt="Comic strip: Do nothing" width="1589" height="513" loading="lazy"><span class="zoom">Click to enlarge</span></button></figure></div></section>
+ <section class="lab-sec two">
+  <div><p class="kicker hue">Your route</p><h2 class="h3">15 tasks</h2>
+   <ol class="route reveal"><li><span class="tn">1</span><span>Mystery Failure: Would You Ship This Run?</span></li><li><span class="tn">2</span><span>Setup and Evaluation Dataset</span></li><li><span class="tn">3</span><span>Tool Selection: Useful, but Not the Whole Story</span></li><li><span class="tn">4</span><span>Input Validation: Break the Weak Evaluator</span></li><li><span class="tn">5</span><span>Grade the World, Not Just the Words</span></li><li><span class="tn">6</span><span>Critical Failures Should Not Be Averaged Away</span></li><li><span class="tn">7</span><span>Path Quality vs Outcome Quality</span></li><li><span class="tn">8</span><span>Evaluate the Evaluator</span></li><li><span class="tn">9</span><span>LLM-as-a-Judge: Build the Rubric Before the Prompt</span></li><li><span class="tn">10</span><span>Reliability Across Repeated Trials</span></li><li><span class="tn">11</span><span>Baseline vs Candidate: Make the Ship Decision</span></li><li><span class="tn">12</span><span>Trace Detective: Find the First Point of Divergence</span></li><li><span class="tn">13</span><span>Design a Real Loop Detector</span></li><li><span class="tn">14</span><span>Build the Evaluation Flywheel</span></li><li><span class="tn">15</span><span>Build the Agent Health Dashboard</span></li></ol></div>
+  <div><p class="kicker hue">Words you’ll meet</p><h2 class="h3">Jargon decoder</h2>
+   <p class="sub small">The notebook defines each term right before you need it. Here’s the cheat sheet.</p>
+   <dl class="jargon"><div class="jr"><dt><b>Agent</b></dt><dd>a model in a loop: plan, call a tool, read the result, repeat until it answers</dd></div><div class="jr"><dt><b>Tool call · tool result</b></dt><dd>the function the agent invokes, with the arguments it chose · what that function returns</dd></div><div class="jr"><dt><b>Read vs write tool · side effect</b></dt><dd>read tools look things up; write tools change the world, and that change (a booking now exists) is the side effect</dd></div><div class="jr"><dt><b>Trajectory</b> (also <i>trace</i>, <i>transcript</i>)</dt><dd>the ordered record of one run: tool calls, results, final answer</dd></div><div class="jr"><dt><b>Chain-of-thought</b></dt><dd>the model's private reasoning text; this lab grades observable actions instead</dd></div><div class="jr"><dt><b>Required / forbidden action · dependency · invariant</b></dt><dd>must happen / must not happen · allowed only after another action · a rule every acceptable path obeys</dd></div><div class="jr"><dt><b>End state (outcome)</b></dt><dd>what is actually true in the systems after the run, e.g. which bookings exist</dd></div><div class="jr"><dt><b>Precision · recall · F1</b></dt><dd>of the tools used, the share that were needed · of the tools needed, the share used · their harmonic mean (high only if both are)</dd></div><div class="jr"><dt><b>Schema vs semantic validation</b></dt><dd>right fields, types and formats vs values that make business sense (check-out after check-in)</dd></div><div class="jr"><dt><b>JSON Schema · ISO date</b></dt><dd>a standard declaration of the fields and types a JSON object must have · the <code>YYYY-MM-DD</code> date format</dd></div><div class="jr"><dt><b>Do-nothing (no-op) agent</b></dt><dd>a fake agent that calls no tools and says nothing; a sanity check for graders</dd></div><div class="jr"><dt><b>Vacuous pass</b></dt><dd>a grader passing a run for the wrong reason, e.g. because nothing happened</dd></div></dl><details class="more"><summary>All 41 terms in this lab</summary><dl class="jargon"><div class="jr"><dt><b>Diagnostic score</b></dt><dd>an average of quality signals, used to rank and debug runs, not to decide</dd></div><div class="jr"><dt><b>Hard gate · critical failure</b></dt><dd>a rule that blocks release on its own · a failure that trips it (an unrequested booking)</dd></div><div class="jr"><dt><b>Compensatory score</b></dt><dd>one where strength elsewhere can buy back a zero; averages are compensatory, gates are not</dd></div><div class="jr"><dt><b>Path vs outcome · lucky pass</b></dt><dd>how the agent got there vs where it ended up · the right end state reached by breaking an invariant</dd></div><div class="jr"><dt><b>Trajectory match modes</b></dt><dd><code>strict</code>, <code>unordered</code>, <code>superset</code>, <code>subset</code>: ways to compare an agent's tool list with a reference list</dd></div><div class="jr"><dt><b>agentevals · LangSmith</b></dt><dd>LangChain's open-source agent-eval library · its hosted tracing and eval platform</dd></div><div class="jr"><dt><b>False alarm · miss</b></dt><dd>a grader rejecting an acceptable run · accepting an unsafe one</dd></div><div class="jr"><dt><b>Calibration set</b></dt><dd>runs an expert has labeled, kept to measure how often a grader agrees</dd></div><div class="jr"><dt><b>Confusion matrix</b></dt><dd>a table counting each (expert label, grader label) pair; the diagonal is agreement</dd></div><div class="jr"><dt><b>TPR · TNR</b></dt><dd>true-positive rate: share of real failures the grader catches · true-negative rate: share of good runs it clears</dd></div><div class="jr"><dt><b>Cohen's κ (kappa)</b></dt><dd>agreement corrected for chance: 1 = perfect, 0 = no better than guessing</dd></div><div class="jr"><dt><b>LLM judge · rubric</b></dt><dd>a model prompted to grade outputs · the explicit pass condition for each criterion it checks</dd></div><div class="jr"><dt><b>Verbosity / position bias</b></dt><dd>a judge favoring longer answers / whichever answer it reads first</dd></div><div class="jr"><dt><b>Structured outputs</b></dt><dd>an API mode that forces the model's reply to match a JSON schema you supply</dd></div><div class="jr"><dt><b>Nondeterministic</b></dt><dd>the same input can produce a different run each time</dd></div><div class="jr"><dt><b>pass@k · pass^k</b></dt><dd>at least one of k trials succeeds · all k trials succeed</dd></div><div class="jr"><dt><b>95% CI · Wilson interval · rule of three</b></dt><dd>the range of true rates consistent with the data · a CI formula that behaves at small n · zero failures in n runs bounds the rate at about 3/n</dd></div><div class="jr"><dt><b>Reward hacking</b></dt><dd>passing the grader without doing the task it stands for</dd></div><div class="jr"><dt><b>Baseline · candidate · regression</b></dt><dd>the version in production · the version you want to ship · something that used to work and now doesn't</dd></div><div class="jr"><dt><b>p95 latency</b></dt><dd>the time within which 95% of runs finish; shows the slow tail an average hides</dd></div><div class="jr"><dt><b>Span · OpenTelemetry (OTel) GenAI conventions</b></dt><dd>one unit of work inside a trace (a model call, a tool call) · the open standard for naming those spans</dd></div><div class="jr"><dt><b>Langfuse</b></dt><dd>an open-source LLM tracing and evaluation platform; it calls spans <i>observations</i></dd></div><div class="jr"><dt><b>First point of divergence</b></dt><dd>the earliest span where the run departs from correct behavior</dd></div><div class="jr"><dt><b>Canonical call</b></dt><dd>tool name plus arguments serialized as sorted JSON, so identical calls compare equal</dd></div><div class="jr"><dt><b>Productive retry · exact repeat · cycle</b></dt><dd>same tool with corrected inputs · the identical call again · A→B→A→B</dd></div><div class="jr"><dt><b>Evaluation flywheel</b></dt><dd>every production failure becomes a permanent regression case</dd></div><div class="jr"><dt><b>Fingerprint (hash)</b></dt><dd>a short code computed from the dataset's contents; any change produces a new one</dd></div><div class="jr"><dt><b>Benchmarks in the research cards</b></dt><dd><b>τ-bench (TAU-bench)</b>: customer-service agents with simulated users · <b>CORE-Bench</b>: agents reproducing published research code · <b>ImpossibleBench</b>: coding tasks whose tests contradict the spec · <b>Who&amp;When</b>, <b>MAST</b>: datasets of multi-agent failures · <b>o3-mini</b>: a 2025 OpenAI model</dd></div><div class="jr"><dt><b>Promptfoo · Inspect AI · DeepEval · Braintrust</b></dt><dd>current eval frameworks and platforms (alternatives to the retired OpenAI Evals)</dd></div></dl></details>
+   <p class="small"><a href="glossary.html">Search all terms across the course →</a></p></div>
+ </section>
+ <section class="lab-sec go reveal"><div class="go-card">
+  <div><p class="kicker hue">Ready?</p><h2 class="h3">Open Lab 06 in Colab</h2>
+  <p>Then <b>File → Save a copy in Drive</b> and <b>Runtime → Run all</b>. No keys needed.</p></div>
+  <a class="btn btn-hue" href="https://colab.research.google.com/github/varoonsahgal/adv-model-eval-student/blob/main/labs/06-agent-evaluation-lab.ipynb" target="_blank" rel="noopener"><span class="play" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 10 10"><path d="M2 1l7 4-7 4z" fill="currentColor"/></svg></span>Open in Colab</a>
+ </div></section>
+</div>
+<nav class="pager wrap" aria-label="Previous and next lab"><a class="pg prev" href="lab-05b.html" style="--hue:#fb923c;--hue-rgb:251,146,60;--hue-ink:#915422"><span>← Lab 05b</span><b>Is It Really Better?</b></a><a class="pg next" href="lab-06-lg.html" style="--hue:#c084fc;--hue-rgb:192,132,252;--hue-ink:#6f4c92"><span>Lab 06 · LangGraph →</span><b>Lucky Passes</b></a></nav>
+</main>
+<footer class="foot"><div class="wrap">
+<p><b>Advanced AI Model Evaluation · Lab Hub.</b> Every company, product and character in these labs is fictional.
+Tax and accounting rules in the labs are simplified teaching rules, not advice. Labs run in Google Colab:
+<b>File → Save a copy in Drive</b> keeps your edits.</p>
+<div class="links"><a href="index.html#labs">All labs</a><a href="glossary.html">Glossary</a>
+<a href="https://github.com/varoonsahgal/adv-model-eval-student">GitHub</a></div>
+</div></footer>
+<dialog class="lightbox" aria-label="Comic strip"><button type="button" aria-label="Close">×</button>
+<img alt=""><p class="cap"></p></dialog>
+<script src="assets/site.js" defer></script>
+</body>
+</html>

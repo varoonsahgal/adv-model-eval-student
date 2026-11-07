@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lab 06 · LangGraph · Lucky Passes · Eval Labs</title>
+<meta name="description" content="Lab 06 · LangGraph: Lucky Passes. A perfect score, and a broken safety rule. A hands-on Colab lab from Advanced AI Model Evaluation.">
+<meta property="og:title" content="Lab 06 · LangGraph · Lucky Passes · Eval Labs">
+<meta property="og:description" content="Lab 06 · LangGraph: Lucky Passes. A perfect score, and a broken safety rule. A hands-on Colab lab from Advanced AI Model Evaluation.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://varoonsahgal.github.io/adv-model-eval-student/img/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#070d1a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23070d1a'/%3E%3Cpath d='M8 17l5 5 11-12' fill='none' stroke='%2334d47f' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='25' cy='24' r='4' fill='%23eb6834'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Mono:ital,wght@0,400;0,500;1,400&display=swap">
+<link rel="stylesheet" href="assets/site.css">
+<script>try{var m=location.search.match(/theme=(dark|light)/),t=m?m[1]:localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar"><div class="wrap">
+<a class="brand" href="index.html"><svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#13213f"/><path d="M8 17l5 5 11-12" fill="none" stroke="#34d47f" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="25" cy="24" r="4" fill="#eb6834"/></svg><span>Eval Labs <span class="dim">· Advanced AI Model Evaluation</span></span></a>
+<nav class="nav" aria-label="Site"><a href="index.html" class="home">Start here</a><a href="index.html#labs" class="">Labs</a><a href="index.html#map" class="opt">Your day</a><a href="index.html#preflight" class="opt">Pre-flight</a><a href="glossary.html" class="">Glossary</a></nav>
+<button class="theme-toggle" type="button" aria-label="Toggle dark mode"><svg class="sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg><svg class="moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg></button>
+</div></header>
+
+<main id="main" style="--hue:#c084fc;--hue-rgb:192,132,252;--hue-ink:#6f4c92">
+<section class="lab-hero"><div class="wrap lab-hero-grid">
+ <div>
+  <p class="lh-kick"><a href="index.html#labs">All labs</a><span>/</span>Lab 06 · LangGraph<span>·</span>Graph<span>·</span>Alternate edition of 06</p>
+  <h1>Lucky Passes</h1>
+  <p class="lh-tag">A perfect score, and a broken safety rule.</p>
+  <p class="lh-full">Evaluating Agentic Systems with LangGraph &amp; LangChain</p>
+  <p class="lh-hook">Ten scenarios through a real LangGraph agent, and a weighted trajectory score says half of them look fine. One of the “fine” runs spent <b>$130 of the user’s money</b> on a room nobody asked for. You’ll replace the score with outcome state plus invariants.</p>
+  <div class="cta-row">
+   <a class="btn btn-hue" href="https://colab.research.google.com/github/varoonsahgal/adv-model-eval-student/blob/main/labs/06-agent-evaluation-langgraph-lab.ipynb" target="_blank" rel="noopener"><span class="play" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 10 10"><path d="M2 1l7 4-7 4z" fill="currentColor"/></svg></span>Open in Colab</a>
+   <a class="btn btn-ghost" href="https://github.com/varoonsahgal/adv-model-eval-student/blob/main/modules/module-06/student-handout.md" target="_blank" rel="noopener">Student handout</a>
+   <a class="link-stage" href="https://github.com/varoonsahgal/adv-model-eval-student/blob/main/modules/module-06/LangChain%20%26%20LangGraph%20Student%20Handout.pdf">LangChain &amp; LangGraph primer (PDF)</a>
+  </div>
+ </div>
+ <div class="lh-art"><svg class="ill big" viewBox="0 0 250 168" role="img" aria-hidden="true" focusable="false"><defs><marker id="ah" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" class="ahf"/></marker></defs>
+<path class="hd" d="M44 84 H92 M136 84 H184 M114 62 V32 M114 106 V136"/>
+<path class="h" d="M122 42 q34 -10 34 20" marker-end="url(#ah)"/>
+<circle class="w fd" cx="30" cy="84" r="14"/><text x="18" y="114">start</text>
+<circle class="h fh" cx="114" cy="84" r="22"/><text x="98" y="88">agent</text>
+<circle class="w fd" cx="114" cy="22" r="13"/><text x="128" y="20">tools</text>
+<circle class="w fd" cx="200" cy="84" r="14"/><text x="190" y="114">end</text>
+<rect class="gs" x="86" y="136" width="58" height="22" rx="5"/><text class="gt" x="94" y="152">1.000</text>
+<path class="r" d="M150 150 l12 -12 M150 138 l12 12"/></svg></div>
+</div></section>
+<div class="wrap">
+ <dl class="facts reveal"><div class="fact"><dt>⏱ Time</dt><dd>50–60 min hands-on, plus an optional 10-min Task 13 and 🏆 challenges</dd></div><div class="fact"><dt>🎚 Level</dt><dd>Intermediate</dd></div><div class="fact"><dt>🔑 Keys</dt><dd>None. 100% free and offline</dd></div><div class="fact"><dt>💻 You’ll do</dt><dd><code>langgraph</code> 1.x · <code>langchain</code> / <code>langchain-core</code> 1.x · <code>pandas</code> · <code>matplotlib</code>, plus a hidden 🎨 lab kit for the insight cards</dd></div></dl>
+ <div class="leave reveal"><span class="lv-k">🏁 You’ll leave with</span><p>A LangGraph agent, captured traces, a state + invariant gate over 13 scenarios, and a SHIP / BLOCK verdict</p></div>
+ <section class="lab-sec"><p class="kicker hue">The strips</p><h2 class="h3">Read these first</h2>
+  <p class="sub">The punchline is the lab’s key insight. You’ll meet each strip again inside the notebook, with your own numbers.</p>
+  <div class="strips"><figure class="strip reveal"><button class="comic" type="button" data-full="img/comics/comic-lg-world-not-story.webp" data-cap="World not story">
+<img src="img/comics/comic-lg-world-not-story.webp" alt="Comic strip: World not story" width="1589" height="513" loading="lazy"><span class="zoom">Click to enlarge</span></button></figure><figure class="strip reveal"><button class="comic" type="button" data-full="img/comics/comic-lg-lucky-pass.webp" data-cap="Lucky pass">
+<img src="img/comics/comic-lg-lucky-pass.webp" alt="Comic strip: Lucky pass" width="1589" height="513" loading="lazy"><span class="zoom">Click to enlarge</span></button></figure></div></section>
+ <section class="lab-sec two">
+  <div><p class="kicker hue">Your route</p><h2 class="h3">13 tasks</h2>
+   <ol class="route reveal"><li><span class="tn">1</span><span>Environment Setup</span></li><li><span class="tn">2</span><span>Define the Agent's Tools with LangChain</span></li><li><span class="tn">3</span><span>Build the Agent Graph with LangGraph</span></li><li><span class="tn">4</span><span>Run the Agent and Capture Traces</span></li><li><span class="tn">5</span><span>Think First — Predicting Failure Modes</span></li><li><span class="tn">6</span><span>Evaluate Tool Selection Accuracy</span></li><li><span class="tn">7</span><span>Design Input Validation Checks</span></li><li><span class="tn">8</span><span>Score Trajectories, Then Gate on State + Invariants</span></li><li><span class="tn">9</span><span>Your Turn — Path Quality vs Outcome Quality</span></li><li><span class="tn">10</span><span>Root Cause Analysis on Traces</span></li><li><span class="tn">11</span><span>Debug Challenge — Three New Failing Scenarios</span></li><li><span class="tn">12</span><span>Build a Loop Detector</span></li><li><span class="tn">13</span><span>The Production Idiom — the Same Tools in `create_agent (optional)</span></li></ol></div>
+  <div><p class="kicker hue">Words you’ll meet</p><h2 class="h3">Jargon decoder</h2>
+   <p class="sub small">The notebook defines each term right before you need it. Here’s the cheat sheet.</p>
+   <dl class="jargon"><div class="jr"><dt><b>Required action</b></dt><dd>a tool call that must happen</dd></div><div class="jr"><dt><b>Forbidden action</b></dt><dd>a tool call that must not happen</dd></div><div class="jr"><dt><b>Dependency</b></dt><dd>an action allowed only after another</dd></div><div class="jr"><dt><b>Invariant</b></dt><dd>a rule every acceptable trajectory obeys, whatever its path</dd></div><div class="jr"><dt><b>End state</b> (the outcome)</dt><dd>what is actually true after the run</dd></div><div class="jr"><dt><b>Agent</b></dt><dd>a model in a loop: plan → call a tool → read the result → repeat until it answers</dd></div><div class="jr"><dt><b>Tool call / tool result</b></dt><dd>the model's structured request to run a function (<code>name</code> + <code>args</code>), and what the function returned</dd></div><div class="jr"><dt><b>Trajectory</b> (trace)</dt><dd>the ordered record of a run's tool calls, results and final answer</dd></div><div class="jr"><dt><b>Side effect</b></dt><dd>a change that persists outside the conversation (a booking, a payment), whatever the agent says afterwards</dd></div><div class="jr"><dt><b>End state</b> (outcome)</dt><dd>what is actually true after the run: here, the bookings in <code>WORLD</code></dd></div><div class="jr"><dt><b>Invariant</b></dt><dd>a rule every acceptable run obeys, whichever path it takes</dd></div><div class="jr"><dt><b>LangChain</b></dt><dd>a Python library of LLM building blocks: tools, message types, model wrappers, <code>create_agent</code></dd></div></dl><details class="more"><summary>All 32 terms in this lab</summary><dl class="jargon"><div class="jr"><dt><b>LangGraph</b></dt><dd>LangChain's library for running an app as a graph of steps over a shared state</dd></div><div class="jr"><dt><b><code>StateGraph</code></b></dt><dd>LangGraph's graph builder: declare the state, add nodes and edges, then <code>compile()</code></dd></div><div class="jr"><dt><b>State</b></dt><dd>the one dict every node reads; a <code>TypedDict</code> declares its keys and their types</dd></div><div class="jr"><dt><b>Node / edge</b></dt><dd>a node is a function <code>state → update</code>; an edge says which node runs next</dd></div><div class="jr"><dt><b>Conditional edge</b></dt><dd>a function that reads the state and returns the name of the next node</dd></div><div class="jr"><dt><b>Reducer</b></dt><dd>the merge rule for one state key when a node returns an update: overwrite (default) or, e.g., append</dd></div><div class="jr"><dt><b>Checkpointer</b></dt><dd>saves a snapshot of the state after every step, filed under a <code>thread_id</code>; enables replay and pauses</dd></div><div class="jr"><dt><b>Interrupt</b></dt><dd>a pause the graph takes before a named node, resumable later: the hook for human approval</dd></div><div class="jr"><dt><b><code>@tool</code></b></dt><dd>LangChain decorator that turns a Python function into a tool: name, typed argument schema, description</dd></div><div class="jr"><dt><b>ReAct loop</b></dt><dd>reason → act (call a tool) → observe the result → repeat; the loop your graph implements</dd></div><div class="jr"><dt><b><code>HumanMessage</code> / <code>AIMessage</code> / <code>ToolMessage</code></b></dt><dd>LangChain's typed chat messages: what the user said, what the model replied (possibly tool calls), what a tool returned</dd></div><div class="jr"><dt><b>Precision / recall / F1</b></dt><dd>share of called tools that were needed / share of needed tools that were called / their harmonic mean</dd></div><div class="jr"><dt><b>Schema vs semantic validation</b></dt><dd>"is it well-formed?" (types, formats) vs "does it make sense?" (check-out after check-in)</dd></div><div class="jr"><dt><b>OTel span</b></dt><dd>one timed unit of work in an OpenTelemetry trace, with a name and attributes</dd></div><div class="jr"><dt><b>τ-bench</b></dt><dd>an agent benchmark (Yao et al., 2024) that grades each run by the final database state</dd></div><div class="jr"><dt><b>Lucky pass</b></dt><dd>the right end state reached while breaking an invariant</dd></div><div class="jr"><dt><b>Canonical call</b></dt><dd>tool name + arguments serialized as sorted JSON, so equal calls compare equal</dd></div><div class="jr"><dt><b><code>create_agent</code> / ToolNode</b></dt><dd>LangChain 1.x's prebuilt agent loop (a <code>model</code> node and a <code>tools</code> node); the ToolNode runs every tool call the model asked for</dd></div><div class="jr"><dt><b>Middleware</b></dt><dd>hooks <code>create_agent</code> runs around model and tool calls (human approval, summarization, …)</dd></div><div class="jr"><dt><b>Idempotency key</b></dt><dd>a unique ID sent with a side-effect call so that a retry can't execute it twice</dd></div></dl></details>
+   <p class="small"><a href="glossary.html">Search all terms across the course →</a></p></div>
+ </section>
+ <section class="lab-sec go reveal"><div class="go-card">
+  <div><p class="kicker hue">Ready?</p><h2 class="h3">Open Lab 06 · LangGraph in Colab</h2>
+  <p>Then <b>File → Save a copy in Drive</b> and <b>Runtime → Run all</b>. No keys needed.</p></div>
+  <a class="btn btn-hue" href="https://colab.research.google.com/github/varoonsahgal/adv-model-eval-student/blob/main/labs/06-agent-evaluation-langgraph-lab.ipynb" target="_blank" rel="noopener"><span class="play" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 10 10"><path d="M2 1l7 4-7 4z" fill="currentColor"/></svg></span>Open in Colab</a>
+ </div></section>
+</div>
+<nav class="pager wrap" aria-label="Previous and next lab"><a class="pg prev" href="lab-06.html" style="--hue:#a78bfa;--hue-rgb:167,139,250;--hue-ink:#605091"><span>← Lab 06</span><b>Grade the World</b></a><a class="pg next" href="lab-06b.html" style="--hue:#818cf8;--hue-rgb:129,140,248;--hue-ink:#4a518f"><span>Lab 06b →</span><b>Best of Five</b></a></nav>
+</main>
+<footer class="foot"><div class="wrap">
+<p><b>Advanced AI Model Evaluation · Lab Hub.</b> Every company, product and character in these labs is fictional.
+Tax and accounting rules in the labs are simplified teaching rules, not advice. Labs run in Google Colab:
+<b>File → Save a copy in Drive</b> keeps your edits.</p>
+<div class="links"><a href="index.html#labs">All labs</a><a href="glossary.html">Glossary</a>
+<a href="https://github.com/varoonsahgal/adv-model-eval-student">GitHub</a></div>
+</div></footer>
+<dialog class="lightbox" aria-label="Comic strip"><button type="button" aria-label="Close">×</button>
+<img alt=""><p class="cap"></p></dialog>
+<script src="assets/site.js" defer></script>
+</body>
+</html>

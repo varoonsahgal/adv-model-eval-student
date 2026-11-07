@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lab 04 · Faithfully Wrong · Eval Labs</title>
+<meta name="description" content="Lab 04: Faithfully Wrong. Grounded, fluent, confident. Correct? A hands-on Colab lab from Advanced AI Model Evaluation.">
+<meta property="og:title" content="Lab 04 · Faithfully Wrong · Eval Labs">
+<meta property="og:description" content="Lab 04: Faithfully Wrong. Grounded, fluent, confident. Correct? A hands-on Colab lab from Advanced AI Model Evaluation.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://varoonsahgal.github.io/adv-model-eval-student/img/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#070d1a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23070d1a'/%3E%3Cpath d='M8 17l5 5 11-12' fill='none' stroke='%2334d47f' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='25' cy='24' r='4' fill='%23eb6834'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Mono:ital,wght@0,400;0,500;1,400&display=swap">
+<link rel="stylesheet" href="assets/site.css">
+<script>try{var m=location.search.match(/theme=(dark|light)/),t=m?m[1]:localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar"><div class="wrap">
+<a class="brand" href="index.html"><svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#13213f"/><path d="M8 17l5 5 11-12" fill="none" stroke="#34d47f" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="25" cy="24" r="4" fill="#eb6834"/></svg><span>Eval Labs <span class="dim">· Advanced AI Model Evaluation</span></span></a>
+<nav class="nav" aria-label="Site"><a href="index.html" class="home">Start here</a><a href="index.html#labs" class="">Labs</a><a href="index.html#map" class="opt">Your day</a><a href="index.html#preflight" class="opt">Pre-flight</a><a href="glossary.html" class="">Glossary</a></nav>
+<button class="theme-toggle" type="button" aria-label="Toggle dark mode"><svg class="sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg><svg class="moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg></button>
+</div></header>
+
+<main id="main" style="--hue:#34d399;--hue-rgb:52,211,153;--hue-ink:#1e7a58">
+<section class="lab-hero"><div class="wrap lab-hero-grid">
+ <div>
+  <p class="lh-kick"><a href="index.html#labs">All labs</a><span>/</span>Lab 04<span>·</span>Retrieve<span>·</span>Core · Module 04</p>
+  <h1>Faithfully Wrong</h1>
+  <p class="lh-tag">Grounded, fluent, confident. Correct?</p>
+  <p class="lh-full">RAG Evaluation Pipeline</p>
+  <p class="lh-hook">A policy assistant answers every employee question fluently. Before the lab ends you’ll find an answer that passes <b>every</b> check you build, retrieval and faithfulness, and is still wrong. You’ll also catch it answering questions it should have declined.</p>
+  <div class="cta-row">
+   <a class="btn btn-hue" href="https://colab.research.google.com/github/varoonsahgal/adv-model-eval-student/blob/main/labs/04-rag-evaluation-lab.ipynb" target="_blank" rel="noopener"><span class="play" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 10 10"><path d="M2 1l7 4-7 4z" fill="currentColor"/></svg></span>Open in Colab</a>
+   <a class="btn btn-ghost" href="https://github.com/varoonsahgal/adv-model-eval-student/blob/main/modules/module-04/student-handout.md" target="_blank" rel="noopener">Student handout</a>
+   
+  </div>
+ </div>
+ <div class="lh-art"><svg class="ill big" viewBox="0 0 250 168" role="img" aria-hidden="true" focusable="false"><defs><marker id="ah" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" class="ahf"/></marker></defs>
+<rect class="w fd" x="22" y="56" width="70" height="90" rx="6"/><rect class="w fd" x="34" y="46" width="70" height="90" rx="6"/>
+<path class="w2" d="M46 70h44M46 84h44M46 98h30"/>
+<g transform="rotate(-14 70 116)"><rect class="rs" x="44" y="104" width="54" height="22" rx="4"/>
+<text class="rt" x="52" y="120">2023</text></g>
+<path class="h" d="M112 92 h26" marker-end="url(#ah)"/>
+<rect class="w fd" x="146" y="40" width="88" height="62" rx="14"/><path class="w" d="M166 102 l-4 16 l16 -16"/>
+<path class="w2" d="M160 60h56M160 74h44"/><circle class="gb" cx="226" cy="44" r="12"/><path class="g" d="M220 43 l5 5 l10 -11"/>
+<text x="150" y="140">grounded · 1.00</text></svg></div>
+</div></section>
+<div class="wrap">
+ <dl class="facts reveal"><div class="fact"><dt>⏱ Time</dt><dd>40–45 min hands-on (Tasks 10–11 can shrink to 5 min each)</dd></div><div class="fact"><dt>🎚 Level</dt><dd>Intermediate</dd></div><div class="fact"><dt>🔑 Keys</dt><dd>None. Runs offline after a one-time ~90 MB NLI model download</dd></div><div class="fact"><dt>💻 You’ll do</dt><dd>Reads both texts together in one pass / turns each text into a vector separately and compares the vectors | Task 6</dd></div></dl>
+ <div class="leave reveal"><span class="lv-k">🏁 You’ll leave with</span><p>Retrieval, faithfulness and <b>context-sufficiency</b> scores, a selective-answer metric (coverage vs. accuracy), a root cause for every query, and a ship/block verdict</p></div>
+ <section class="lab-sec"><p class="kicker hue">The strips</p><h2 class="h3">Read these first</h2>
+  <p class="sub">The punchline is the lab’s key insight. You’ll meet each strip again inside the notebook, with your own numbers.</p>
+  <div class="strips"><figure class="strip reveal"><button class="comic" type="button" data-full="img/comics/comic-never-says-idk.webp" data-cap="Never says idk">
+<img src="img/comics/comic-never-says-idk.webp" alt="Comic strip: Never says idk" width="1589" height="513" loading="lazy"><span class="zoom">Click to enlarge</span></button></figure><figure class="strip reveal"><button class="comic" type="button" data-full="img/comics/comic-faithfully-wrong.webp" data-cap="Faithfully wrong">
+<img src="img/comics/comic-faithfully-wrong.webp" alt="Comic strip: Faithfully wrong" width="1589" height="513" loading="lazy"><span class="zoom">Click to enlarge</span></button></figure></div></section>
+ <section class="lab-sec two">
+  <div><p class="kicker hue">Your route</p><h2 class="h3">11 tasks</h2>
+   <ol class="route reveal"><li><span class="tn">1</span><span>Environment Setup and Dependencies</span></li><li><span class="tn">2</span><span>Load the RAG Evaluation Dataset</span></li><li><span class="tn">3</span><span>Think First — What Makes a RAG Response Trustworthy?</span></li><li><span class="tn">4</span><span>Compute Retrieval Metrics (Recall@K, Precision@K, nDCG, MRR)</span></li><li><span class="tn">5</span><span>Your Turn — Design Grounding Evaluation Criteria</span></li><li><span class="tn">6</span><span>Implement Faithfulness Scoring</span></li><li><span class="tn">7</span><span>Analyze Traced RAG Examples</span></li><li><span class="tn">8</span><span>A Production Sample Arrives: Faithful ≠ Correct</span></li><li><span class="tn">9</span><span>Sufficient Context and Abstention</span></li><li><span class="tn">10</span><span>Your Turn: Create Stress Test Queries</span></li><li><span class="tn">11</span><span>Open Challenge: Failure Analysis and the Ship Decision</span></li></ol></div>
+  <div><p class="kicker hue">Words you’ll meet</p><h2 class="h3">Jargon decoder</h2>
+   <p class="sub small">The notebook defines each term right before you need it. Here’s the cheat sheet.</p>
+   <dl class="jargon"><div class="jr"><dt><b>RAG</b> (retrieval-augmented generation)</dt><dd>Look up passages first, then have an LLM write the answer from them</dd></div><div class="jr"><dt><b>Retriever / generator</b></dt><dd>The search step that picks passages / the LLM that writes from them</dd></div><div class="jr"><dt><b>Chunk</b> (here: doc)</dt><dd>A passage cut from a document and stored for search; each doc here is one short policy</dd></div><div class="jr"><dt><b>Corpus / index</b></dt><dd>Every document you <i>could</i> retrieve / the searchable store built from it</dd></div><div class="jr"><dt><b>Top-K</b></dt><dd>The K highest-scoring chunks handed to the LLM (K = 5 here)</dd></div><div class="jr"><dt><b>Relevance label</b></dt><dd>A person's 1/0 call: is this doc on-topic for the question? On-topic ≠ contains the answer</dd></div><div class="jr"><dt><b>Recall@K / hit rate</b></dt><dd>Share of the relevant docs that made the top K / share of queries with at least one</dd></div><div class="jr"><dt><b>Precision@K</b></dt><dd>Share of the top K that are relevant (how much noise came along)</dd></div><div class="jr"><dt><b>nDCG@K</b></dt><dd>A 0–1 ranking score that gives more credit for relevant docs near the top</dd></div><div class="jr"><dt><b>MRR</b> (mean reciprocal rank)</dt><dd>Average of 1 ÷ (rank of the first relevant doc)</dd></div><div class="jr"><dt><b>Grounding / faithfulness</b></dt><dd>Every claim in the answer is supported by the retrieved docs (not "is true")</dd></div><div class="jr"><dt><b>Distortion / fabrication / hallucination</b></dt><dd>A changed fact / a claim with no source at all / the umbrella term for confident unsupported output</dd></div></dl><details class="more"><summary>All 34 terms in this lab</summary><dl class="jargon"><div class="jr"><dt><b>Stop words</b></dt><dd>Very common words a word-counting scorer throws away before comparing texts</dd></div><div class="jr"><dt><b>NLI</b> (natural language inference)</dt><dd>A model that reads a <b>premise</b> and a <b>hypothesis</b> and says <i>entailment</i> (supports), <i>contradiction</i> or <i>neutral</i></dd></div><div class="jr"><dt><b>Cross-encoder vs. embedding</b></dt><dd>Reads both texts together in one pass / turns each text into a vector separately and compares the vectors</dd></div><div class="jr"><dt><b>Logits / softmax</b></dt><dd>A model's raw scores / the step that turns them into probabilities summing to 1</dd></div><div class="jr"><dt><b>Miss rate / false-alarm rate</b></dt><dd>Bad answers a scorer passes / good answers it flags</dd></div><div class="jr"><dt><b>TPR / TNR</b></dt><dd>True-positive rate (1 − miss rate) / true-negative rate (1 − false-alarm rate)</dd></div><div class="jr"><dt><b>Trace / span</b></dt><dd>The record of one request through the pipeline / one step inside it</dd></div><div class="jr"><dt><b>OpenTelemetry (OTel)</b></dt><dd>The open standard for recording traces; its GenAI conventions name LLM spans</dd></div><div class="jr"><dt><b>Root cause</b></dt><dd>The earliest pipeline stage that went wrong</dd></div><div class="jr"><dt><b>Ground truth / correctness</b></dt><dd>The trusted right answer (here: the current handbook) / whether the answer matches it</dd></div><div class="jr"><dt><b>SME</b></dt><dd>Subject-matter expert; here a benefits specialist who grades answers</dd></div><div class="jr"><dt><b>Doc-derived (synthetic) set vs. production sample</b></dt><dd>Questions written while reading the docs / questions real users typed</dd></div><div class="jr"><dt><b>95% CI / Wilson interval</b></dt><dd>The range of true rates consistent with your score / a CI formula that behaves at small n</dd></div><div class="jr"><dt><b>Index hygiene / freshness metadata</b></dt><dd>Removing outdated versions from search / tagging each chunk with its effective date</dd></div><div class="jr"><dt><b>Abstention / over-refusal</b></dt><dd>Declining to answer / declining when the answer <i>was</i> in the docs</dd></div><div class="jr"><dt><b>Context sufficiency / key facts</b></dt><dd>Whether the retrieved text contains everything needed to answer / the facts an answer must include</dd></div><div class="jr"><dt><b>Coverage / selective accuracy</b></dt><dd>Share of questions answered / share of <i>answered</i> questions that are correct</dd></div><div class="jr"><dt><b>Autorater (LLM judge)</b></dt><dd>An LLM prompted to grade something, here sufficiency</dd></div><div class="jr"><dt><b>Stress test / probe</b></dt><dd>A question written to make the system fail in a specific way</dd></div><div class="jr"><dt><b>CI pipeline</b> (continuous integration)</dt><dd>The automated tests that run on every change; not the confidence interval</dd></div><div class="jr"><dt><b>PTO · stipend · per diem</b></dt><dd>Paid time off · a fixed allowance for a purpose · a fixed daily travel allowance</dd></div><div class="jr"><dt><b>401(k) · match · vesting · stock options</b></dt><dd>US workplace retirement account · employer money added when you contribute · employer money becoming yours over time · the right to buy shares at a set price, which vest, can be <i>exercised</i> (bought), or are <i>forfeited</i></dd></div></dl></details>
+   <p class="small"><a href="glossary.html">Search all terms across the course →</a></p></div>
+ </section>
+ <section class="lab-sec go reveal"><div class="go-card">
+  <div><p class="kicker hue">Ready?</p><h2 class="h3">Open Lab 04 in Colab</h2>
+  <p>Then <b>File → Save a copy in Drive</b> and <b>Runtime → Run all</b>. No keys needed.</p></div>
+  <a class="btn btn-hue" href="https://colab.research.google.com/github/varoonsahgal/adv-model-eval-student/blob/main/labs/04-rag-evaluation-lab.ipynb" target="_blank" rel="noopener"><span class="play" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 10 10"><path d="M2 1l7 4-7 4z" fill="currentColor"/></svg></span>Open in Colab</a>
+ </div></section>
+</div>
+<nav class="pager wrap" aria-label="Previous and next lab"><a class="pg prev" href="lab-03.html" style="--hue:#2dd4bf;--hue-rgb:45,212,191;--hue-ink:#1a7a6e"><span>← Lab 03</span><b>Valid, Not Right</b></a><a class="pg next" href="lab-04b.html" style="--hue:#a3e635;--hue-rgb:163,230,53;--hue-ink:#5e851e"><span>Lab 04b →</span><b>Somebody Else’s Defaults</b></a></nav>
+</main>
+<footer class="foot"><div class="wrap">
+<p><b>Advanced AI Model Evaluation · Lab Hub.</b> Every company, product and character in these labs is fictional.
+Tax and accounting rules in the labs are simplified teaching rules, not advice. Labs run in Google Colab:
+<b>File → Save a copy in Drive</b> keeps your edits.</p>
+<div class="links"><a href="index.html#labs">All labs</a><a href="glossary.html">Glossary</a>
+<a href="https://github.com/varoonsahgal/adv-model-eval-student">GitHub</a></div>
+</div></footer>
+<dialog class="lightbox" aria-label="Comic strip"><button type="button" aria-label="Close">×</button>
+<img alt=""><p class="cap"></p></dialog>
+<script src="assets/site.js" defer></script>
+</body>
+</html>

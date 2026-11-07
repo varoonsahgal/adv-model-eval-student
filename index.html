@@ -1,0 +1,511 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Eval Labs · Advanced AI Model Evaluation</title>
+<meta name="description" content="Fifteen hands-on Colab labs on evaluating LLM systems: traces, RAG, LLM judges, agents, safety, and statistics.">
+<meta property="og:title" content="Eval Labs · Advanced AI Model Evaluation">
+<meta property="og:description" content="Fifteen hands-on Colab labs on evaluating LLM systems: traces, RAG, LLM judges, agents, safety, and statistics.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://varoonsahgal.github.io/adv-model-eval-student/img/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#070d1a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23070d1a'/%3E%3Cpath d='M8 17l5 5 11-12' fill='none' stroke='%2334d47f' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='25' cy='24' r='4' fill='%23eb6834'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Mono:ital,wght@0,400;0,500;1,400&display=swap">
+<link rel="stylesheet" href="assets/site.css">
+<script>try{var m=location.search.match(/theme=(dark|light)/),t=m?m[1]:localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar"><div class="wrap">
+<a class="brand" href="index.html"><svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#13213f"/><path d="M8 17l5 5 11-12" fill="none" stroke="#34d47f" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="25" cy="24" r="4" fill="#eb6834"/></svg><span>Eval Labs <span class="dim">· Advanced AI Model Evaluation</span></span></a>
+<nav class="nav" aria-label="Site"><a href="index.html" class="home" aria-current=page>Start here</a><a href="index.html#labs" class="">Labs</a><a href="index.html#map" class="opt">Your day</a><a href="index.html#preflight" class="opt">Pre-flight</a><a href="glossary.html" class="">Glossary</a></nav>
+<button class="theme-toggle" type="button" aria-label="Toggle dark mode"><svg class="sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg><svg class="moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg></button>
+</div></header>
+
+<main id="main">
+<section class="hero" aria-labelledby="hero-title"><div class="wrap hero-grid">
+ <div>
+  <p class="eyebrow"><span class="pill">Advanced AI Model Evaluation</span><span>15 Colab labs</span><span>Nov 2026 edition</span></p>
+  <h1 id="hero-title"><span>Every check</span><span>is green.</span><span class="accent">Would you ship?</span></h1>
+  <p class="lede">Fifteen hands-on labs where the dashboard says <b>yes</b> and the evidence says otherwise.
+  You’ll find what each green number hides, measure it properly, and make the ship call yourself, across
+  <b>traces, RAG, LLM judges, agents, safety</b>, and the statistics that hold it all together.</p>
+  <div class="cta-row">
+   <a class="btn btn-primary" href="https://colab.research.google.com/github/varoonsahgal/adv-model-eval-student/blob/main/labs/1_TraceBasedEvalSetup_STUDENT.ipynb" target="_blank" rel="noopener"><span class="play" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 10 10"><path d="M2 1l7 4-7 4z" fill="currentColor"/></svg></span>Start Lab 01 in Colab</a>
+   <a class="btn btn-ghost" href="#labs">Browse all 15 labs <span aria-hidden="true">↓</span></a>
+  </div>
+  <p class="fineprint"><span>Runs in your browser</span><span>No API keys</span><span>No installs</span></p>
+ </div>
+ <div class="dash" id="dash" aria-label="A release dashboard where every check is green">
+  <div class="dash-head"><span class="dots"><i></i><i></i><i></i></span><span>Release candidate · v2</span>
+   <span class="status-pill" aria-live="polite"><span class="led"></span><span class="status-text">All checks passed</span></span></div>
+  <div class="tiles">
+<div class="tile" tabindex="0" role="button" aria-label="Reviewer verdict: Reads well. Reveal the question">
+ <div class="tile-inner">
+  <div class="face front"><span class="k">Reviewer verdict</span><span class="v long">Reads well</span><span class="ok">✓ PASS</span></div>
+  <div class="face back" style="--hue:#4f9bff;--hue-rgb:79,155,255;--hue-ink:#2d5993"><span class="k">Lab 01 · Trace</span>
+   <span class="q">What do 40 traces say?</span><a href="lab-01.html" tabindex="-1">Find out →</a></div>
+ </div></div>
+<div class="tile" tabindex="0" role="button" aria-label="Traces passing checks: 100/100. Reveal the question">
+ <div class="tile-inner">
+  <div class="face front"><span class="k">Traces passing checks</span><span class="v">100/100</span><span class="ok">✓ PASS</span></div>
+  <div class="face back" style="--hue:#38bdf8;--hue-rgb:56,189,248;--hue-ink:#206d8f"><span class="k">Lab 02 · Triage</span>
+   <span class="q">Then why are escalations climbing?</span><a href="lab-02.html" tabindex="-1">Find out →</a></div>
+ </div></div>
+<div class="tile" tabindex="0" role="button" aria-label="Schema-valid outputs: 100%. Reveal the question">
+ <div class="tile-inner">
+  <div class="face front"><span class="k">Schema-valid outputs</span><span class="v">100%</span><span class="ok">✓ PASS</span></div>
+  <div class="face back" style="--hue:#2dd4bf;--hue-rgb:45,212,191;--hue-ink:#1a7a6e"><span class="k">Lab 03 · Extract</span>
+   <span class="q">How many invoices are actually right?</span><a href="lab-03.html" tabindex="-1">Find out →</a></div>
+ </div></div>
+<div class="tile" tabindex="0" role="button" aria-label="Judge agrees w/ analysts: 90%. Reveal the question">
+ <div class="tile-inner">
+  <div class="face front"><span class="k">Judge agrees w/ analysts</span><span class="v">90%</span><span class="ok">✓ PASS</span></div>
+  <div class="face back" style="--hue:#fbbf24;--hue-rgb:251,191,36;--hue-ink:#916e14"><span class="k">Lab 05 · Judge</span>
+   <span class="q">Agrees about what, exactly?</span><a href="lab-05.html" tabindex="-1">Find out →</a></div>
+ </div></div>
+<div class="tile" tabindex="0" role="button" aria-label="Prompt v2 vs v1: +6 pts. Reveal the question">
+ <div class="tile-inner">
+  <div class="face front"><span class="k">Prompt v2 vs v1</span><span class="v">+6 pts</span><span class="ok">✓ PASS</span></div>
+  <div class="face back" style="--hue:#fb923c;--hue-rgb:251,146,60;--hue-ink:#915422"><span class="k">Lab 05b · Measure</span>
+   <span class="q">Signal, or the luck of 50 questions?</span><a href="lab-05b.html" tabindex="-1">Find out →</a></div>
+ </div></div>
+<div class="tile" tabindex="0" role="button" aria-label="Tasks passed (best of 5): 100%. Reveal the question">
+ <div class="tile-inner">
+  <div class="face front"><span class="k">Tasks passed (best of 5)</span><span class="v">100%</span><span class="ok">✓ PASS</span></div>
+  <div class="face back" style="--hue:#818cf8;--hue-rgb:129,140,248;--hue-ink:#4a518f"><span class="k">Lab 06b · Build</span>
+   <span class="q">And on a customer’s one try?</span><a href="lab-06b.html" tabindex="-1">Find out →</a></div>
+ </div></div>
+<div class="tile" tabindex="0" role="button" aria-label="Jailbreaks succeeded: 0 / 30. Reveal the question">
+ <div class="tile-inner">
+  <div class="face front"><span class="k">Jailbreaks succeeded</span><span class="v">0 / 30</span><span class="ok">✓ PASS</span></div>
+  <div class="face back" style="--hue:#f87171;--hue-rgb:248,113,113;--hue-ink:#8f4141"><span class="k">Lab 07 · Defend</span>
+   <span class="q">What does zero prove?</span><a href="lab-07.html" tabindex="-1">Find out →</a></div>
+ </div></div>
+<div class="tile" tabindex="0" role="button" aria-label="Slices where v2.1 wins: 22 / 30. Reveal the question">
+ <div class="tile-inner">
+  <div class="face front"><span class="k">Slices where v2.1 wins</span><span class="v">22 / 30</span><span class="ok">✓ PASS</span></div>
+  <div class="face back" style="--hue:#ff7a45;--hue-rgb:255,122,69;--hue-ink:#934628"><span class="k">Lab 08 · Launch</span>
+   <span class="q">Real wins, or noise?</span><a href="lab-08.html" tabindex="-1">Find out →</a></div>
+ </div></div></div>
+  <div class="dash-foot"><button class="ship" type="button">Ship v2 ✓</button>
+   <span class="dash-msg" aria-live="polite">Hover or tap a tile. Each green number has a lab that breaks it.</span></div>
+ </div>
+</div></section>
+
+<section class="stats" aria-label="The course in numbers"><div class="wrap">
+ <div class="stat"><div class="n" data-count="15">15</div><div class="l">Colab labs</div></div>
+ <div class="stat"><div class="n" data-count="16">16</div><div class="l">Hours hands-on</div></div>
+ <div class="stat"><div class="n" data-count="29">29</div><div class="l">Comic strips</div></div>
+ <div class="stat"><div class="n" data-count="441">441</div><div class="l">Jargon terms decoded</div></div>
+ <div class="stat"><div class="n">0</div><div class="l">API keys required</div></div>
+</div></section>
+
+<div class="wrap">
+<section class="section" id="rule">
+ <p class="kicker">Said once, applies all day</p>
+ <h2 class="h2">The one <em>rule</em></h2>
+ <div class="rule-hero reveal"><div><span>Metrics</span> report.</div><div><span>Evidence</span> decides.</div><div><span>You</span> sign.</div></div>
+ <p class="sub">Every lab ends the same way: a call you can defend with numbers, not vibes.</p>
+ <div class="verdicts reveal"><span class="verdict-chip v-ship">🚀 SHIP</span><span class="verdict-chip v-caution">⚠️ SHIP WITH CAUTION</span><span class="verdict-chip v-block">🛑 BLOCK</span></div>
+</section>
+
+<section class="section" id="map">
+ <p class="kicker">One day · eight stops · seven side quests</p>
+ <h2 class="h2">Your <em>day</em></h2>
+ <p class="sub">The core path runs 9:00 to 5:30. Side quests branch off where they fit: take them after class,
+ or swap one in for its core lab if your cohort is advanced.</p>
+ <div class="map reveal"><div class="stop" style="--hue:#4f9bff;--hue-rgb:79,155,255;--hue-ink:#2d5993"><span class="time">9:00</span><a class="node" href="lab-01.html" aria-label="Lab 01: Reads Well">01</a><span class="name">Traces</span></div><div class="stop" style="--hue:#38bdf8;--hue-rgb:56,189,248;--hue-ink:#206d8f"><span class="time">9:45</span><a class="node" href="lab-02.html" aria-label="Lab 02: All Green">02</a><span class="name">Failure analysis</span></div><div class="stop" style="--hue:#2dd4bf;--hue-rgb:45,212,191;--hue-ink:#1a7a6e"><span class="time">10:45</span><a class="node" href="lab-03.html" aria-label="Lab 03: Valid, Not Right">03</a><span class="name">Structured outputs</span></div><div class="stop" style="--hue:#34d399;--hue-rgb:52,211,153;--hue-ink:#1e7a58"><span class="time">12:45</span><a class="node" href="lab-04.html" aria-label="Lab 04: Faithfully Wrong">04</a><span class="name">RAG</span><div class="branch"><a class="side" style="--hue:#a3e635;--hue-rgb:163,230,53;--hue-ink:#5e851e" href="lab-04b.html"><b>04B</b>Somebody Else’s Defaults</a><a class="side" style="--hue:#facc15;--hue-rgb:250,204,21;--hue-ink:#91760c" href="lab-04c.html"><b>04C</b>Ask Your Books</a></div></div><div class="stop" style="--hue:#fbbf24;--hue-rgb:251,191,36;--hue-ink:#916e14"><span class="time">1:45</span><a class="node" href="lab-05.html" aria-label="Lab 05: The Rubber Stamp">05</a><span class="name">Generative & judges</span><div class="branch"><a class="side" style="--hue:#fb923c;--hue-rgb:251,146,60;--hue-ink:#915422" href="lab-05b.html"><b>05B</b>Is It Really Better?</a></div></div><div class="stop" style="--hue:#a78bfa;--hue-rgb:167,139,250;--hue-ink:#605091"><span class="time">3:00</span><a class="node" href="lab-06.html" aria-label="Lab 06: Grade the World">06</a><span class="name">Agents</span><div class="branch"><a class="side" style="--hue:#c084fc;--hue-rgb:192,132,252;--hue-ink:#6f4c92" href="lab-06-lg.html"><b>06 LG</b>Lucky Passes</a><a class="side" style="--hue:#818cf8;--hue-rgb:129,140,248;--hue-ink:#4a518f" href="lab-06b.html"><b>06B</b>Best of Five</a><a class="side" style="--hue:#f472b6;--hue-rgb:244,114,182;--hue-ink:#8d4269" href="lab-06c.html"><b>06C</b>Every Turn Passed</a></div></div><div class="stop" style="--hue:#f87171;--hue-rgb:248,113,113;--hue-ink:#8f4141"><span class="time">4:00</span><a class="node" href="lab-07.html" aria-label="Lab 07: Zero of Thirty">07</a><span class="name">Safety & guardrails</span><div class="branch"><a class="side" style="--hue:#fb7185;--hue-rgb:251,113,133;--hue-ink:#91414d" href="lab-07b.html"><b>07B</b>The Poisoned Memo</a></div></div><div class="stop" style="--hue:#ff7a45;--hue-rgb:255,122,69;--hue-ink:#934628"><span class="time">4:45</span><a class="node" href="lab-08.html" aria-label="Lab 08: The Launch Decision">08</a><span class="name">The pipeline</span></div></div>
+ <div class="map-legend"><span><i style="--hue:var(--head)"></i>Core lab</span><span><i class="dashed" style="--hue:var(--faint)"></i>Side quest or alternate edition</span></div>
+</section>
+
+<section class="section" id="labs">
+ <p class="kicker">Fifteen labs · fifteen themes · one ship call each</p>
+ <h2 class="h2">The <em>labs</em></h2>
+ <p class="sub">Each opens with a decision on your desk and ends with your verdict. <b>Open in Colab</b> runs it now;
+ the <b>lab guide</b> shows its comics, its route, and the words you’ll meet.</p>
+ <div class="filters" role="group" aria-label="Filter labs"><button class="chip" type="button" data-filter="all" aria-pressed="true">All 15</button><button class="chip" type="button" data-filter="core" aria-pressed="false" style="--chip:var(--head)">Core path (8)</button><button class="chip" type="button" data-filter="side" aria-pressed="false">Side quests (7)</button><button class="chip" type="button" data-filter="found" aria-pressed="false" style="--hue:#4f9bff"><i></i>Traces & triage</button><button class="chip" type="button" data-filter="data" aria-pressed="false" style="--hue:#2dd4bf"><i></i>Data & retrieval</button><button class="chip" type="button" data-filter="judge" aria-pressed="false" style="--hue:#fbbf24"><i></i>Judges & statistics</button><button class="chip" type="button" data-filter="agent" aria-pressed="false" style="--hue:#a78bfa"><i></i>Agents</button><button class="chip" type="button" data-filter="safe" aria-pressed="false" style="--hue:#f87171"><i></i>Safety</button><button class="chip" type="button" data-filter="pipe" aria-pressed="false" style="--hue:#ff7a45"><i></i>Launch</button></div>
+ <p class="count" aria-live="polite"><span id="shown">15</span> labs shown</p>
+ <div class="lab-grid">
+<article class="lab-card reveal" id="lab-01" style="--hue:#4f9bff;--hue-rgb:79,155,255;--hue-ink:#2d5993" data-family="found" data-kind="core">
+  <div class="lc-art"><svg class="ill" viewBox="0 0 250 168" role="img" aria-hidden="true" focusable="false"><defs><marker id="ah" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" class="ahf"/></marker></defs>
+<rect class="w fd" x="18" y="22" width="112" height="74" rx="14"/><path class="w" d="M40 96 l-6 18 l20 -18"/>
+<path class="w2" d="M34 44h70M34 58h80M34 72h56"/><circle class="gb" cx="122" cy="26" r="13"/><path class="g" d="M116 25 l5 5 l10 -11"/>
+<path class="h" d="M150 60h52M162 76h36M170 92h22M162 108h66M150 124h40"/>
+<path class="r" d="M196 92h22"/><circle class="rf" cx="222" cy="92" r="4"/>
+<path class="hd" d="M146 52v80"/>
+<text x="150" y="146">trace · 6 spans</text></svg></div>
+  <div class="lc-kick"><span>Lab 01</span><span class="sep">·</span><span>Trace</span></div>
+  <h3><a href="lab-01.html">Reads Well</a></h3>
+  <p class="lc-tag">The answer looks fine. The trace knows better.</p>
+  <p class="lc-hook">A reviewer read all 40 answers and signed off: <i>“Reads well. Ship it.”</i> Every request also left a trace: what was retrieved, which calls failed and retried, how long each step took, what it cost. Would you ship on the reviewer’s word?</p>
+  <ul class="lc-chips"><li>Trace-Based Evaluation Setup</li><li>⏱ 30 min</li><li>Foundations</li></ul>
+  <div class="lc-actions">
+    <a class="btn btn-hue" href="https://colab.research.google.com/github/varoonsahgal/adv-model-eval-student/blob/main/labs/1_TraceBasedEvalSetup_STUDENT.ipynb" target="_blank" rel="noopener"><span class="play" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 10 10"><path d="M2 1l7 4-7 4z" fill="currentColor"/></svg></span>Open in Colab</a>
+    <a class="lc-more" href="lab-01.html">Lab guide <span aria-hidden="true">→</span></a>
+  </div>
+</article>
+<article class="lab-card reveal" id="lab-02" style="--hue:#38bdf8;--hue-rgb:56,189,248;--hue-ink:#206d8f" data-family="found" data-kind="core">
+  <div class="lc-art"><svg class="ill" viewBox="0 0 250 168" role="img" aria-hidden="true" focusable="false"><defs><marker id="ah" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" class="ahf"/></marker></defs>
+<g transform="rotate(-8 80 90)"><rect class="w fd" x="26" y="40" width="96" height="70" rx="10"/></g>
+<g transform="rotate(4 100 90)"><rect class="w fd" x="48" y="34" width="96" height="70" rx="10"/>
+<path class="w2" d="M62 54h52M62 68h66M62 82h40"/></g>
+<circle class="gb" cx="136" cy="40" r="12"/><path class="g" d="M130 39 l5 5 l10 -11"/>
+<rect class="note" x="150" y="96" width="62" height="50" rx="4" transform="rotate(6 180 120)"/>
+<path class="ink" d="M160 112 q8 -6 16 0 t16 0M160 126 q8 -6 16 0" transform="rotate(6 180 120)"/>
+<circle class="h" cx="178" cy="62" r="24"/><path class="h" d="M195 79l20 20"/>
+<path class="r" d="M178 50v13"/><circle class="rf" cx="178" cy="71" r="2.6"/></svg></div>
+  <div class="lc-kick"><span>Lab 02</span><span class="sep">·</span><span>Triage</span></div>
+  <h3><a href="lab-02.html">All Green</a></h3>
+  <p class="lc-tag">Every check passes. Escalations keep climbing.</p>
+  <p class="lc-hook">The automated checks on a bookkeeping assistant have been green for weeks, and support escalations keep climbing. You have 100 traces and one afternoon to answer two questions: <b>what is going wrong, and what do we fix first?</b></p>
+  <ul class="lc-chips"><li>Error Analysis: From 100 Traces to &quot;What We Fix First&quot;</li><li>⏱ 40–45 min</li><li>Intermediate</li></ul>
+  <div class="lc-actions">
+    <a class="btn btn-hue" href="https://colab.research.google.com/github/varoonsahgal/adv-model-eval-student/blob/main/labs/02-failure-analysis-lab.ipynb" target="_blank" rel="noopener"><span class="play" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 10 10"><path d="M2 1l7 4-7 4z" fill="currentColor"/></svg></span>Open in Colab</a>
+    <a class="lc-more" href="lab-02.html">Lab guide <span aria-hidden="true">→</span></a>
+  </div>
+</article>
+<article class="lab-card reveal" id="lab-03" style="--hue:#2dd4bf;--hue-rgb:45,212,191;--hue-ink:#1a7a6e" data-family="data" data-kind="core">
+  <div class="lc-art"><svg class="ill" viewBox="0 0 250 168" role="img" aria-hidden="true" focusable="false"><defs><marker id="ah" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" class="ahf"/></marker></defs>
+<rect class="w fd" x="40" y="18" width="120" height="132" rx="12"/>
+<text class="big" x="52" y="46">{</text><text class="big" x="140" y="140">}</text>
+<text x="64" y="66">"vendor": "Acme",</text><text x="64" y="84">"total": 412.80,</text>
+<text x="64" y="102">"currency": "USD",</text><text x="64" y="120">"po": "PO-7731"</text>
+<path class="r" d="M108 106 q4 4 8 0 t8 0 t8 0 t8 0 t8 0"/>
+<path class="h fh" d="M178 30 l30 12 v26 c0 22 -14 34 -30 40 c-16 -6 -30 -18 -30 -40 v-26z"/>
+<path class="g" d="M170 66 l5 5 l10 -11"/><text class="hl" x="160" y="132">SCHEMA ✓</text></svg></div>
+  <div class="lc-kick"><span>Lab 03</span><span class="sep">·</span><span>Extract</span></div>
+  <h3><a href="lab-03.html">Valid, Not Right</a></h3>
+  <p class="lc-tag">The JSON is always valid now. Is it right?</p>
+  <p class="lc-hook">Your invoice extractor moved to native structured outputs and has been <b>100% schema-valid</b> ever since. Then month-end close finds a Canadian-dollar invoice booked in US dollars and a purchase-order number copied from another vendor.</p>
+  <ul class="lc-chips"><li>Evaluating Structured Outputs in 2026</li><li>⏱ 45–55 min</li><li>Intermediate</li></ul>
+  <div class="lc-actions">
+    <a class="btn btn-hue" href="https://colab.research.google.com/github/varoonsahgal/adv-model-eval-student/blob/main/labs/03-structured-outputs-lab.ipynb" target="_blank" rel="noopener"><span class="play" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 10 10"><path d="M2 1l7 4-7 4z" fill="currentColor"/></svg></span>Open in Colab</a>
+    <a class="lc-more" href="lab-03.html">Lab guide <span aria-hidden="true">→</span></a>
+  </div>
+</article>
+<article class="lab-card reveal" id="lab-04" style="--hue:#34d399;--hue-rgb:52,211,153;--hue-ink:#1e7a58" data-family="data" data-kind="core">
+  <div class="lc-art"><svg class="ill" viewBox="0 0 250 168" role="img" aria-hidden="true" focusable="false"><defs><marker id="ah" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" class="ahf"/></marker></defs>
+<rect class="w fd" x="22" y="56" width="70" height="90" rx="6"/><rect class="w fd" x="34" y="46" width="70" height="90" rx="6"/>
+<path class="w2" d="M46 70h44M46 84h44M46 98h30"/>
+<g transform="rotate(-14 70 116)"><rect class="rs" x="44" y="104" width="54" height="22" rx="4"/>
+<text class="rt" x="52" y="120">2023</text></g>
+<path class="h" d="M112 92 h26" marker-end="url(#ah)"/>
+<rect class="w fd" x="146" y="40" width="88" height="62" rx="14"/><path class="w" d="M166 102 l-4 16 l16 -16"/>
+<path class="w2" d="M160 60h56M160 74h44"/><circle class="gb" cx="226" cy="44" r="12"/><path class="g" d="M220 43 l5 5 l10 -11"/>
+<text x="150" y="140">grounded · 1.00</text></svg></div>
+  <div class="lc-kick"><span>Lab 04</span><span class="sep">·</span><span>Retrieve</span></div>
+  <h3><a href="lab-04.html">Faithfully Wrong</a></h3>
+  <p class="lc-tag">Grounded, fluent, confident. Correct?</p>
+  <p class="lc-hook">A policy assistant answers every employee question fluently. Before the lab ends you’ll find an answer that passes <b>every</b> check you build, retrieval and faithfulness, and is still wrong. You’ll also catch it answering questions it should have declined.</p>
+  <ul class="lc-chips"><li>RAG Evaluation Pipeline</li><li>⏱ 40–45 min</li><li>Intermediate</li></ul>
+  <div class="lc-actions">
+    <a class="btn btn-hue" href="https://colab.research.google.com/github/varoonsahgal/adv-model-eval-student/blob/main/labs/04-rag-evaluation-lab.ipynb" target="_blank" rel="noopener"><span class="play" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 10 10"><path d="M2 1l7 4-7 4z" fill="currentColor"/></svg></span>Open in Colab</a>
+    <a class="lc-more" href="lab-04.html">Lab guide <span aria-hidden="true">→</span></a>
+  </div>
+</article>
+<article class="lab-card reveal" id="lab-04b" style="--hue:#a3e635;--hue-rgb:163,230,53;--hue-ink:#5e851e" data-family="data" data-kind="side">
+  <div class="lc-art"><svg class="ill" viewBox="0 0 250 168" role="img" aria-hidden="true" focusable="false"><defs><marker id="ah" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" class="ahf"/></marker></defs>
+<rect class="w fd" x="30" y="18" width="92" height="128" rx="8"/>
+<path class="w2" d="M44 36h64M44 48h56M44 70h64M44 82h48M44 104h60M44 116h40"/>
+<path class="hd" d="M22 58h108M22 92h108M22 126h108"/>
+<g transform="translate(150 40) rotate(-30)"><circle class="h" cx="0" cy="0" r="10"/><circle class="h" cx="0" cy="34" r="10"/>
+<path class="h" d="M8 6 L44 24 M8 28 L44 10"/></g>
+<rect class="w fd" x="140" y="104" width="96" height="26" rx="5"/>
+<path class="w2" d="M150 104v8M162 104v12M174 104v8M186 104v12M198 104v8M210 104v12M222 104v8"/>
+<text class="hl" x="146" y="148">800 / 400 ?</text></svg></div>
+  <div class="lc-kick"><span>Lab 04b</span><span class="sep">·</span><span>Chunk</span><span class="lc-side">Side quest</span></div>
+  <h3><a href="lab-04b.html">Somebody Else’s Defaults</a></h3>
+  <p class="lc-tag">Every tutorial default was tuned on another corpus.</p>
+  <p class="lc-hook">The vendor tutorial says: chunk at 800 tokens with 400 overlap, use vector search, add a reranker. Each default sounds reasonable. You’ll build the pipeline, measure every default on your own corpus, and find at least one that’s wrong for you.</p>
+  <ul class="lc-chips"><li>Production-Grade RAG System</li><li>⏱ 60–70 min</li><li>Intermediate–advanced</li></ul>
+  <div class="lc-actions">
+    <a class="btn btn-hue" href="https://colab.research.google.com/github/varoonsahgal/adv-model-eval-student/blob/main/labs/04b-production-rag-lab.ipynb" target="_blank" rel="noopener"><span class="play" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 10 10"><path d="M2 1l7 4-7 4z" fill="currentColor"/></svg></span>Open in Colab</a>
+    <a class="lc-more" href="lab-04b.html">Lab guide <span aria-hidden="true">→</span></a>
+  </div>
+</article>
+<article class="lab-card reveal" id="lab-04c" style="--hue:#facc15;--hue-rgb:250,204,21;--hue-ink:#91760c" data-family="data" data-kind="side">
+  <div class="lc-art"><svg class="ill" viewBox="0 0 250 168" role="img" aria-hidden="true" focusable="false"><defs><marker id="ah" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" class="ahf"/></marker></defs>
+<path class="w fd" d="M24 40 q36 -12 72 0 v100 q-36 -12 -72 0z"/><path class="w fd" d="M96 40 q36 -12 72 0 v100 q-36 -12 -72 0z"/>
+<path class="w2" d="M36 60h48M36 76h48M36 92h40M108 60h48M108 76h40M108 92h48"/>
+<ellipse class="h fh" cx="208" cy="40" rx="24" ry="9"/><path class="h" d="M184 40v40 q24 14 48 0 v-40M184 60 q24 14 48 0"/>
+<text class="hl" x="20" y="164">SELECT SUM(amount)</text>
+<rect class="w fd" x="176" y="104" width="62" height="34" rx="10"/><text x="184" y="126">$12,480</text>
+<circle class="gb" cx="234" cy="104" r="11"/><path class="g" d="M228 103 l5 5 l10 -11"/></svg></div>
+  <div class="lc-kick"><span>Lab 04c</span><span class="sep">·</span><span>Query</span><span class="lc-side">Side quest</span></div>
+  <h3><a href="lab-04c.html">Ask Your Books</a></h3>
+  <p class="lc-tag">The SQL ran. Was it the right answer?</p>
+  <p class="lc-hook">The model behind a bookkeeping Q&amp;A feature retires on 14 January 2027. Its replacement scores <b>64%</b> on the golden set; the current model scores <b>80%</b>. CI says BLOCK. Would you block the migration? Most engineers would.</p>
+  <ul class="lc-chips"><li>Ask Your Books: Evaluating Text-to-SQL Analytics</li><li>⏱ 85–100 min</li><li>Intermediate–advanced</li></ul>
+  <div class="lc-actions">
+    <a class="btn btn-hue" href="https://colab.research.google.com/github/varoonsahgal/adv-model-eval-student/blob/main/labs/04c-text-to-sql-analytics-lab.ipynb" target="_blank" rel="noopener"><span class="play" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 10 10"><path d="M2 1l7 4-7 4z" fill="currentColor"/></svg></span>Open in Colab</a>
+    <a class="lc-more" href="lab-04c.html">Lab guide <span aria-hidden="true">→</span></a>
+  </div>
+</article>
+<article class="lab-card reveal" id="lab-05" style="--hue:#fbbf24;--hue-rgb:251,191,36;--hue-ink:#916e14" data-family="judge" data-kind="core">
+  <div class="lc-art"><svg class="ill" viewBox="0 0 250 168" role="img" aria-hidden="true" focusable="false"><defs><marker id="ah" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" class="ahf"/></marker></defs>
+<rect class="w fd" x="30" y="104" width="124" height="46" rx="6"/>
+<rect class="gs" x="58" y="114" width="70" height="28" rx="5"/><text class="gt" x="68" y="134">PASS</text>
+<rect class="h fh" x="74" y="60" width="38" height="24" rx="4"/><path class="h" d="M93 60 v-18"/>
+<circle class="h fh" cx="93" cy="30" r="13"/>
+<g class="w2"><circle cx="76" cy="24" r="6"/><circle cx="76" cy="36" r="6"/><circle cx="110" cy="24" r="6"/><circle cx="110" cy="36" r="6"/>
+<circle cx="84" cy="15" r="6"/><circle cx="102" cy="15" r="6"/><circle cx="93" cy="12" r="6"/></g>
+<rect class="w fd" x="170" y="34" width="62" height="80" rx="6"/><path class="w2" d="M180 52h42M180 66h42M180 80h30"/>
+<path class="r" d="M180 94h36"/><text x="168" y="134">90% agree</text></svg></div>
+  <div class="lc-kick"><span>Lab 05</span><span class="sep">·</span><span>Judge</span></div>
+  <h3><a href="lab-05.html">The Rubber Stamp</a></h3>
+  <p class="lc-tag">It agrees with your analysts 90% of the time. With what?</p>
+  <p class="lc-hook">An AI-written earnings summary once claimed revenue grew 15% when it grew 8%. Since then two analysts review every summary by hand. Your VP wants an LLM judge instead: <b>it agrees with the analysts 90% of the time.</b> Do you retire the analysts?</p>
+  <ul class="lc-chips"><li>Can an LLM Judge Replace Your Analysts?</li><li>⏱ 60–75 min</li><li>Intermediate</li></ul>
+  <div class="lc-actions">
+    <a class="btn btn-hue" href="https://colab.research.google.com/github/varoonsahgal/adv-model-eval-student/blob/main/labs/05-generative-outputs-lab.ipynb" target="_blank" rel="noopener"><span class="play" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 10 10"><path d="M2 1l7 4-7 4z" fill="currentColor"/></svg></span>Open in Colab</a>
+    <a class="lc-more" href="lab-05.html">Lab guide <span aria-hidden="true">→</span></a>
+  </div>
+</article>
+<article class="lab-card reveal" id="lab-05b" style="--hue:#fb923c;--hue-rgb:251,146,60;--hue-ink:#915422" data-family="judge" data-kind="side">
+  <div class="lc-art"><svg class="ill" viewBox="0 0 250 168" role="img" aria-hidden="true" focusable="false"><defs><marker id="ah" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" class="ahf"/></marker></defs>
+<path class="hd" d="M18 132h220"/>
+<path class="w" d="M30 132 C70 132 72 52 104 52 C136 52 138 132 178 132"/>
+<path class="h fh" d="M64 132 C104 132 106 46 138 46 C170 46 172 132 212 132"/>
+<text x="92" y="44">v1</text><text class="hl" x="140" y="38">v2</text>
+<path class="r" d="M60 150h112M60 144v12M172 144v12"/><circle class="rf" cx="116" cy="150" r="4"/>
+<text class="hl" x="180" y="80">+6?</text>
+<rect class="w fd" x="196" y="96" width="34" height="34" rx="7"/><circle class="dot" cx="206" cy="106" r="3"/>
+<circle class="dot" cx="220" cy="120" r="3"/><circle class="dot" cx="213" cy="113" r="3"/></svg></div>
+  <div class="lc-kick"><span>Lab 05b</span><span class="sep">·</span><span>Measure</span><span class="lc-side">Side quest</span></div>
+  <h3><a href="lab-05b.html">Is It Really Better?</a></h3>
+  <p class="lc-tag">+6 points on 50 cases. Signal or noise?</p>
+  <p class="lc-hook">Prompt v2 lifts the golden-set pass rate from <b>78% to 84%</b>, and the LLM judge says production quality is 90%, above the 85% launch bar. The PM wants to ship Monday. How much of that message is signal?</p>
+  <ul class="lc-chips"><li>Is It Really Better? Statistical Rigor and Judge Calibration for LLM Evals</li><li>⏱ 70–85 min</li><li>Intermediate</li></ul>
+  <div class="lc-actions">
+    <a class="btn btn-hue" href="https://colab.research.google.com/github/varoonsahgal/adv-model-eval-student/blob/main/labs/05b-statistical-rigor-judge-calibration-lab.ipynb" target="_blank" rel="noopener"><span class="play" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 10 10"><path d="M2 1l7 4-7 4z" fill="currentColor"/></svg></span>Open in Colab</a>
+    <a class="lc-more" href="lab-05b.html">Lab guide <span aria-hidden="true">→</span></a>
+  </div>
+</article>
+<article class="lab-card reveal" id="lab-06" style="--hue:#a78bfa;--hue-rgb:167,139,250;--hue-ink:#605091" data-family="agent" data-kind="core">
+  <div class="lc-art"><svg class="ill" viewBox="0 0 250 168" role="img" aria-hidden="true" focusable="false"><defs><marker id="ah" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" class="ahf"/></marker></defs>
+<rect class="w fd" x="22" y="24" width="120" height="118" rx="10"/><path class="w2" d="M22 46h120"/>
+<text x="32" y="40">FRIDAY</text>
+<rect class="rf2" x="34" y="72" width="96" height="26" rx="5"/><text class="rt" x="42" y="89">MEETING 2–4</text>
+<path class="h" d="M58 112 h56"/><path class="h" d="M98 104 l16 8 l-16 8"/><text x="42" y="134">✈ 3 pm</text>
+<circle class="h" cx="196" cy="74" r="38"/><path class="h" d="M226 56 l8 -2 l-1 9"/>
+<rect class="w fd" x="180" y="60" width="32" height="28" rx="6"/><circle class="hf" cx="190" cy="73" r="3"/><circle class="hf" cx="202" cy="73" r="3"/>
+<circle class="gb" cx="222" cy="128" r="12"/><path class="g" d="M216 127 l5 5 l10 -11"/><text x="160" y="152">"You're free!"</text></svg></div>
+  <div class="lc-kick"><span>Lab 06</span><span class="sep">·</span><span>Act</span></div>
+  <h3><a href="lab-06.html">Grade the World</a></h3>
+  <p class="lc-tag">Don’t grade what the agent said. Grade what it did.</p>
+  <p class="lc-hook"><i>“Am I free Friday? If so, book a flight.”</i> The agent checks the calendar, sees a 2–4 pm meeting, books a 3 pm flight, and replies that you’re free. You’re the release engineer and a new version ships today. Would you ship this run?</p>
+  <ul class="lc-chips"><li>Evaluating Agentic Systems in 2026 — Student Edition</li><li>⏱ 70–95 min</li><li>Intermediate–advanced</li></ul>
+  <div class="lc-actions">
+    <a class="btn btn-hue" href="https://colab.research.google.com/github/varoonsahgal/adv-model-eval-student/blob/main/labs/06-agent-evaluation-lab.ipynb" target="_blank" rel="noopener"><span class="play" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 10 10"><path d="M2 1l7 4-7 4z" fill="currentColor"/></svg></span>Open in Colab</a>
+    <a class="lc-more" href="lab-06.html">Lab guide <span aria-hidden="true">→</span></a>
+  </div>
+</article>
+<article class="lab-card reveal" id="lab-06-lg" style="--hue:#c084fc;--hue-rgb:192,132,252;--hue-ink:#6f4c92" data-family="agent" data-kind="alt">
+  <div class="lc-art"><svg class="ill" viewBox="0 0 250 168" role="img" aria-hidden="true" focusable="false"><defs><marker id="ah" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" class="ahf"/></marker></defs>
+<path class="hd" d="M44 84 H92 M136 84 H184 M114 62 V32 M114 106 V136"/>
+<path class="h" d="M122 42 q34 -10 34 20" marker-end="url(#ah)"/>
+<circle class="w fd" cx="30" cy="84" r="14"/><text x="18" y="114">start</text>
+<circle class="h fh" cx="114" cy="84" r="22"/><text x="98" y="88">agent</text>
+<circle class="w fd" cx="114" cy="22" r="13"/><text x="128" y="20">tools</text>
+<circle class="w fd" cx="200" cy="84" r="14"/><text x="190" y="114">end</text>
+<rect class="gs" x="86" y="136" width="58" height="22" rx="5"/><text class="gt" x="94" y="152">1.000</text>
+<path class="r" d="M150 150 l12 -12 M150 138 l12 12"/></svg></div>
+  <div class="lc-kick"><span>Lab 06 · LangGraph</span><span class="sep">·</span><span>Graph</span><span class="lc-side">Alt</span></div>
+  <h3><a href="lab-06-lg.html">Lucky Passes</a></h3>
+  <p class="lc-tag">A perfect score, and a broken safety rule.</p>
+  <p class="lc-hook">Ten scenarios through a real LangGraph agent, and a weighted trajectory score says half of them look fine. One of the “fine” runs spent <b>$130 of the user’s money</b> on a room nobody asked for. You’ll replace the score with outcome state plus invariants.</p>
+  <ul class="lc-chips"><li>Evaluating Agentic Systems with LangGraph &amp; LangChain</li><li>⏱ 50–60 min</li><li>Intermediate</li></ul>
+  <div class="lc-actions">
+    <a class="btn btn-hue" href="https://colab.research.google.com/github/varoonsahgal/adv-model-eval-student/blob/main/labs/06-agent-evaluation-langgraph-lab.ipynb" target="_blank" rel="noopener"><span class="play" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 10 10"><path d="M2 1l7 4-7 4z" fill="currentColor"/></svg></span>Open in Colab</a>
+    <a class="lc-more" href="lab-06-lg.html">Lab guide <span aria-hidden="true">→</span></a>
+  </div>
+</article>
+<article class="lab-card reveal" id="lab-06b" style="--hue:#818cf8;--hue-rgb:129,140,248;--hue-ink:#4a518f" data-family="agent" data-kind="side">
+  <div class="lc-art"><svg class="ill" viewBox="0 0 250 168" role="img" aria-hidden="true" focusable="false"><defs><marker id="ah" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" class="ahf"/></marker></defs>
+<rect class="h fh" x="34" y="44" width="58" height="50" rx="10"/><circle class="w2" cx="52" cy="66" r="5"/>
+<circle class="w2" cx="74" cy="66" r="5"/><path class="h" d="M63 44 v-12"/><circle class="h fh" cx="63" cy="28" r="5"/>
+<g transform="rotate(-35 132 54)"><rect class="w fd" x="114" y="28" width="38" height="15" rx="3"/><path class="w" d="M133 43 v42"/></g>
+<g transform="translate(26 120)"><circle class="gbf" cx="0" cy="0" r="10"/><circle class="gbf" cx="30" cy="0" r="10"/>
+<circle class="rbf" cx="60" cy="0" r="10"/><circle class="gbf" cx="90" cy="0" r="10"/><circle class="rbf" cx="120" cy="0" r="10"/></g>
+<text class="hl" x="172" y="125">pass^5</text><text x="172" y="88">pass@5</text><text class="gtx" x="172" y="104">100%</text>
+<text class="rtx" x="172" y="142">?</text></svg></div>
+  <div class="lc-kick"><span>Lab 06b</span><span class="sep">·</span><span>Build</span><span class="lc-side">Side quest</span></div>
+  <h3><a href="lab-06b.html">Best of Five</a></h3>
+  <p class="lc-tag">It passed every task once. Is once enough?</p>
+  <p class="lc-hook">Build a tool-calling billing agent, then prove it works. It passes <b>every</b> task at least once in five tries. You’ll see the same run reported as “100%” and as “about 1 in 3”, and learn which number predicts wrong refunds.</p>
+  <ul class="lc-chips"><li>Build Your Own Agent — Then Prove It Works</li><li>⏱ ≈ 80 min</li><li>Advanced</li></ul>
+  <div class="lc-actions">
+    <a class="btn btn-hue" href="https://colab.research.google.com/github/varoonsahgal/adv-model-eval-student/blob/main/labs/06b-build-and-evaluate-agent-lab.ipynb" target="_blank" rel="noopener"><span class="play" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 10 10"><path d="M2 1l7 4-7 4z" fill="currentColor"/></svg></span>Open in Colab</a>
+    <a class="lc-more" href="lab-06b.html">Lab guide <span aria-hidden="true">→</span></a>
+  </div>
+</article>
+<article class="lab-card reveal" id="lab-06c" style="--hue:#f472b6;--hue-rgb:244,114,182;--hue-ink:#8d4269" data-family="agent" data-kind="side">
+  <div class="lc-art"><svg class="ill" viewBox="0 0 250 168" role="img" aria-hidden="true" focusable="false"><defs><marker id="ah" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" class="ahf"/></marker></defs>
+<rect class="w fd" x="20" y="18" width="92" height="26" rx="12"/><rect class="h fh" x="104" y="52" width="104" height="26" rx="12"/>
+<rect class="w fd" x="20" y="86" width="80" height="26" rx="12"/><rect class="h fh" x="96" y="120" width="112" height="26" rx="12"/>
+<path class="w2" d="M32 31h56M116 65h64M32 99h48M108 133h72"/>
+<path class="g" d="M186 64 l5 5 l10 -11"/><path class="g" d="M186 132 l5 5 l10 -11"/><path class="g" d="M84 30 l5 5 l10 -11"/>
+<rect class="note" x="214" y="18" width="28" height="34" rx="4"/><text class="nt" x="222" y="41">?</text>
+<path class="r" d="M30 156 h180" stroke-dasharray="6 7"/></svg></div>
+  <div class="lc-kick"><span>Lab 06c</span><span class="sep">·</span><span>Converse</span><span class="lc-side">Side quest</span></div>
+  <h3><a href="lab-06c.html">Every Turn Passed</a></h3>
+  <p class="lc-tag">Conversations, not prompts.</p>
+  <p class="lc-hook">Two tax-help assistants. One answers in its first reply and wins every per-turn helpfulness score. One asks for missing facts first. Simulated customers with hidden facts talk to both. Which one gives people the right number?</p>
+  <ul class="lc-chips"><li>Conversations, Not Prompts: Evaluating Multi-Turn Assistants with Simulated Users</li><li>⏱ ≈ 80 min</li><li>Intermediate–advanced</li></ul>
+  <div class="lc-actions">
+    <a class="btn btn-hue" href="https://colab.research.google.com/github/varoonsahgal/adv-model-eval-student/blob/main/labs/06c-multi-turn-assistant-eval-lab.ipynb" target="_blank" rel="noopener"><span class="play" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 10 10"><path d="M2 1l7 4-7 4z" fill="currentColor"/></svg></span>Open in Colab</a>
+    <a class="lc-more" href="lab-06c.html">Lab guide <span aria-hidden="true">→</span></a>
+  </div>
+</article>
+<article class="lab-card reveal" id="lab-07" style="--hue:#f87171;--hue-rgb:248,113,113;--hue-ink:#8f4141" data-family="safe" data-kind="core">
+  <div class="lc-art"><svg class="ill" viewBox="0 0 250 168" role="img" aria-hidden="true" focusable="false"><defs><marker id="ah" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" class="ahf"/></marker></defs>
+<path class="h fh" d="M96 18 l52 20 v40 c0 36 -24 58 -52 70 c-28 -12 -52 -34 -52 -70 v-40z"/>
+<path class="g" d="M84 74 l5 5 l10 -11"/><path class="r" d="M104 106 l-6 10 l8 6 l-5 12"/>
+<text class="hl" x="160" y="44">0 / 30</text><text x="166" y="62">blocked</text>
+<text class="rtx" x="168" y="102">pl3ase</text><text class="rtx" x="176" y="122">ign0re</text><text class="rtx" x="160" y="142">  rules</text></svg></div>
+  <div class="lc-kick"><span>Lab 07</span><span class="sep">·</span><span>Defend</span></div>
+  <h3><a href="lab-07.html">Zero of Thirty</a></h3>
+  <p class="lc-tag">No jailbreak worked. What does that prove?</p>
+  <p class="lc-hook">The guardrail vendor’s demo says <b>0 of 30 jailbreaks succeeded</b>. QA says the support bot answers the same question differently when it’s rephrased, and sometimes helps when it should refuse. Launch is Friday.</p>
+  <ul class="lc-chips"><li>Robustness, Safety &amp; Guardrails</li><li>⏱ 55–65 min</li><li>Intermediate–advanced</li></ul>
+  <div class="lc-actions">
+    <a class="btn btn-hue" href="https://colab.research.google.com/github/varoonsahgal/adv-model-eval-student/blob/main/labs/07-robustness-safety-lab.ipynb" target="_blank" rel="noopener"><span class="play" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 10 10"><path d="M2 1l7 4-7 4z" fill="currentColor"/></svg></span>Open in Colab</a>
+    <a class="lc-more" href="lab-07.html">Lab guide <span aria-hidden="true">→</span></a>
+  </div>
+</article>
+<article class="lab-card reveal" id="lab-07b" style="--hue:#fb7185;--hue-rgb:251,113,133;--hue-ink:#91414d" data-family="safe" data-kind="side">
+  <div class="lc-art"><svg class="ill" viewBox="0 0 250 168" role="img" aria-hidden="true" focusable="false"><defs><marker id="ah" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" class="ahf"/></marker></defs>
+<rect class="w fd" x="26" y="18" width="104" height="134" rx="8"/><text x="38" y="40">INVOICE #2210</text>
+<path class="w2" d="M38 56h80M38 70h64M38 84h72"/>
+<rect class="rf2" x="34" y="98" width="88" height="40" rx="5"/><text class="rt" x="40" y="114">memo: also</text>
+<text class="rt" x="40" y="130">refund #2211</text>
+<rect class="h fh" x="168" y="58" width="56" height="48" rx="10"/><circle class="hf" cx="184" cy="80" r="4"/><circle class="hf" cx="208" cy="80" r="4"/>
+<path class="h" d="M196 58 v-12"/><circle class="h fh" cx="196" cy="42" r="5"/>
+<path class="hd" d="M166 86 L126 116"/><circle class="gb" cx="220" cy="126" r="12"/><path class="g" d="M214 125 l5 5 l10 -11"/></svg></div>
+  <div class="lc-kick"><span>Lab 07b</span><span class="sep">·</span><span>Attack</span><span class="lc-side">Side quest</span></div>
+  <h3><a href="lab-07b.html">The Poisoned Memo</a></h3>
+  <p class="lc-tag">The attacker never talks to your agent.</p>
+  <p class="lc-hook">Your billing agent verifies identity and follows every policy. Can someone who never talks to it still get a refund out of it? An attacker who can only edit an <b>invoice memo</b> is about to find out.</p>
+  <ul class="lc-chips"><li>Red-Team Your Agent — Indirect Prompt Injection</li><li>⏱ ≈ 50 min</li><li>Advanced</li></ul>
+  <div class="lc-actions">
+    <a class="btn btn-hue" href="https://colab.research.google.com/github/varoonsahgal/adv-model-eval-student/blob/main/labs/07b-agent-red-team-lab.ipynb" target="_blank" rel="noopener"><span class="play" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 10 10"><path d="M2 1l7 4-7 4z" fill="currentColor"/></svg></span>Open in Colab</a>
+    <a class="lc-more" href="lab-07b.html">Lab guide <span aria-hidden="true">→</span></a>
+  </div>
+</article>
+<article class="lab-card reveal" id="lab-08" style="--hue:#ff7a45;--hue-rgb:255,122,69;--hue-ink:#934628" data-family="pipe" data-kind="core">
+  <div class="lc-art"><svg class="ill" viewBox="0 0 250 168" role="img" aria-hidden="true" focusable="false"><defs><marker id="ah" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" class="ahf"/></marker></defs>
+<path class="h fh" d="M96 18 c22 18 26 52 18 84 h-36 c-8 -32 -4 -66 18 -84z"/><circle class="w" cx="96" cy="58" r="9"/>
+<path class="h" d="M78 92 l-16 20 h18 M114 92 l16 20 h-18"/><path class="r" d="M88 108 q8 18 16 0"/>
+<path class="w" d="M40 140 h112"/>
+<rect class="w fd" x="178" y="32" width="40" height="104" rx="12"/>
+<circle class="gbf" cx="198" cy="54" r="10"/><circle class="gbf" cx="198" cy="84" r="10"/><circle class="rbf" cx="198" cy="114" r="10"/>
+<text class="hl" x="160" y="156">T–0 · 4:40 pm</text></svg></div>
+  <div class="lc-kick"><span>Lab 08</span><span class="sep">·</span><span>Launch</span></div>
+  <h3><a href="lab-08.html">The Launch Decision</a></h3>
+  <p class="lc-tag">Friday, 4:40 pm. Your signature goes here.</p>
+  <p class="lc-hook">v2.1 beat v2.0 on <b>22 of 30</b> test slices and the launch post is drafted. Are the wins real? Does it still work the eighth time a customer asks? Did it ever say what it must never say? Build the pipeline that answers, then sign.</p>
+  <ul class="lc-chips"><li>The Launch Decision: An End-to-End Evaluation Pipeline</li><li>⏱ 55–65 min</li><li>Advanced</li></ul>
+  <div class="lc-actions">
+    <a class="btn btn-hue" href="https://colab.research.google.com/github/varoonsahgal/adv-model-eval-student/blob/main/labs/08-end-to-end-pipeline-lab.ipynb" target="_blank" rel="noopener"><span class="play" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 10 10"><path d="M2 1l7 4-7 4z" fill="currentColor"/></svg></span>Open in Colab</a>
+    <a class="lc-more" href="lab-08.html">Lab guide <span aria-hidden="true">→</span></a>
+  </div>
+</article><aside class="route-card reveal" data-kind="meta" data-family="meta"><p class="kicker">Short on time?</p><h3>Pick the lab that matches your job</h3><ul><li><a href="lab-05b.html" style="--hue:#fb923c;--hue-rgb:251,146,60;--hue-ink:#915422">Comparing prompt or model versions?<b>Lab 05b</b></a></li><li><a href="lab-06c.html" style="--hue:#f472b6;--hue-rgb:244,114,182;--hue-ink:#8d4269">Building a chat assistant?<b>Lab 06c</b></a></li><li><a href="lab-04b.html" style="--hue:#a3e635;--hue-rgb:163,230,53;--hue-ink:#5e851e">Shipping RAG on your own docs?<b>Lab 04b</b></a></li><li><a href="lab-07b.html" style="--hue:#fb7185;--hue-rgb:251,113,133;--hue-ink:#91414d">Letting an agent act on data?<b>Lab 07b</b></a></li><li><a href="lab-04c.html" style="--hue:#facc15;--hue-rgb:250,204,21;--hue-ink:#91760c">Answering questions over a database?<b>Lab 04c</b></a></li></ul></aside></div>
+</section>
+
+<section class="section" id="inside">
+ <p class="kicker">Every lab, every task</p>
+ <h2 class="h2">The loop you’ll <em>run all day</em></h2>
+ <p class="sub">No lab lectures first. Each task asks for your guess, then lets the numbers argue with it.</p>
+ <div class="loop">
+  <div class="beat reveal" style="--c:var(--violet)"><div class="ic">🔮</div><h4>Predict</h4><p>Commit to a guess before the cell runs. Your gut gets a score.</p></div>
+  <div class="beat reveal" style="--c:var(--blue)"><div class="ic">▶️</div><h4>Run</h4><p>Short, readable cells. Offline mocks, fixed seeds: the whole room sees the same numbers.</p></div>
+  <div class="beat reveal" style="--c:var(--aqua)"><div class="ic">👀</div><h4>Reveal</h4><p>A scoreboard or one chart whose title states the takeaway.</p></div>
+  <div class="beat reveal" style="--c:var(--gold)"><div class="ic">💡</div><h4>Insight</h4><p>A card computed from <i>your</i> run, ending in a rule of thumb you can use on Monday.</p></div>
+  <div class="beat reveal" style="--c:var(--orange)"><div class="ic">🌉</div><h4>Bridge</h4><p>One sentence on the question the next task answers.</p></div>
+ </div>
+ <div class="preview reveal">
+  <div>
+   <div class="kit-card" style="--c:var(--violet)"><div class="lab">🤯 Counterintuitive</div><div class="hd">The average looked healthy. The worst case did not.</div>
+   <p>Insight cards like this one appear right after a result, with the numbers from your own run. <b>Rule of thumb:</b> gate on what must never happen; average the rest.</p></div>
+   <div class="kit-card" style="--c:#52514e"><div class="lab">📚 What the research says</div><div class="hd">Every claim is sourced and dated.</div>
+   <p>Research cards cite the paper or post, the year, and what it means for this lab.</p></div>
+  </div>
+  <div>
+   <div class="kit-tiles"><div class="kit-tile" style="--c:var(--pass-deep)"><div class="l">Pass rate</div><div class="v">82%</div><div class="s">±11 pts, n = 50</div></div>
+   <div class="kit-tile" style="--c:var(--red)"><div class="l">Hard gate</div><div class="v">2</div><div class="s">must be 0</div></div>
+   <div class="kit-tile" style="--c:var(--gold)"><div class="l">Judge κ</div><div class="v">0.71</div><div class="s">target ≥ 0.7</div></div></div>
+   <div class="kit-verdict" style="--c:var(--red)"><div class="vd">🛑 BLOCK</div><ul><li>Two hard-gate violations</li><li>The gain sits inside the noise</li></ul></div>
+   <p class="preview-note">Illustrative only: your labs compute their own numbers.</p>
+  </div>
+ </div>
+</section>
+
+<section class="section" id="cast">
+ <p class="kicker">Recurring characters · 29 strips</p>
+ <h2 class="h2">Meet the <em>cast</em></h2>
+ <p class="sub">Every lab opens with a comic, and the punchline is the lab’s key insight. You’ll know these six by lunch.</p>
+ <div class="cast"><figure class="person reveal"><img src="img/cast/eng.webp" alt="The Engineer, drawn as a stick figure" width="455" height="496" loading="lazy"><figcaption><b>The Engineer</b><span>Skeptical. Does the measuring. Asks which 50 examples.</span></figcaption></figure><figure class="person reveal"><img src="img/cast/pm.webp" alt="The PM, drawn as a stick figure" width="455" height="496" loading="lazy"><figcaption><b>The PM</b><span>Optimistic. Wants to ship Monday. Every lab starts with their message.</span></figcaption></figure><figure class="person reveal"><img src="img/cast/bot.webp" alt="The Model, drawn as a stick figure" width="455" height="496" loading="lazy"><figcaption><b>The Model</b><span>Fluent, fast, confident, and occasionally wrong.</span></figcaption></figure><figure class="person reveal"><img src="img/cast/judge.webp" alt="The LLM Judge, drawn as a stick figure" width="455" height="496" loading="lazy"><figcaption><b>The LLM Judge</b><span>Lenient, easily flattered by bold bullet points.</span></figcaption></figure><figure class="person reveal"><img src="img/cast/auditor.webp" alt="The Auditor, drawn as a stick figure" width="455" height="496" loading="lazy"><figcaption><b>The Auditor</b><span>Asks for evidence. Usually right to.</span></figcaption></figure><figure class="person reveal"><img src="img/cast/user.webp" alt="The Customer, drawn as a stick figure" width="455" height="496" loading="lazy"><figcaption><b>The Customer</b><span>Gets one try. Just wants the right number.</span></figcaption></figure></div>
+</section>
+
+<section class="section" id="preflight">
+ <p class="kicker">Two minutes, before Lab 01</p>
+ <h2 class="h2">Pre-<em>flight</em></h2>
+ <p class="sub">Everything runs in Google Colab. You need a Google account and a browser. That’s it.</p>
+ <div class="preflight">
+  <ul class="checks">
+   <li><label><input type="checkbox" data-check="google"><span><b>Sign in to Google</b> in your browser. Any account works.</span></label></li>
+   <li><label><input type="checkbox" data-check="open"><span>Click <b>Open in Colab</b> on Lab 01. It opens a read-only copy from GitHub.</span></label></li>
+   <li><label><input type="checkbox" data-check="copy"><span><b>File → Save a copy in Drive.</b> Now your edits and predictions are yours.</span></label></li>
+   <li><label><input type="checkbox" data-check="run"><span><b>Runtime → Run all</b> (<kbd>Ctrl</kbd> <kbd>F9</kbd>). The first cell installs what it needs, about a minute.</span></label></li>
+   <li><label><input type="checkbox" data-check="kit"><span>Look for the line below. If you see it, you’re ready.</span></label></li>
+  </ul>
+  <div>
+   <div class="terminal"><div class="bar"><i></i><i></i><i></i><span>Colab · first cells</span></div>
+<pre><span class="dim">$ Runtime → Run all</span>
+<span class="ok">✅ Imports OK · PROVIDER = 'mock'</span>
+<span class="ok">🎨 Lab kit loaded: insight(), tiles(), verdict(), style_charts()</span></pre></div>
+   <p class="keys-note"><b>No keys needed.</b> Every lab runs offline on seeded mocks. Want a real model? Add
+   <code>OPENAI_API_KEY</code> or <code>ANTHROPIC_API_KEY</code> to Colab’s 🔑 Secrets panel and flip the lab’s
+   <code>PROVIDER</code> switch. Lab 01 can also connect to a free Langfuse account.</p>
+  </div>
+ </div>
+</section>
+
+<section class="section" id="takeaways">
+ <p class="kicker">Across all fifteen labs</p>
+ <h2 class="h2">Six rules to <em>leave with</em></h2>
+ <p class="sub">Each one is a plot twist you’ll have seen with your own numbers.</p>
+ <div class="rules"><div class="rule reveal" style="--c:#4f9bff"><div><h4>Read the trace, not the answer.</h4><p>Twenty minutes of reading traces finds failure modes no metric names yet. Write evals for what you saw.</p>
+<div class="labs"><a href="lab-01.html">Lab 01</a><a href="lab-02.html">Lab 02</a></div></div></div><div class="rule reveal" style="--c:#2dd4bf"><div><h4>Valid is not right.</h4><p>Schema validity is nearly free in 2026. Score the values, the whole record, and what the model left blank.</p>
+<div class="labs"><a href="lab-03.html">Lab 03</a><a href="lab-04c.html">Lab 04c</a></div></div></div><div class="rule reveal" style="--c:#34d399"><div><h4>Faithful is not correct.</h4><p>An answer can match its sources perfectly and still be wrong. Check sufficiency, freshness and when it should decline.</p>
+<div class="labs"><a href="lab-04.html">Lab 04</a><a href="lab-04b.html">Lab 04b</a></div></div></div><div class="rule reveal" style="--c:#fbbf24"><div><h4>Agreement is not accuracy.</h4><p>A judge that says PASS to everything agrees with you most of the time. Calibrate it against people, then correct its number.</p>
+<div class="labs"><a href="lab-05.html">Lab 05</a><a href="lab-05b.html">Lab 05b</a></div></div></div><div class="rule reveal" style="--c:#a78bfa"><div><h4>Grade the world, not the words.</h4><p>For agents: check the end state and the rules it must never break, on every try a customer gets.</p>
+<div class="labs"><a href="lab-06.html">Lab 06</a><a href="lab-06b.html">Lab 06b</a><a href="lab-06c.html">Lab 06c</a></div></div></div><div class="rule reveal" style="--c:#ff7a45"><div><h4>One run is an anecdote.</h4><p>Put an interval on every rate, run an A/A test before you trust a regression alarm, and gate on what must never happen.</p>
+<div class="labs"><a href="lab-05b.html">Lab 05b</a><a href="lab-07.html">Lab 07</a><a href="lab-08.html">Lab 08</a></div></div></div></div>
+</section>
+
+<section class="section" id="stack">
+ <p class="kicker">Current as of November 2026</p>
+ <h2 class="h2">Built on <em>today’s</em> stack</h2>
+ <p class="sub">Current model IDs and APIs, no retired endpoints, and real-provider code you can switch on when you’re ready.</p>
+ <ul class="stack reveal"><li><b>Models</b> gpt-6-luna · claude-haiku-5-5</li><li><b>APIs</b> OpenAI Responses · Claude structured outputs</li><li><b>Tracing</b> Langfuse v5 · OpenTelemetry GenAI</li><li><b>Agents</b> LangChain & LangGraph 1.x</li><li><b>Eval runners</b> Promptfoo · Inspect AI · DeepEval</li><li><b>Default</b> offline mocks · fixed seeds</li></ul>
+</section>
+</div>
+</main>
+<footer class="foot"><div class="wrap">
+<p><b>Advanced AI Model Evaluation · Lab Hub.</b> Every company, product and character in these labs is fictional.
+Tax and accounting rules in the labs are simplified teaching rules, not advice. Labs run in Google Colab:
+<b>File → Save a copy in Drive</b> keeps your edits.</p>
+<div class="links"><a href="index.html#labs">All labs</a><a href="glossary.html">Glossary</a>
+<a href="https://github.com/varoonsahgal/adv-model-eval-student">GitHub</a></div>
+</div></footer>
+<dialog class="lightbox" aria-label="Comic strip"><button type="button" aria-label="Close">×</button>
+<img alt=""><p class="cap"></p></dialog>
+<script src="assets/site.js" defer></script>
+</body>
+</html>
