@@ -81,10 +81,10 @@
   if (box && typeof box.showModal === "function") {
     var img = box.querySelector("img"), cap = box.querySelector(".cap");
     document.addEventListener("click", function (e) {
-      var b = e.target.closest("button.comic");
+      var b = e.target.closest("button.comic, button.zoomable");
       if (!b) return;
       img.src = b.getAttribute("data-full");
-      img.alt = "Comic strip: " + (b.getAttribute("data-cap") || "");
+      img.alt = (b.getAttribute("data-alt") || b.getAttribute("data-cap") || "");
       cap.textContent = b.getAttribute("data-cap") || "";
       box.showModal();
     });
@@ -149,4 +149,78 @@
       if (empty) empty.hidden = n !== 0;
     });
   }
+
+  /* ---- scroll progress */
+  var sb = document.querySelector(".scrollbar");
+  if (sb) {
+    var onScroll = function () {
+      var h = document.documentElement, max = h.scrollHeight - h.clientHeight;
+      sb.style.width = (max > 0 ? Math.min(100, 100 * h.scrollTop / max) : 0) + "%";
+    };
+    window.addEventListener("scroll", onScroll, { passive: true }); onScroll();
+  }
+
+  /* ---- lab cards: tilt + cursor glow (pointer devices only) */
+  var canTilt = window.matchMedia && window.matchMedia("(hover: hover)").matches && !reduce;
+  document.querySelectorAll(".lab-card").forEach(function (card) {
+    if (!card.querySelector(".glow")) { var g = document.createElement("span"); g.className = "glow"; card.appendChild(g); }
+    if (!canTilt) return;
+    card.addEventListener("pointermove", function (e) {
+      var r = card.getBoundingClientRect();
+      var px = (e.clientX - r.left) / r.width, py = (e.clientY - r.top) / r.height;
+      card.style.setProperty("--mx", (px * 100).toFixed(1) + "%");
+      card.style.setProperty("--my", (py * 100).toFixed(1) + "%");
+      card.style.setProperty("--ry", ((px - .5) * 7).toFixed(2) + "deg");
+      card.style.setProperty("--rx", ((.5 - py) * 7).toFixed(2) + "deg");
+      card.classList.add("tilt");
+    });
+    card.addEventListener("pointerleave", function () {
+      card.classList.remove("tilt"); card.style.removeProperty("--rx"); card.style.removeProperty("--ry");
+    });
+  });
+
+  /* ---- progress: labs marked done (this browser only) */
+  var doneBoxes = Array.prototype.slice.call(document.querySelectorAll("input[data-done]"));
+  var prog = document.querySelector(".progress");
+  function refreshProgress() {
+    var total = parseInt((prog && prog.getAttribute("data-total")) || "15", 10), n = 0;
+    for (var i = 0; i < total + 20; i++) { /* count keys, not boxes: lab pages have one box */ }
+    var ids = (prog && prog.getAttribute("data-ids") || "").split(",").filter(Boolean);
+    ids.forEach(function (id) { if (store("done:" + id) === "1") n++; });
+    if (!prog) return;
+    var p = ids.length ? Math.round(100 * n / ids.length) : 0;
+    prog.style.setProperty("--p", p);
+    var ring = prog.querySelector(".ring b"); if (ring) ring.textContent = p + "%";
+    var txt = prog.querySelector(".txt"); if (txt) txt.innerHTML = "<b>" + n + " of " + ids.length + "</b> labs done" + (n === ids.length && n ? " · course complete 🎉" : n ? " · keep going" : " · tick a lab’s box when you’ve run it");
+  }
+  doneBoxes.forEach(function (cb) {
+    var id = cb.getAttribute("data-done"), card = cb.closest(".lab-card");
+    var on = store("done:" + id) === "1";
+    cb.checked = on; if (card) card.classList.toggle("is-done", on);
+    cb.addEventListener("change", function () {
+      store("done:" + id, cb.checked ? "1" : "0");
+      if (card) card.classList.toggle("is-done", cb.checked);
+      refreshProgress();
+    });
+  });
+  refreshProgress();
+
+  /* ---- ticker: duplicate the track once so the loop is seamless */
+  var track = document.querySelector(".ticker-track");
+  if (track && !reduce) { track.innerHTML += track.innerHTML; }
+
+  /* ---- "/" focuses the glossary search */
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "/" && !/input|textarea/i.test(document.activeElement.tagName)) {
+      var qq = document.getElementById("q"); if (qq) { e.preventDefault(); qq.focus(); }
+    }
+  });
+
+  /* ---- hero family chips jump to the catalog and apply the matching filter */
+  document.querySelectorAll("a[data-go]").forEach(function (a) {
+    a.addEventListener("click", function () {
+      var f = a.getAttribute("data-go"), btn = document.querySelector('.chip[data-filter="' + f + '"]');
+      if (btn) btn.click();
+    });
+  });
 })();
