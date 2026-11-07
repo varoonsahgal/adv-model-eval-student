@@ -1,6 +1,6 @@
 # ✍️ Module 05: Evaluating Generative Outputs
 
-> **Lab:** [`labs/05-generative-outputs-lab.ipynb`](../../labs/05-generative-outputs-lab.ipynb) · **Time:** 60–75 min core (+15 min stretch) · **Tools:** Python, `pandas`, `scikit-learn`, `pydantic` · **Keys needed:** none (a simulated judge runs offline; real OpenAI/Anthropic judges are optional)
+> **Lab:** [`labs/05-generative-outputs-lab.ipynb`](../../labs/05-generative-outputs-lab.ipynb) · **Time:** 60–75 min core (+45 min for the five challenges) · **Tools:** Python, `pandas`, `scikit-learn`, `pydantic` · **Keys needed:** none (a simulated judge runs offline; real OpenAI/Anthropic judges are optional)
 
 ![Four lenses on generated text, and the judge itself gets validated](images/pipeline.png)
 
@@ -255,7 +255,10 @@ A factuality-only evaluator would have shipped it.
 - 📖 Skim the **source data** for GreenLeaf before Task 3; the lab hinges on what the summary leaves out.
 - ✍️ Tasks 5 and 7 are **design** tasks with no single right answer. Commit to your criteria *before* you see the reference implementation.
 - 🔮 Fill in the **prediction card** in Task 1 (five numbers), and answer each task's **Predict** prompt before running it. Key Takeaways scores your card; the surprises are the point.
-- 🏦 Each task has an **In your world** line mapping it to tax, bookkeeping or credit work, and Challenge 1 is a small-business bookkeeping variant.
+- 🧰 Collapsed cells (titled `🧰 …`) are plumbing: data, mock judges, chart code. They run under *Run all*; read the short cells instead, each of which marks the line that matters with `👀 Look at:`.
+- 📘 Six **Concept** blocks define a term where the lab first leans on it (atomic claim, relative error, binary check, TPR/TNR, κ, bias probe); the glossary below backs them up.
+- 🏦 Each task has an **In your world** line mapping it to tax, bookkeeping or credit work. Two of the five challenges are built that way: Challenge 1 (a bakery's bookkeeping summary) and Challenge 4 (a refund explanation's wrong number).
+- 🏆 The lab ends with **five challenges**. Do 1 and 4 first (10 minutes each); 3 and 5 are the hard pair: fix the risk judge, then find what its perfect score never measured.
 - 🔍 Keep a note of every place an automated layer **misses** something you can see, including the judge.
 
 ---

@@ -323,6 +323,9 @@ Decision: **BLOCK**, and the fix belongs in the **conditional logic after the ca
 
 - 🕵️ **Task 1 (06)** asks for a SHIP / BLOCK decision *before* any evaluator runs. Commit to it; you'll revisit it.
 - 💻 **(06)** Exercises 4A, 5A, 11A and 13A have reference fallbacks, so *Run All* always works. Flip each `EXERCISE_*_COMPLETE` flag to `True` once you implement it.
+- 🧰 **(06)** Fixtures, helpers and those fallbacks are collapsed form cells that show only a title. They run under *Run All*; expand one only if you're curious, and expand a fallback only after you've tried the exercise.
+- 📘 **(06)** Six concept blocks (invariant, end-state grading, hard gate vs diagnostic score, calibration set / TPR / TNR, pass@k vs pass^k, canonical call) appear where the lab first leans on each; read the "what it can't tell you" line, because the next task exploits it.
+- 🏆 **(06)** Five challenges close the lab: fool the hardened grader, gate a spending cap, break an invariant by binding the wrong week, budget how many labeled failures a judge needs before you can claim ≥ 90% TPR, and catch a loop that never repeats its arguments. Each starter runs as shipped and prints ✅/❌.
 - 🏗️ **(LG)** Read the `@tool` docstrings carefully: they are the only thing a real model would see about each tool.
 - 🧠 Keep asking: *"What became true in the world, and was the agent allowed to make it true?"*
 

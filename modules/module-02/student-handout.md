@@ -253,6 +253,9 @@ What the numbers look like in the verified run:
 - 🗒️ In Task 3 you'll write open codes for 15 traces (about 6 minutes). The **reviewer's cheat sheet** in the lab tells you the policies and facts a domain expert knows.
 - 🔮 Each task asks you to **predict** before running. Write your guess down; the surprises are the point.
 - 🎯 Be ready to defend your "fix first" choice in one sentence to a manager who doesn't want a list of 40 bugs.
+- 🧰 Some code cells are collapsed (titles starting with 🧰): fixtures and chart helpers. They run under *Run all*; the visible cells are the ones to read, and each marks the line that matters with `# 👀 Look at:`.
+- 📘 Six concept blocks (open coding, saturation, ARI, root-cause layer, harness, impact score) define each term where the lab first leans on it; the 📖 jargon decoder is the safety net.
+- 🏆 Five challenge exercises close the lab (🌶️ to 🌶️🌶️🌶️), each with a starter that checks your answer: break the cheap check, derive a reading budget, write a harness-cap detector, decide which half of a stratified sample to report, and measure how lucky your stopping rule was.
 
 ---
 

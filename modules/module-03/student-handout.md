@@ -248,6 +248,10 @@ The record is schema-valid and its subtotal, tax and total agree with each other
 
 ## 🚀 Before You Start the Lab
 
+- **Collapsed cells.** Plumbing (data, provider calls, chart code) sits in grey `# @title` cells that *Run All* executes; expand them only if curious. The cells you read are short.
+- **📘 Concept blocks** introduce each idea in three sentences right before the lab leans on it; the lab page on the course site lists them.
+- **Five 🏆 challenges** close the lab (+30 min), each built around one point you discover by solving it; starters run as shipped and print ✅/❌. New in this edition: a cross-record duplicate check (Challenge 4) and projecting accuracy onto the production invoice mix (Challenge 5).
+
 - 🔌 Leave `PROVIDER = "mock"`. The lab replays recorded strict-mode extractions, so everyone sees the same numbers. Try a live provider afterwards if you have a key.
 - ✍️ Task 4 (weights) and Task 8 (business rules) are yours to write; both fall back to reference versions until you finish, so *Run All* always works.
 - 🔮 Each task starts with a **Predict** prompt, and Task 1 asks you to record five numeric guesses in `MY_PREDICTIONS`. A scorecard at the end grades them; the gap between guess and result is where the learning is.

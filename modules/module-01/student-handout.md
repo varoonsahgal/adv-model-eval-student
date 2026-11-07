@@ -301,6 +301,10 @@ What you'll see in the lab's simulated morning of traffic (local mode; Langfuse 
 
 ## 🚀 Before You Start the Lab
 
+- **Collapsed cells.** Plumbing (data, provider calls, chart code) sits in grey `# @title` cells that *Run All* executes; expand them only if curious. The cells you read are short.
+- **📘 Concept blocks** introduce each idea in three sentences right before the lab leans on it; the lab page on the course site lists them.
+- **Five 🏆 challenges** close the lab (+30 min), each built around one point you discover by solving it; starters run as shipped and print ✅/❌. New in this edition: who ate the budget (Challenge 4, cost tails are input-driven) and paging on the p95 without paging on luck (Challenge 5).
+
 1. 🌍 Pick a Langfuse Cloud **region** (US `us.cloud.langfuse.com` or EU `cloud.langfuse.com`) and **remember it**.
 2. 🏢 Create an **organization** and a **project** (e.g. `trace-eval-lab`).
 3. 🔑 Create API keys (**Settings → API Keys**). Copy the public `pk-lf-…` and secret `sk-lf-…` keys. The secret is shown **once**.
