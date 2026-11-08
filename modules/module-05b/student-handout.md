@@ -230,7 +230,8 @@ theta = (p_obs + tnr - 1) / (tpr + tnr - 1)              # Rogan-Gladen judge co
 ## 🚀 Before You Start the Lab
 
 - 🆓 Everything runs offline with no keys. Run the three setup cells first (imports, 🎨 Lab kit, 🧰 Lab harness).
-- 🏆 Three 🌶️ challenge exercises at the end (zero-failure bounds, same-κ judges, delta-method SE) for those who want more.
+- 🏆 Five 🌶️ challenge exercises at the end for those who want more: zero-failure bounds, same-κ judges, the delta-method SE, a failure queue that "improves" with no change, and an estimator that is 3.5× tighter until filing season changes the traffic.
+- 🧰 Chart code, widget wiring and challenge checkers sit in collapsed 🧰 cells: they run with *Run All*, and the visible code is the statistics. Each new idea gets a short 📘 **Concept** block (what it is, what it can't tell you, an example) right before you use it.
 - 🎛️ Two interactive cells: a **p-hacking slot machine** (Task 9) and a **judge slider** (Task 8). Both also draw a static view, so Run All works anywhere.
 - 🧠 Four short exercises (3A paired CI, 6A sample size, 7A judge metrics, 8A deriving the judge correction). Each is followed by a ✅ check cell that falls back to a reference implementation if yours isn't ready, so **Run All always works**.
 - 🔮 Task 1 asks you to lock in **five numeric predictions**; the lab scores them at the end. Each task also starts with a **Predict** prompt. Commit to a guess before running: the surprises are the point.

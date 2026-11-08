@@ -111,7 +111,7 @@ A **metric glossary** (also called a semantic layer) writes the house definition
 
 ### 6. Metamorphic checks: testing without gold
 
-A **metamorphic relation** connects several answers: a quarter's total must equal the sum of its three months, and two phrasings of a question must agree. A violation proves something is wrong, with no answer key, so you can run it on production traffic. Its blind spot is the **systematic** bug: a model that makes the same mistake everywhere satisfies the relation perfectly.
+A **metamorphic relation** connects several answers: a quarter's total must equal the sum of its three months, and two phrasings of a question must agree. A violation proves something is wrong, with no answer key, so you can run it on production traffic. Its blind spot is a bug that moves the whole and its parts by amounts that still add up: a model that adds credits on every row satisfies the relation perfectly (a model that drops every period's last day does not, because the quarter loses one day and its months three).
 
 ### 7. Deciding on paired evidence
 
@@ -163,6 +163,8 @@ The lab then asks the same question of the **answer key**: on 10 of the 50 quest
 - Skim the **schema** and **metric glossary** in the Scenario section. Every bug in the lab is a violation of one glossary line.
 - Three exercises have safe fallbacks: **2A** (comparator), **3A** (fuzzer), **6A** (metamorphic check). If you're short on time, read the hints and move on; later tasks still run.
 - Make the 🔮 predictions *before* running each cell. The lab is designed so that at least two of them will be wrong.
+- Collapsed **🧰** cells hold the harness and the chart plumbing; every open code cell is one worth reading, and a `# 👀 Look at:` comment marks its key line.
+- Five 🏆 challenges close the lab. The two newest: **One afternoon before the gate** (which single eval fix to make first, and why the most rigorous-sounding one makes things worse) and **Catch the habit with no gold** (turn each line of the metric glossary into a production probe).
 
 ---
 

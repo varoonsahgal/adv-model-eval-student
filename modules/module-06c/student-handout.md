@@ -1,6 +1,6 @@
 # 💬 Module 06c: Conversations, Not Prompts: Evaluating Multi-Turn Assistants with Simulated Users
 
-> **Lab:** [`labs/06c-multi-turn-assistant-eval-lab.ipynb`](../../labs/06c-multi-turn-assistant-eval-lab.ipynb) · **Supplemental lab after Module 06** · **Time:** ≈ 80 min core (+10 min optional Task 9, +15–45 min stretch goals and 🏆 challenges) · **Keys needed:** none (offline mock assistant and mock users); optional OpenAI / Anthropic
+> **Lab:** [`labs/06c-multi-turn-assistant-eval-lab.ipynb`](../../labs/06c-multi-turn-assistant-eval-lab.ipynb) · **Supplemental lab after Module 06** · **Time:** ≈ 80 min core (+10 min optional Task 9, +20–60 min stretch goals and five 🏆 challenges) · **Keys needed:** none (offline mock assistant and mock users); optional OpenAI / Anthropic
 
 ![Every turn looks good. The conversation still fails.](images/turns-vs-conversation.png)
 
@@ -235,13 +235,13 @@ The cooperative simulator overstated v1's success by **45 points** and v2's by *
 ## 🚀 Before You Start the Lab
 
 - ⚙️ Keep `PROVIDER = "mock"` and `N_USERS = 5`; the expected outputs are written for them.
-- 🧰 The **Lab harness** cell is hidden infrastructure. You can read it, but it contains the exercise answers.
+- 🧰 Cells titled **🧰 … (hidden)** are plumbing: the Lab harness, charts, helpers and reference fallbacks. They run with *Run All* and their output appears as usual; the visible cells are the ones worth reading. The harness contains the exercise answers, so try first.
 - 💻 Four exercises (3A, 4A, 7A, 8A) each have an `EXERCISE_…_COMPLETE` flag. While it's `False`, a reference implementation runs, so *Run All* always works.
 - 🔮 Every task starts with a **Predict** prompt. Write your guess down before running; the surprises are the point.
 - 🔮 Right after setup you'll record five numeric predictions; the last cell scores them. Commit to real guesses.
 - 🧾 Remember: all tax numbers come from simplified teaching rules.
 - 📖 Unsure of a term? The lab's collapsible **Jargon decoder** (after the Overview) defines all of them.
-- 🏆 Finished early? The **Challenge exercises** at the end ask you to break the turn judge, build an evaluator that needs no oracle, and work out how much "0 critical failures" really proves.
+- 🏆 Finished early? Five **Challenge exercises** at the end ask you to break the turn judge, build an evaluator that needs no oracle, work out how much "0 critical failures" really proves, write the IRS-bill message that slips past the "improved" v3 router, and decide whether more simulated users or more personas buy a tighter interval.
 
 ---
 

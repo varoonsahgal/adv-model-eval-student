@@ -248,7 +248,8 @@ The mock chatbot and guards are **seeded**, so everyone sees the same numbers; T
 - 🎯 For sensitivity probes, copy the **exact** original query string from the dataset.
 - 🏴‍☠️ For the bypass challenge (Task 13), read `BLOCKED_PATTERNS`, `safety_classifier` and `harm_grader` first: knowing what's checked tells you what isn't.
 - ⚖️ Red-team only systems you own or are authorized to test (this lab is a sandbox; all names and emails are fictional).
-- 📖 The lab opens with a collapsible **Jargon decoder** (45 terms); 🏆 three **challenge exercises** in the Stretch section test the Wilson bound, a tax-advice grader and a cost-based threshold choice.
+- 🧰 Fixtures, mocks and chart code sit in collapsed **🧰 cells**: they run with *Run all*, so read the visible cells and expand a 🧰 cell only when a task asks you to (Task 13 does).
+- 📖 The lab opens with a collapsible **Jargon decoder** (55 terms); 🏆 five **challenge exercises** after the Stretch section test the Wilson bound, a tax-advice grader, a cost-based threshold choice, a payroll-guard normalizer that mustn't invent SSNs, and an output filter that games its own gate.
 
 ---
 

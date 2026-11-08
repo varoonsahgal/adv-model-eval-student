@@ -239,10 +239,10 @@ Tokens per trial go **up** (+20%), cost per *success* goes **down** (−13%): th
 ## 🚀 Before You Start the Lab
 
 - ⚙️ Keep `PROVIDER = "mock"` for the whole lab first; the expected outputs are written for it. Try a real model at the end (Stretch D).
-- 🧰 The **Lab harness** cell is hidden infrastructure (world, adapters, graders, runner). You can peek, but it contains reference solutions.
+- 🧰 Cells titled **🧰 … (hidden · N lines)** are plumbing: the lab harness (world, adapters, graders, runner, reference solutions), helpers, fixtures and challenge checks. They run like any other cell; expand one only if you're curious, and try the tasks before you peek at the harness.
 - 📖 In Task 5, **read every step** of the four traces before moving on. It's the highest-value activity in the lab.
 - 📖 Unsure of a term? The lab's collapsed **📖 Jargon decoder** (after the Overview) defines all 32 it uses.
-- 🏆 Finished early? The **Challenge exercises** in the Stretch section ask you to fool the honesty judge, derive how many trials make "5/5" meaningful, and design a grader that works on live, unlabeled traffic.
+- 🏆 Finished early? The five **Challenge exercises** in the Stretch section ask you to fool the honesty judge, derive how many trials make "5/5" meaningful, design a grader that works on live, unlabeled traffic, fix a step cap that leaves a 12-invoice bulk refund half-done, and grade a retry loop that keeps paying refunds the verifier rejected.
 - ⚠️ `MockLLM` understands specific phrasings (email, 5-digit ZIP, `INV-1234`, "refund", "most recent", "$X of"). Write your custom tasks with those.
 
 ---

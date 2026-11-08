@@ -725,19 +725,19 @@ html.static .ill .d { animation: none !important; stroke-dashoffset: 0 !importan
 .concepts { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
 .concepts li { display: grid; grid-template-columns: 34px 1fr; gap: 12px; align-items: start; padding: 14px 16px; border-radius: 12px; background: var(--surface); border: 1px solid var(--rule); border-left: 4px solid var(--hue); }
 .concepts li .ic { font-size: 18px; line-height: 1.2; }
-.concepts li b { display: block; color: var(--head); font-size: 15.5px; margin-bottom: 3px; }
+.concepts li > div > b { display: block; color: var(--head); font-size: 15.5px; margin-bottom: 3px; }
 .concepts li span { font-size: 14.5px; line-height: 1.5; color: var(--ink); }
 .challenges { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; counter-reset: ch; }
 .challenges li { display: grid; grid-template-columns: auto 1fr; gap: 14px; align-items: start; padding: 14px 16px; border-radius: 12px; background: var(--surface); border: 1px solid var(--rule); }
 .challenges .spice { font: 600 11px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); display: grid; gap: 6px; justify-items: center; min-width: 54px; padding-top: 2px; }
 .challenges .spice i { display: flex; gap: 2px; font-style: normal; font-size: 14px; letter-spacing: -2px; }
 .challenges .spice[data-level="1"] i { filter: grayscale(.2); }
-.challenges li b { display: block; color: var(--head); font-size: 15.5px; margin-bottom: 4px; }
+.challenges li > div > b { display: block; color: var(--head); font-size: 15.5px; margin-bottom: 4px; }
 .challenges li span { font-size: 14px; line-height: 1.5; color: var(--ink); }
 .challenges li.new { border-color: rgba(var(--hue-rgb), .55); }
-.challenges li.new b::after { content: "new"; margin-left: 8px; font: 600 10px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--hue-ink); border: 1px solid var(--hue); border-radius: 999px; padding: 3px 6px; vertical-align: middle; }
-:root[data-theme="dark"] .challenges li.new b::after { color: var(--hue); }
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .challenges li.new b::after { color: var(--hue); } }
+.challenges li.new > div > b::after { content: "new"; margin-left: 8px; font: 600 10px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--hue-ink); border: 1px solid var(--hue); border-radius: 999px; padding: 3px 6px; vertical-align: middle; }
+:root[data-theme="dark"] .challenges li.new > div > b::after { color: var(--hue); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .challenges li.new > div > b::after { color: var(--hue); } }
 .go-card .done { color: #c4d0e3; margin-left: 0; font-size: 13.5px; }
 .go-card .actions { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
 
@@ -749,3 +749,5 @@ html.static .ill .d { animation: none !important; stroke-dashoffset: 0 !importan
 .hero-chips a { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; font: 500 12.5px/1 var(--mono); color: #c4d0e3; border: 1px solid var(--stage-rule); border-radius: 999px; padding: 8px 11px; transition: border-color .15s, color .15s, transform .15s; }
 .hero-chips a i { width: 7px; height: 7px; border-radius: 50%; background: var(--hue); box-shadow: 0 0 8px var(--hue); }
 .hero-chips a:hover { color: #fff; border-color: var(--hue); transform: translateY(-1px); }
+
+.concepts li span b, .challenges li span b { color: var(--head); }

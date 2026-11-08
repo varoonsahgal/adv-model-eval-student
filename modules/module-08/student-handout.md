@@ -223,8 +223,9 @@ The lab's verdict is **BLOCK**. The reason isn't the slice count, a threshold, o
 - 🧠 Tasks 2 and 11 are written reflections; Tasks 4 and 10 are code with self-tests and safe fallbacks (*Run All* always works).
 - 🔮 Every task opens with a **Predict** prompt. Commit to a guess before you run; the surprises are the point.
 - 🎤 Draft your executive summary for someone who has 2 minutes and no ML background.
-- 📖 New to the statistics? Open the **Jargon decoder** at the top of the lab (34 terms, one line each).
-- 🏆 Finished early? The Stretch section has three **challenge exercises** (🌶️ to 🌶️🌶️🌶️): break pass^k, build a monitor that tells drift from mix, and derive the sample size a non-inferiority gate demands.
+- 📖 New to the statistics? Open the **Jargon decoder** at the top of the lab (40 terms, one line each). Six 📘 **Concept** boxes define the ideas the lab leans on hardest (hard gate, pass^k, A/A test, paired comparison, drift vs. mix shift, minimum detectable effect) right where you first need them.
+- 🧰 Collapsed **🧰 cells** hold data, simulators and chart code. They run under *Run all*; the code you're meant to read stays visible, with a `# 👀 Look at:` line on the part that matters.
+- 🏆 Finished early? The Stretch section has five **challenge exercises** (🌶️ to 🌶️🌶️🌶️): break pass^k, build a monitor that tells drift from mix, derive the sample size a non-inferiority gate demands, find the tax-season traffic mix at which v2.1 stops winning, and work out how much a real LLM judge slows a canary.
 
 ---
 

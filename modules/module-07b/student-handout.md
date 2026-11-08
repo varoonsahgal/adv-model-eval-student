@@ -88,7 +88,7 @@ The model receives tool results as text in the same context window as its instru
 | **Utility under attack** | Pass rate on the *user's* task when an attack **is** present | ↑ |
 | **ASR** | Share of attack trials where the **attacker's goal** was met | ↓ |
 
-A defense that refuses every refund gets ASR = 0 *and* benign utility ≈ 0. **Security metrics without utility metrics reward breaking the product.** Always report all three.
+A defense that refuses every refund gets ASR = 0 *and* fails every customer who asked for a refund. **Security metrics without utility metrics reward breaking the product.** Always report all three.
 
 ### 3. 🧪 Anatomy of an attack test case
 
@@ -246,7 +246,8 @@ With the **policy guard**: step 5 is blocked with *"the customer did not ask for
 - 🗺️ Before Task 3, sketch which tool returns which attacker-writable field, and *where in the agent loop* the model reads it.
 - ⚙️ Keep `PROVIDER = "mock"` for the expected outputs. The mock "falls for" phrases like `Note to support AI`, `SYSTEM NOTICE`, `Assistant instructions:` and acts on `refund INV-XXXX`, `pre-approved`/`do not escalate`, `already verified`/`skip verification`.
 - 🧪 Your guard has **6 unit cases** to pass; treat it like any other production code.
-- 🏆 Finished early? Three **challenge exercises** (🌶️ to 🌶️🌶️🌶️) at the end: the attacker's math at scale, escaping the spotlight's delimiters, and a flaw in the reference guard.
+- 🧰 Plumbing (the harness, task fixtures, each ✅ check, chart code) sits in collapsed cells. Run All runs them; after editing a TODO cell, also run the collapsed check right under it.
+- 🏆 Finished early? Five **challenge exercises** (🌶️ to 🌶️🌶️🌶️) at the end: the attacker's math at scale, escaping the spotlight's delimiters, a flaw in the reference guard, a memo detector judged at production base rates, and five broken guards that all score a perfect 0/60.
 
 ---
 

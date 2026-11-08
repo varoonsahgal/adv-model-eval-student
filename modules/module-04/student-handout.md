@@ -270,8 +270,9 @@ The same pipeline on Q6 ("pets in the office") gives retrieval **0/5**, both fai
 - 🔍 Before Task 3, read Q4 and Q6's answers and ask yourself: *which one is fabricated?* (Trick question.)
 - 📐 Keep the danger quadrant and the sufficiency grid in mind; Task 11 asks you to place queries in them.
 - 🧪 When a score surprises you, inspect the query with `inspect_query(id)` before concluding anything.
-- 📖 Unsure of a term? The lab's **Jargon decoder** (top of the notebook) defines 34 of them, from nDCG to vesting.
-- 🏆 Finished early? Three auto-checked challenges in the Stretch Goal section: break the number check, build a stale-version detector, and decide whether a sufficiency gate is worth its refusals.
+- 📖 Unsure of a term? The lab's **Jargon decoder** (top of the notebook) defines 35 of them, from nDCG to vesting.
+- 🧰 Cells titled 🧰 are collapsed plumbing (fixtures, chart helpers). They run with **Run all**; you never need to read them.
+- 🏆 Finished early? Five auto-checked challenges after the Stretch Goal section: break the number check, build a stale-version detector, decide whether a sufficiency gate is worth its refusals, catch payroll answers that keep the digits and change the unit, and score faithfulness claim by claim.
 
 ---
 

@@ -231,7 +231,8 @@ evaluate_faithfulness(resp.answer, resp.context_used)
 - ⏳ The first run downloads the embedding model (~90 MB). The default path needs nothing else.
 - ⚙️ All switches live in one Task 1 config cell: `PROVIDER`, `USE_WEAVIATE`, `RERANKER`, `K_CONTEXT`.
 - 🔑 Optional: add `OPENAI_API_KEY` to Colab Secrets and set `PROVIDER = "openai"` to generate with `gpt-6-luna`.
-- 🏆 After Task 11, three challenges (🌶️ to 🌶️🌶️🌶️): break Recall@K, test whether the retrieval staircase is real, and attack the pipeline with a stale "last year's rules" page, then defend it.
+- 🏆 After Task 11, five challenges (🌶️ to 🌶️🌶️🌶️): break Recall@K, test whether the retrieval staircase is real, attack the pipeline with a stale "last year's rules" page and defend it, find answers that pass every generation gauge and are still wrong, and write a tax "faithful lie" that the faithfulness metric scores 1.00.
+- 🧰 Long setup code (the corpus, the vector-store adapter, chart code, the mock generator) sits in collapsed cells that still run under **Run all**; expand them only if curious.
 - 🤔 Before Task 7, predict which chunking config will have the **worst IoU**. Before Task 8, predict whether the reranker helps most.
 
 ---
